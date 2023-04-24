@@ -140,8 +140,9 @@ library(pastecs)
 La base de datos de la cual vamos a explorar está dentro de un formato .csv y, para una mayor practicidad, vamos a guardar cada una de las variables a explorar dentro de un elemento distinto de nuestro entorno, tal como se continúa a continuación:
 
 ```{r, include = FALSE, message=FALSE}
-setwd('C:/Users/usuario/Documents/Icesi/SEMESTRE-4/INF/ombe')
-Paris_weekdays <- read_csv("Paris_weekdays.csv")
+setwd('C:/Users/juanj/Desktop/Universidad/4. CUARTO SEMESTRE/Inferencia Estadistica/Proyecto final/Repositorio Github Proyecto Final/Statistical-analysis-Airbnb-Paris')
+
+Paris_weekdays <- read_csv("paris_weekdays.csv")
 datos <- Paris_weekdays
 ```
 
