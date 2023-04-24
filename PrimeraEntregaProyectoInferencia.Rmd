@@ -1,0 +1,1195 @@
+---
+title: "**Estudio de datos de Airbnb en la ciudad de París entre semana**" 
+author: "Juan Jose Diaz Parra, Mateo Silva Lasso, Santiago Espinosa, Melissa Dayana Mora "
+date: "`r Sys.Date()`"
+output: 
+  html_document: 
+    toc: yes
+    toc_float: yes
+    collapsed: yes
+    smooth_scroll: yes
+    theme: journal
+    highlight: kate
+    code_folding: show
+---
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+### **Antecedentes:** 
+
+
+Airbnb es una plataforma de alojamiento en línea que permite a los usuarios alquilar viviendas privadas a corto plazo. En los últimos años, el aumento del turismo ha llevado a un aumento en el número de alojamientos de Airbnb en todo el mundo, llegando a competir incluso con las grandes compañías hoteleras en el mundo. La capital de Francia, París, es la ciudad con mayor número de visitantes en un año y tiene una gran cantidad de alojamientos de Airbnb. Si analizamos el comportamiento de este modelo de negocio en esta ciudad tan importante para el turismo podemos entender de forma más completa las características de este negocio y ser capaces de tomar decisiones conscientes dentro de este negocio.
+
+$$$$
+
+### **Definición del problema **
+
+Como se mencionó anteriormente, la aplicación de Airbnb ha tenido un crecimiento supremamente acelerado y una expansión a pasos agigantados, lo que hace que sea muy difícil estimar las indicadores que permitan conocer el comportamiento de estos alojamientos, y poder tomar decisiones a partir de esta información. Es por esto que este informe se va a encargar en estimar indicadores que nos permitan tener una idea general de lo que son los alojamientos de Airbnb en el mundo o en este caso, específicamente en París, Francia.
+
+
+$$$$
+
+### **Objetivos del proyecto:**
+
+
+#### **Objetivo General**
+
+Analizar el comportamiento del modelo de negocio de Airbnb en la ciudad de París durante una semana, considerando variables como la capacidad de las habitaciones, la distancia al centro de la ciudad, el tipo de habitación, la privacidad de la habitación, el nivel de limpieza y la tarifa total, para comprender cómo se utilizan estos alojamientos y poder tomar decisiones informadas sobre la regulación del mercado de alquileres.
+
+
+#### **Objetivos específicos:**
+
+* **Objetivo 1:** Calcular las estadisticas descriptivas de las variables cuantitativas como puede ser la media, mediana, moda y desviacion estadar. 
+
+* **Objetivo 2:** Calcular las estadisticas descriptivas de las variables cualitativas a traves de tablas de frecuencias y graficas.
+
+* **Objetivo 3:** Ilustrar de forma grafica el comportamiento de las variables como puede ser por medio de graficas de cajas y bigotes, graficos de barras, histogramas, etc...
+
+* **Objetivo 4:** Plantear intervalos de confianza para cada una de las variables respecto a la media o la proporcion dependiendo del tipo de variable.
+
+* **Objetivo 5:** Plantear hipótesis de la media o la proporcion para cada una de las variables, dependiendo si esta es cualitativa o cuantitativa.
+
+* **Objetivo 6:** Realizar graficas que ilustren la posible relacion entre 2 variables del estudio, como pueden ser graficas de dispersion para las variables cuantitativas o graficos de barras apliadas para las variables cualitativas.
+
+* **Objetivo 7:** Determinar los precios promedio de los alojamientos en diferentes zonas de París durante la semana, considerando la distancia al metro y el tipo de habitación
+ 
+* **Objetivo 8:** Analizar el número de reservas y la ocupación de los alojamientos de Airbnb en París durante la semana, considerando la privacidad de la habitación y la limpieza
+
+* **Objetivo 9:** Evaluar la relación entre el tamaño de los alojamientos de Airbnb y su capacidad de hospedar a múltiples huéspedes en París durante la semana, considerando la tarifa total
+
+$$$$
+
+### **Recolección de datos y análisis de resultados:**
+
+#### **Forma de recoleccion de datos:**
+
+
+
+La forma de recolección de datos que se utilizó para este estudio fue la utilización de una base de datos publicada en la página web Kaggle, que es una red social para compartir información de bases de datos públicamente. El archivo que seleccionamos contiene más de 3000 publicaciones de alojamientos de Airbnb. La descarga de los datos se llevó a cabo mediante la descarga directa de los archivos de la página web en un formato estructurado, con un formato .csv, sin necesidad de utilizar técnicas de scraping web. Una vez descargados los datos, se procedió a analizarlos y seleccionar 6 variables con base a ciertos criterios previamente definidos.
+
+$$$$
+
+#### **Definición de la población de estudio:**
+
+La población de estudio se refiere a las publicaciones de alojamientos disponibles los días entre semana durante el año 2015 en la plataforma Airbnb en París. Cómo se están considerando todas las publicaciones de la anteriormente mencionada plataforma, la población podría incluir diferentes tipos de alojamientos, como apartamentos, casas, habitaciones, entre otros.
+
+$$$$
+
+#### **Definición del metodo de muestreo:**
+
+En el contexto anteriormente descrito, sería mejor utilizar el método de muestreo aleatorio simple para seleccionar una muestra de alojamientos de Airbnb a partir del archivo que contiene más de 3000 publicaciones. Con lo anteriormente mencionado se asegura que cada publicación tiene la misma probabilidad de ser seleccionada y, por lo tanto, que la muestra obtenida sea representativa de la población de alojamientos de Airbnb en cuestión.
+
+$$$$
+
+### **Definición de las variables de estudio:**
+
+Dentro de nuestro estudio se van a estudiar ocho variables, de las cuales 4 van a ser cuantitativas y 4 van a ser cualitativas, tal como se muestran a continuacion:
+
+#### **Variables cuantitativas:**
+
+* ***Puntaje de limpieza:*** Puntaje que determina el nivel de limpieza del alojamiento, se mide en una escala del 1 al 10.
+
+* ***Precio final:*** Se refiere al precio final por el alojamiento, medido en euros.
+
+* ***Capacidad de personas:*** Capacidad de personas que permite el alojamiento.
+
+* ***Distancia al centro:*** Distancia entre del alojamiento al centro de la ciudad de París, medido en Kilometros.
+
+
+
+
+#### **Variables cualitativas:**
+* ***Tipo de cuarto:*** Tipo de alojamiento que es ofrecido. Los valores que puede tomar son los siguientes: Casa o apartamento entero, cuarto privado, cuarto compartido.
+
+* ***Cuarto privado:*** Es el valor de si el cuarto es privado o no. Esta variable es de tipo booleano, es decir que solo puede tener los valores de TRUE y FALSE.
+* ***Multiples cuartos:*** Es el valor de si el alojamiento tiene multiples cuartos o no. Esta variable es de tipo booleano, es decir que solo puede tener los valores de TRUE y FALSE. 
+* ***Fines de negocio:*** Es el valor de si el alojamiento se puede usar para fines de negocios o no. Esta variable es de tipo booleano, es decir que solo puede tener los valores de TRUE y FALSE. 
+
+## **Exploración de datos**
+
+
+A continuación importamos todas las librerias que se van a usar dentro de este informe:
+
+```{r,message = FALSE, warning = FALSE}
+# Importar todas las librerias necesarias para el analisis
+library(tidyverse)
+library(dplyr)
+library(xts)
+library(psych)
+library(gmodels)
+library(MASS)
+library(fitdistrplus)
+library(lmtest)
+library(fdth)
+library(readxl)
+library(ggplot2)
+library(plotly)
+library(PASWR2)
+library(lattice)
+library(descr)
+library(openxlsx)
+library(kableExtra)
+library(pastecs)
+```
+
+
+La base de datos de la cual vamos a explorar está dentro de un formato .csv y, para una mayor practicidad, vamos a guardar cada una de las variables a explorar dentro de un elemento distinto de nuestro entorno, tal como se continúa a continuación:
+
+```{r, include = FALSE, message=FALSE}
+setwd('C:/Users/usuario/Documents/Icesi/SEMESTRE-4/INF/ombe')
+Paris_weekdays <- read_csv("Paris_weekdays.csv")
+datos <- Paris_weekdays
+```
+
+```{r}
+#Variables cuantitativas
+CalificacionDeLimpieza <- datos$cleanliness_rating
+PrecioFinal <- datos$realSum
+CapacidadPersonas <- datos$person_capacity
+DistanciaCentro <- datos$dist
+
+#Variables cualitativas
+TipoDeCuarto<-  datos$room_type
+CuartoPrivado <- datos$room_private
+PoseeMasDeUnCuarto <- datos$multi
+FinesDeNegocios <- datos$biz
+```
+
+$$$$
+
+### **Gráficos para las variables cuantitativas:**
+
+####  **Calificación de limpieza:**
+
+```{r}
+boxplot(CalificacionDeLimpieza, horizontal = TRUE)
+```
+
+####  **Precio final** 
+
+```{r}
+boxplot(PrecioFinal, horizontal = TRUE)
+```
+
+Si le quitamos los valores atípicos se vería algo así:
+
+```{r}
+mean_val <- mean(PrecioFinal)
+sd_val <- sd(PrecioFinal)
+
+# Eliminar los valores atípicos
+PrecioFinalSinAtipicos <- PrecioFinal[PrecioFinal < (mean_val + 3*sd_val) & PrecioFinal > (mean_val - 3*sd_val)]
+boxplot(PrecioFinalSinAtipicos, horizontal = TRUE)
+
+```
+
+
+####  **Capacidad de personas** 
+
+```{r}
+boxplot(CapacidadPersonas, horizontal = TRUE)
+```
+
+####  **Distancia al centro de la ciudad** 
+
+```{r}
+boxplot(DistanciaCentro, horizontal = TRUE)
+```
+
+
+
+### **Gráficas para variables cualitativas**
+
+### **Gráficas de barras:**
+
+#### **Tipo de cuarto**
+
+```{r}
+barplot(table(TipoDeCuarto)) 
+```
+
+#### **Cuarto privado**
+
+```{r}
+barplot(table(CuartoPrivado), names.arg = c("Sin cuarto privado", "Con cuarto privado"))  
+```
+
+#### **Alojamientos que poseen mas de un cuarto**
+
+```{r}
+barplot(table(PoseeMasDeUnCuarto), names.arg = c("Sin mas de un cuarto", "Con mas de un cuarto")) 
+```
+
+#### **Alojamiento para fines de negocios**
+
+```{r}
+barplot(table(FinesDeNegocios), names.arg = c("Sin fines de negocios", "Con fines de negocios")) 
+```
+
+## **Estadística descriptiva para las variables**
+
+### **Variables cuantitativas**
+
+### **Calificación de limpieza**
+
+
+*Mínimo:*
+
+```{r, echo = FALSE}
+min <- min(CalificacionDeLimpieza)
+min
+```
+
+*Máximo:*
+
+```{r, echo = FALSE}
+max <- max(CalificacionDeLimpieza)
+max
+```
+
+*Rango:*
+
+```{r, echo = FALSE}
+rango <- max-min
+rango
+```
+
+*Media:*
+
+```{r, echo = FALSE}
+media <- mean(CalificacionDeLimpieza)
+media
+```
+
+*Desviación estándar:*
+
+```{r, echo = FALSE}
+desv_estándar <- sd(CalificacionDeLimpieza)
+desv_estándar
+```
+
+*Coeficiente de variación:*
+
+```{r, echo = FALSE}
+coef_var <- desv_estándar/media
+coef_var
+```
+
+*Cuartiles 1 y 3:*
+
+```{r, echo = FALSE}
+##Cuartil 1
+q1 <- unname(quantile(CalificacionDeLimpieza, 0.25))
+q1
+##Cuartil 3
+q3 <- unname(quantile(CalificacionDeLimpieza, 0.75))
+q3
+```
+
+
+*Rango intercuartil:*
+
+```{r, echo = FALSE}
+ric <- q3 - q1
+ric
+```
+
+*Cerco inferior y superior:*
+
+```{r, echo = FALSE}
+#Cerco inferior 
+cerco_inf <- q1 - 1.5*ric
+cerco_inf
+#Cerco superior
+cerco_sup <- q3 + 1.5*ric
+cerco_sup
+```
+
+
+### **Precio final**
+
+*Mínimo:*
+
+```{r, echo = FALSE}
+min <- min(PrecioFinal)
+min
+```
+
+*Máximo:*
+
+```{r, echo = FALSE}
+max <- max(PrecioFinal)
+max
+```
+
+*Rango:*
+
+```{r, echo = FALSE}
+rango <- max-min
+rango
+```
+
+*Media:*
+
+```{r, echo = FALSE}
+media <- mean(PrecioFinal)
+media
+```
+
+*Desviación estándar:*
+
+```{r, echo = FALSE}
+desv_estándar <- sd(PrecioFinal)
+desv_estándar
+```
+
+*Coeficiente de variación:*
+
+```{r, echo = FALSE}
+coef_var <- desv_estándar/media
+coef_var
+```
+
+*Cuartiles 1 y 3:*
+
+```{r, echo = FALSE}
+##Cuartil 1
+q1 <- unname(quantile(PrecioFinal, 0.25))
+q1
+##Cuartil 3
+q3 <- unname(quantile(PrecioFinal, 0.75))
+q3
+```
+
+
+*Rango intercuartil*
+
+```{r, echo = FALSE}
+ric <- q3 - q1
+ric
+```
+
+*Cerco inferior y superior:*
+
+```{r, echo = FALSE}
+#Cerco inferior 
+cerco_inf <- q1 - 1.5*ric
+cerco_inf
+#Cerco superior
+cerco_sup <- q3 + 1.5*ric
+cerco_sup
+```
+
+### **Capacidad de personas**
+
+*Mínimo:*
+
+```{r, echo = FALSE}
+min <- min(CapacidadPersonas)
+min
+```
+
+*Máximo:*
+
+```{r, echo = FALSE}
+max <- max(CapacidadPersonas)
+max
+```
+
+*Rango:*
+
+```{r, echo = FALSE}
+rango <- max-min
+rango
+```
+
+*Media:*
+
+```{r, echo = FALSE}
+media <- mean(CapacidadPersonas)
+media
+```
+
+*Desviación estándar:*
+
+```{r, echo = FALSE}
+desv_estándar <- sd(CapacidadPersonas)
+desv_estándar
+```
+
+*Coeficiente de variación:*
+
+```{r, echo = FALSE}
+coef_var <- desv_estándar/media
+coef_var
+```
+
+*Cuartiles 1 y 3:*
+
+```{r, echo = FALSE}
+##Cuartil 1
+q1 <- unname(quantile(CapacidadPersonas, 0.25))
+q1
+##Cuartil 3
+q3 <- unname(quantile(CapacidadPersonas, 0.75))
+q3
+```
+
+
+*Rango intercuartil*
+
+```{r, echo = FALSE}
+ric <- q3 - q1
+ric
+```
+
+*Cerco inferior y superior:*
+
+```{r, echo = FALSE}
+#Cerco inferior 
+cerco_inf <- q1 - 1.5*ric
+cerco_inf
+#Cerco superior
+cerco_sup <- q3 + 1.5*ric
+cerco_sup
+```
+
+### **Distancia al centro de la ciudad**
+
+
+
+*Mínimo:*
+
+```{r, echo = FALSE}
+min <- min(DistanciaCentro)
+min
+```
+
+*Máximo:*
+
+```{r, echo = FALSE}
+max <- max(DistanciaCentro)
+max
+```
+
+*Rango:*
+
+```{r, echo = FALSE}
+rango <- max-min
+rango
+```
+
+*Media:*
+
+```{r, echo = FALSE}
+media <- mean(DistanciaCentro)
+media
+```
+
+*Desviación estándar:*
+
+```{r, echo = FALSE}
+desv_estándar <- sd(DistanciaCentro)
+desv_estándar
+```
+
+*Coeficiente de variación:*
+
+```{r, echo = FALSE}
+coef_var <- desv_estándar/media
+coef_var
+```
+
+*Cuartiles 1 y 3:*
+
+```{r, echo = FALSE}
+##Cuartil 1
+q1 <- unname(quantile(DistanciaCentro, 0.25))
+q1
+##Cuartil 3
+q3 <- unname(quantile(DistanciaCentro, 0.75))
+q3
+```
+
+
+*Rango intercuartil*
+
+```{r, echo = FALSE}
+ric <- q3 - q1
+ric
+```
+
+*Cerco inferior y superior:*
+
+```{r, echo = FALSE}
+#Cerco inferior 
+cerco_inf <- q1 - 1.5*ric
+cerco_inf
+#Cerco superior
+cerco_sup <- q3 + 1.5*ric
+cerco_sup
+```
+
+
+
+## **Estadística descriptiva variables cualitativas:**
+
+
+### **Tipo de cuarto**
+
+Generamos una tabla de frecuencias
+
+```{r, echo = FALSE}
+tablaDeFrecuencia <- table(TipoDeCuarto)
+print(tablaDeFrecuencia)
+```
+Calculamos la frecuencia relativa 
+
+```{r, echo = FALSE}
+tablaDeFrecuenciaRelativa <- prop.table(tablaDeFrecuencia)
+print(tablaDeFrecuenciaRelativa)
+```
+
+Ahora calculamos la moda
+
+```{r, echo = FALSE}
+moda <- names(tablaDeFrecuencia)[which.max(tablaDeFrecuencia)]
+print(moda)
+```
+### **Cuarto privado**
+
+Generamos una tabla de frecuencias
+
+```{r, echo = FALSE}
+tablaDeFrecuencia <- table(CuartoPrivado)
+print(tablaDeFrecuencia)
+```
+Calculamos la frecuencia relativa 
+
+```{r, echo = FALSE}
+tablaDeFrecuenciaRelativa <- prop.table(tablaDeFrecuencia)
+print(tablaDeFrecuenciaRelativa)
+```
+
+Ahora calculamos la moda
+
+```{r, echo = FALSE}
+moda <- names(tablaDeFrecuencia)[which.max(tablaDeFrecuencia)]
+print(moda)
+```
+
+### **Múltiples cuartos**
+
+Generamos una tabla de frecuencias
+
+```{r, echo = FALSE}
+tablaDeFrecuencia <- table(PoseeMasDeUnCuarto)
+print(tablaDeFrecuencia)
+```
+Calculamos la frecuencia relativa 
+
+```{r, echo = FALSE}
+tablaDeFrecuenciaRelativa <- prop.table(tablaDeFrecuencia)
+print(tablaDeFrecuenciaRelativa)
+```
+
+Ahora calculamos la moda
+
+```{r, echo = FALSE}
+moda <- names(tablaDeFrecuencia)[which.max(tablaDeFrecuencia)]
+print(moda)
+```
+
+### **Fines de negocios**
+
+Generamos una tabla de frecuencias
+
+```{r, echo = FALSE}
+tablaDeFrecuencia <- table(FinesDeNegocios)
+print(tablaDeFrecuencia)
+```
+Calculamos la frecuencia relativa 
+
+```{r, echo = FALSE}
+tablaDeFrecuenciaRelativa <- prop.table(tablaDeFrecuencia)
+print(tablaDeFrecuenciaRelativa)
+```
+
+Ahora calculamos la moda
+
+```{r, echo = FALSE}
+moda <- names(tablaDeFrecuencia)[which.max(tablaDeFrecuencia)]
+print(moda)
+```
+
+
+
+
+### **Análisis de resultados:**
+
+
+Para esta sección se van a estimar parámetros de interés a través de intervalos de confianza para cada una de las variables, ya sea para la media poblacional o la proporción. Así mismo, se van a realizar pruebas de hipótesis para la media y la proporción.
+$$$$
+
+### **Intervalos de confianza:**
+
+Para estimar los intervalos de confianza, tenemos en cuenta que la base de datos que tenemos es una muestra de toda la población de alojamientos de París en Airbnb entre semana. Por lo tanto, para cada una de estas estimaciones, vamos a utilizar las fórmulas de la distribución t-Student, ya que no contamos con la desviación estándar poblacional.
+
+$$$$
+
+### **Variables cuantitativas**
+
+##### **Calificación de limpieza**
+
+
+*Ahora calculamos la media muestral*
+
+```{r}
+mediaMuestral <- mean(CalificacionDeLimpieza)
+mediaMuestral
+```
+
+*Calculamos la desviación muestral*
+
+```{r}
+desviacionestándarMuestral <- sd(CalificacionDeLimpieza)
+desviacionestándarMuestral
+```
+
+Dentro de la estimación vamos a tomar el nivel de confianza como 98%. y vamos a aplicar la siguiente ecuación:
+
+$$\bar{x} \pm t_{\alpha/2, n-1} \frac{s}{\sqrt{n}}$$
+
+*Ahora hacemos la estimación*
+
+```{r}
+rango_inferior <- mediaMuestral+qt(0.01, df=length(CalificacionDeLimpieza)-1)*(desviacionestándarMuestral/sqrt(length(CalificacionDeLimpieza)))
+rango_inferior
+
+rango_Superior <- mediaMuestral-qt(0.01, df=length(CalificacionDeLimpieza)-1)*(desviacionestándarMuestral/sqrt(length(CalificacionDeLimpieza)))
+rango_Superior
+```
+
+Con estos valores obtenemos el siguiente rango:
+
+$$[9.21~; ~9.30]$$
+Es decir que el puntaje de limpieza promedio de los Airbnb en París entre semana con un 98% de confianza está dentro del rango de los 9.21 puntos a los 9.30 puntos.
+
+$$$$
+
+##### **Precio Final**
+
+
+*Ahora calculamos la media muestral*
+
+```{r}
+mediaMuestral <- mean(PrecioFinal)
+mediaMuestral
+```
+
+*Calculamos la desviación muestral*
+
+```{r}
+desviacionestándarMuestral <- sd(PrecioFinal)
+desviacionestándarMuestral
+```
+
+Dentro de la estimación vamos a tomar el nivel de confianza como 95%. y vamos a aplicar la siguiente ecuación:
+
+$$\bar{x} \pm t_{\alpha/2, n-1} \frac{s}{\sqrt{n}}$$
+
+*Ahora hacemos la estimación*
+
+```{r}
+rango_inferior <- mediaMuestral+qt(0.025, df=length(PrecioFinal))*(desviacionestándarMuestral/sqrt(length(PrecioFinal)))
+rango_inferior
+
+rango_Superior <- mediaMuestral-qt(0.025, df=length(PrecioFinal))*(desviacionestándarMuestral/sqrt(length(PrecioFinal)))
+rango_Superior
+```
+
+Con estos valores obtenemos el siguiente rango:
+
+$$[384.90~; ~412.69]$$
+Es decir, que el puntaje de limpieza promedio de los Airbnb en París entre semana, con un 98% de confianza, está dentro del rango de 9.21 puntos a 9.30 puntos.
+
+
+$$$$
+
+##### **Capacidad de personas**
+
+*Ahora calculamos la media muestral*
+
+```{r}
+mediaMuestral <- mean(CapacidadPersonas)
+mediaMuestral
+```
+
+*Calculamos la desviación muestral*
+
+```{r}
+desviacionestándarMuestral <- sd(CapacidadPersonas)
+desviacionestándarMuestral
+```
+
+Dentro de la estimación vamos a tomar el nivel de confianza como 95%. y vamos a aplicar la siguiente ecuación:
+
+$$\bar{x} \pm t_{\alpha/2, n-1} \frac{s}{\sqrt{n}}$$
+
+*Ahora hacemos la estimación*
+
+```{r}
+rango_inferior <- mediaMuestral+qt(0.025, df=length(CapacidadPersonas))*(desviacionestándarMuestral/sqrt(length(CapacidadPersonas)))
+rango_inferior
+
+rango_Superior <- mediaMuestral-qt(0.025, df=length(CapacidadPersonas))*(desviacionestándarMuestral/sqrt(length(CapacidadPersonas)))
+rango_Superior
+```
+
+Con estos valores obtenemos el siguiente rango:
+
+$$[2.90~; ~2.99]$$
+Es decir, que el puntaje de limpieza promedio de los AirBnB en París entre semana, con un 98% de confianza, está dentro del rango de 9.21 puntos a 9.30 puntos.
+
+$$$$
+
+
+#### **Distancia al centro de la ciudad**
+
+*Ahora calculamos la media muestral*
+
+```{r}
+mediaMuestral <- mean(DistanciaCentro)
+mediaMuestral
+```
+
+*Calculamos la desviación muestral*
+
+```{r}
+desviacionestándarMuestral <- sd(DistanciaCentro)
+desviacionestándarMuestral
+```
+
+Dentro de la estimación vamos a tomar el nivel de confianza como 98%. y vamos a aplicar la siguiente ecuación:
+
+$$\bar{x} \pm t_{\alpha/2, n-1} \frac{s}{\sqrt{n}}$$
+
+*Ahora hacemos la estimación*
+
+```{r}
+rango_inferior <- mediaMuestral+qt(0.01, df=length(DistanciaCentro))*(desviacionestándarMuestral/sqrt(length(DistanciaCentro)))
+rango_inferior
+
+rango_Superior <- mediaMuestral-qt(0.01, df=length(DistanciaCentro))*(desviacionestándarMuestral/sqrt(length(DistanciaCentro)))
+rango_Superior
+```
+
+Con estos valores obtenemos el siguiente rango:
+
+$$[2.94~; ~3.07]$$
+Es decir, que la distancia promedio al centro de los Airbnb en París entre semana, con un 95% de confianza, está dentro del rango de 2.94 kilómetros a 3.07 kilómetros.
+
+$$$$
+
+### **Variables cualitativas**
+
+$$$$
+
+#### **Tipo de cuarto **
+
+Para esta variable vamos a calcular los intervalos en que cada uno de los posibles tipos de cuartos estén, cada uno con un nivel de confianza del 95%:
+
+
+
+```{r}
+# Calcular la proporción de cada categoría en los datos
+proporciones <- table(TipoDeCuarto) / length(TipoDeCuarto)
+
+# Calcular el error estándar de cada proporción
+error_estándar <- sqrt(proporciones * (1 - proporciones) / length(TipoDeCuarto))
+
+# Calcular el intervalo de confianza del 95% para cada proporción
+intervalos_confianza_inferiores <- proporciones + qt(0.025, length(TipoDeCuarto)) * error_estándar
+intervalos_confianza_superiores <- proporciones - qt(0.025, length(TipoDeCuarto)) * error_estándar
+
+# Imprimir el resultado
+cat("Los intervalos de confianza del 95% son:")
+for (i in 1:length(proporciones)) {
+  cat("\n - Categoría '", names(proporciones)[i], "': [", intervalos_confianza_inferiores[i], ", ", intervalos_confianza_superiores[i], "]", sep="")
+}
+
+```
+
+Con esto, podemos decir que los rangos de confianza de la proporción de los valores son los siguientes:
+
+* **Casa/ Apartamento entero:** $[0.73, 0.76]$, es decir entre 73% al 76%
+* **Cuarto Privado** $[0.23, 0.26]$, es decir entre 23% al 26%
+* **Cuarto compartido** $[0.01, 0.02]$, es decir entre 1% al 2%
+
+$$$$
+
+#### **Cuarto privado**
+
+*Buscamos la proporción de esta y tomamos los alojamientos con cuarto privado*
+
+```{r}
+datos_true <- subset(CuartoPrivado, CuartoPrivado == TRUE)
+privateRoomTrue <- sum(CuartoPrivado)
+privateRoomTrue
+```
+
+*Se hara la estimación para los alojamientos que cuentan con cuarto privado*
+```{r}
+p <- privateRoomTrue/length(CuartoPrivado)
+p
+```
+
+*Finalmente usamos el siguiente código para estimar la proporción con una confianza del 95%*
+
+```{r}
+rango_inferior <-p + qt(0.025, length(CuartoPrivado))* sqrt((p*(1-p))/length(CuartoPrivado)) 
+rango_inferior
+
+rango_superior <-  p - qt(0.025, length(PoseeMasDeUnCuarto))* sqrt((p*(1-p))/length(CuartoPrivado)) 
+rango_superior
+
+```
+
+*Escribimos el intervalo caluculado anteriormente:*
+
+$$[0.23, 0.26]$$ 
+
+
+
+*Con una confianza al 95% podemos decir que la proporción de los alojamientos que poseen cuarto privado es mayor o igual que 0,23 y menor o igual a 0,26, o del 23% al 26%*
+
+$$$$
+
+#### **Multiples cuartos**
+
+
+*Buscamos la proporción de esta y tomamos los alojamientos con más de un cuarto*
+
+```{r}
+datos_true <- subset(PoseeMasDeUnCuarto, PoseeMasDeUnCuarto == 1)
+multi <- sum(datos_true)
+multi
+```
+
+*Se hara la estimación para los alojamientos que cuentan con más de un cuarto*
+```{r}
+p <- multi/length(PoseeMasDeUnCuarto)
+p
+```
+
+*Finalmente usamos el siguiente código para estimar la proporción con una confianza del 95%*
+
+```{r}
+rango_inferior <- p + qt(0.025, length(PoseeMasDeUnCuarto))* sqrt((p*(1-p))/length(PoseeMasDeUnCuarto)) 
+rango_inferior
+
+rango_superior <- p - qt(0.025, length(PoseeMasDeUnCuarto))* sqrt((p*(1-p))/length(PoseeMasDeUnCuarto)) 
+rango_superior
+
+```
+
+*Escribimos el intervalo calculado anteriormente:*
+
+$$[0.21, 0.23]$$ 
+
+
+
+*Con una confianza al 95% podemos decir que la proporción de los alojamientos que poseen más de un cuarto es mayor o igual que 0,21 y menor o igual a 0,23, o del 21% al 23%*
+
+$$$$
+
+#### **Fines de negocios**
+
+
+
+*Buscamos la proporción de esta y tomamos los alojamientos que son con fines de negocios*
+
+```{r}
+datos_true <- subset(FinesDeNegocios, FinesDeNegocios == 1)
+multi <- sum(datos_true)
+multi
+```
+
+*Se hara la estimación para los alojamientos que son con fines de negocios*
+```{r}
+p <- multi/length(FinesDeNegocios)
+p
+```
+
+*Finalmente usamos el siguiente código para estimar la proporción con una confianza del 95%*
+
+```{r}
+rango_inferior <- p + qt(0.025, length(FinesDeNegocios))* sqrt((p*(1-p))/length(FinesDeNegocios)) 
+rango_inferior
+
+rango_superior <- p - qt(0.025, length(FinesDeNegocios))* sqrt((p*(1-p))/length(FinesDeNegocios)) 
+rango_superior
+
+```
+
+*Escribimos el intervalo caluculado anteriormente:*
+
+$$[0.24, 0.27]$$ 
+
+
+
+*Con una confianza al 95% podemos decir que la proporción de los alojamientos que que son para fines de negocios están entre el 0.24, y el 0.27, es decir, entre el 24% y el 27%*
+
+
+$$$$
+
+### **Hipótesis para las variables:**
+
+Dentro de esta sección del estudio vamos a plantear hipótesis a las variables, ya sea respecto a la media o a la proporción, dependiendo de su caracteristica cualitativa o cuantitiva.
+
+$$$$
+
+### **Variables cuantitativas**
+
+#### **Puntaje de limpieza**
+
+Para la plataforma Airbnb es de gran imporancia la calificación de la limpieza de sus alojamientos, es por esto que se espera que la mayoría de sus alojamientos posean un buen puntaje de limpieza. Se estima que el puntaje de limpieza promedio que ponen los usuarios a los alojamientos es mayor o igual a 9.5. Para esto se plantean las siguientes hipótesis:
+
+* **$H_0: \pi \geq 9.5$**
+* **$H_1: \pi < 9.5$**
+
+*Usamos el siguiente código para encontrar el valor de p:*
+
+```{r}
+with(datos, (t.test(CalificacionDeLimpieza, alternative = "less", mu = 9.5, conf.level = 0.95)))
+```
+
+Con el resultado anterior podemos observar como $p < 0.05$, sabiendo esto, podemos rechazar la hipótesis nula y podemos afirmar que con un nivel de confianza del 95%, la calificación media de los alojamientos de Airbnbn en la ciudad de París fue menor a 9.5.
+
+
+#### **Precio final**
+
+Una de las principales preocupaciones dentro de la industria de Airbnb son los altos precios de los alojamientos en las ciudades europeas. Normalmente, los precios rondan los 400 euros. Se desea saber si, con un nivel de confianza del 0.05, se cumple como hipótesis nula que los precios de los Airbnb en París son menores a 400.
+
+Planteamos las siguientes hipótesis:
+
+* **$H_0: \mu \leq 400$**
+* **$H_1: \mu > 400$**
+
+*Aplicamos el siguiente código para comprobar nuestras hipótesis:*
+
+```{r}
+with(datos, (t.test(realSum, alternative = "greater", mu = 400, conf.level = 0.95)))
+
+```
+
+Como $H_0: \mu \leq 400$ el valor $p=0.56$ esta por encima de nuestro alfa, por lo tanto no podemos rechazar la hipótesis nula. Es decir que no podemos rechazar el hecho de que el precio medio de los Airbnb en París superen los 400 Euros.
+
+#### **Capacidad de personas**
+
+La capacidad de personas que caben dentro de un alojamiento es sumamente importante en la industria de Airbnb. Expertos recomiendan que, en promedio, los cuartos tengan por lo menos la capacidad de 3 personas. Se desea saber si, con un nivel de confianza del 95%, se cumple como hipótesis nula que la capacidad de personas promedio está por encima de 3..
+
+Planteamos las siguientes hipótesis:
+
+* **$H_0: \mu \geq 3$**
+* **$H_1: \mu < 3$**
+
+*Aplicamos el siguiente código para comprobar nuestras hipótesis:*
+
+```{r}
+with(datos, (t.test(realSum, alternative = "greater", mu = 400, conf.level = 0.95)))
+
+```
+
+Como $H_0: \mu \leq 400$ el valor $p=0.56$ esta por encima de nuestro alfa, por lo tanto no podemos rechazar la hipótesis nula. Es decir que no podemos rechazar el hecho de que el precio medio de los Airbnb en París supere los 400 Euros.
+
+
+
+#### **Distancia al centro**
+
+Se sabe que la distancia media que hay entre los alojamientos (de Airbnb y externos a la plataforma) y el centro de la ciudad es de 2.1 kilómetros. Airbnb requiere saber si es cierto que los alojamientos que se publican en su plataforma tienen una distancia hasta el centro de la ciudad igual o menor que 2.1. Para esto, se plantean las siguientes hipótesis:
+
+* **$H_0: \mu \leq 2.1$**
+* **$H_1: \mu > 2.1$**
+
+Calculamos el valor de p con el siguiente código
+
+```{r}
+with(datos, (t.test(dist, alternative = "greater", mu = 2.1, conf.level = 0.95)))
+
+```
+
+Como el valor p es mucho menor que el valor de alfa, podemos rechazar el hipótesis $H_0$ y, por lo tanto, podemos decir que a un nivel de confiabilidad del 95% de que el promedio de las distancias de los Airbnb al centro de la cuidad sea mayor a 2.1 kilometros.
+
+
+### **Variables cualitativas**
+
+
+
+#### **Tipo de cuarto**
+
+Dentro de la industria de Airbnb está la incertidumbre acerca de la posible proporción de alojamientos que ofrecen el apartamento o la casa completa, ya que esto permite una mayor comodidad y exclusividad al usuario. Se estima que a nivel de la Unión Europea, aproximadamente más del 70% de los alojamientos de Airbnb son por toda la casa o el apartamento. A continuación, se muestra una prueba de hipótesis de esta información con un nivel de confianza del 95%:
+
+Planteamos las siguientes hipótesis:
+
+* **$H_0: \pi  \geq 0.7$**
+* **$H_1: \pi <  0.7$**
+
+Para comprobar estas hipótesis utilizamos el siguiente código:
+
+
+```{r}
+daticos<- prop.test( sum(TipoDeCuarto== "Entire home/apt"), n = length(datos$room_type), p = 0.7, alternative = "less")
+daticos
+```
+
+Como podemos ver que el valor p es mayor al valor de confianza que fue de 0.05, por lo tanto, no podemos rechazar la hipótesis nula $H_0$. Es decir, que podemos afirmar que la probabilidad de que los alojamientos de Airbnb ofrezcan cuartos es mayor al 70%.
+
+
+
+
+#### **Cuarto Privado**
+
+Se estima que el número de alojamientos de Airbnb que tienen cuartos privados es aproximadamente del 35%; sin embargo, se desea comprobar dicha información con un nivel de confianza del 95%. 
+
+Planteamos las siguientes hipótesis:
+
+* **$H_0: \pi = 0.35$**
+* **$H_1: \pi \neq  0.35$**
+
+Para comprobar esto tenemos que utilizar dos colas en la curva y lo hacemos con la siguiente función:
+
+
+```{r}
+daticos<- prop.test(sum(datos$room_private[datos$room_private== "TRUE"] ), n = length(datos$room_private), p = 0.35, alternative = "two.sided")
+daticos
+```
+
+Como podemos ver que el valor p es menor al valor de confianza que fue de 0.05, por lo tanto, rechazamos la hipótesis nula. Es decir, que podemos afirmar que la probabilidad de que los alojamientos de Airbnb tengan cuartos privados es diferente al 35%.
+
+
+#### **Multiples cuartos**
+
+Según estimaciones pasadas de Airbnb, se tiene que aproximadamente más del 30% de los alojamientos tienen múltiples cuartos. Sin embargo, se desea comprobar dicha estimación con un nivel de confianza del 92%. Para esto, se plantean las siguientes hipótesis:
+
+* **$H_0: \pi \geq 0.30$**
+* **$H_1: \pi <  0.30$**
+
+```{r}
+daticos<- prop.test(sum(datos$multi[datos$multi== "1"] ), n = length(datos$multi), p = 0.30, alternative = "less", conf.level = 0.95)
+daticos
+```
+
+Como podemos ver, el valor p es mayor a nuestro nivel de confianza, por lo que podemos decir que no podemos rechazar $H_0$. Por lo tanto, podemos decir que no hay suficiente información para afirmar que más del 30% de los alojamientos de Airbnb tienen múltiples cuartos.
+
+
+#### **Fines de negocios**
+
+Se estima que como mínimo, el 26% de los alojamientos se puede utilizar para fines de negocios, sin embargo, se desea comprobar dicha estimación con un nivel de confianza del 92%. Para esto se plantean las siguientes hipótesis:
+
+* **$H_0: \pi \geq 0.26$**
+* **$H_1: \pi <  0.26$**
+
+```{r}
+daticos<- prop.test(sum(datos$biz[datos$biz== "1"] ), n = length(datos$biz), p = 0.26, alternative = "greater", conf.level = 0.92)
+daticos
+```
+
+Como podemos ver, el valor p es mayor que nuestro nivel de confianza, por lo que no podemos rechazar $H_0$. Por lo tanto, no hay suficiente información para afirmar que más del 26% de los alojamientos se pueden utilizar para fines de negocios.
+
+
+### **Cruces de variables**
+
+
+Dentro de esta sección, de acuerdo a los objetivos planteados al inicio del informe, vamos a comparar diferentes variables entre sí con el fin de buscar algún tipo de relación entre ellas. A continuación se presentan las gráficas que ilustran dicha comparación o cruce.
+
+
+$$$$
+
+#### **Precio final vs Calificación de limpieza**
+
+A continuación se ve en el eje x la calificación de limpieza y en el eje y el precio final. 
+
+```{r, warning = FALSE}
+df <- data.frame(x = PrecioFinal, y = CalificacionDeLimpieza)
+ggplot(data = data.frame(PrecioFinal, CalificacionDeLimpieza), aes(x = PrecioFinal, y = CalificacionDeLimpieza)) +
+  geom_point() + xlim(0, 3000) + ylim(0, 10) +
+  geom_smooth(method = "lm", formula = y ~ poly(x, 1, raw = TRUE) ) +
+  labs(x = "Precio Final", y = "Calificación de limpieza")
+```
+
+Con esta grafica podemos ver si existe una relación entre el precio final de un alojamiento de Airbnb con respecto a la calificación de limpieza. Ademas, podemos afirmar que esta relación es directamente proporcional, es decir que entre mayor sea el precio, mayor va a ser la calificación de limpieza. Esto nos puede indicar que entre mas elevado es el precio, mas limpio podria llegar a ser el cuarto.
+
+$$$$
+
+
+#### **Precio final vs Distancia al centro de la ciudad**
+
+A continuación se muestra una grafica de dispersión del precio final vs la distancia del alojamiento al centro de la ciudad:
+
+```{r, warning = FALSE}
+df <- data.frame(x = PrecioFinal, y = DistanciaCentro)
+ggplot(data = data.frame(PrecioFinal, CalificacionDeLimpieza), aes(x = PrecioFinal, y = DistanciaCentro)) +
+  geom_point() + xlim(0, 5000) + ylim(0, 10) +
+  geom_smooth(method = "lm", formula = y ~ poly(x, 2, raw = TRUE) ) +
+  labs(x = "Precio final", y = "Distancia al centro")
+```
+
+Con esta gráfica no podemos hacer conclusiones fuertes, por lo que podemos decir que en el caso específico de los Airbnb en París no hay una relación entre la distancia al centro de la ciudad con los precios.
+
+#### **Precio final vs Capacidad de personas**
+
+En el siguiente gráfico se presenta en el eje x el precio final de los alojamientos y en el eje y la capacidad de personas:
+
+```{r, warning = FALSE}
+df <- data.frame(x = PrecioFinal, y = CapacidadPersonas)
+ggplot(data = data.frame(PrecioFinal, CapacidadPersonas), aes(x = PrecioFinal, y = CapacidadPersonas)) +
+  geom_point() + xlim(0, 1700) + ylim(0, 7) +
+  geom_smooth(method = "lm", formula = y ~ poly(x, 2, raw = TRUE) ) +
+  labs(x = "Precio final", y = "Capacidad personas")
+```
+
+Con esta grafica podemos decir que puede existir una relación entre el precio final y la capacidad de personas en un alojamiento. Asi mismo podriamos decir que dicha relación es directa, es decir que entre mayor sea el precio, mayor cantidad de personas va a tener.
+
+#### **Tipo de cuarto vs Fines de negocio**
+
+A continuación se muestra una grafica de barras apliladas para mostrar la relación que tienen las variables de tipo de cuarto y alojamiento con fines de negocio
+
+
+```{r, warning=FALSE}
+datos <-data.frame(TipoDeCuarto, FinesDeNegocios)
+tabla <- table(datos)
+barplot(tabla, beside = FALSE, 
+        main = "Gráfica de barras apliladas", 
+        xlab = "Fines de negocios", ylab = "Frecuencia", 
+        names.arg = c("Sin fines de negocios", "Con fines de negocios"),
+        legend.text = rownames(tabla), 
+        args.legend = list(title = "Tipo de cuarto"))
+```
+
+En esta grafica podemos observar que asombrosamente los alojamientos con fines de negocios tienen una mayor proporción de cuartos compartidos a comparación de los alojamientos que no fueron para fines de negocios.
+
+
+### **Conclusiones:**
+
+A continuación se listarán las conclusiones que se hicieron a partir de la investigación hecha:
+
+* En París, en promedio entre 73% y y 76% de los alojamientos se presta todo el local y no un solo cuarto, a esto se le puede añadir que en promedio entre el 21% y el 23% de los alojamientos poseen mas de un cuarto, se puede decir que la hay una gran parte de publicaciones que son apartaestudios.
+
+* Los alojamientos de Airbnb publicados en París poseen un puntaje de limpieza promedio entre 9.21 y 9.30 puntos, lo cual asegura la calidad del servicio que se presta.
+
+* No hay una relación notable entre las variables dist y realsum, esto quiere decir que el valor del alojamiento no depende realmente de la distancia que hay hasta el centro de París.
+
+* El precio promedio de los alojamientos se encuentra en un rango entre 384.90 y 412.69 euros.
+
+* El promedio de capacidad de personas se encuentra entre 2.90 y 2.99 personas, por lo que si se toma en cuenta el punto anterior, en promedio el costo por persona de un alojamiento es de 135.18 Euros.
+
+* Con un nivel de confianza del 95% se puede decir que la distancia en promedio de los alojamientos hasta el centro de la ciudad es mayor a 2.1 kilómetros.
+
+* Existe una relación entre realsum y cleanliness_rating, la cual nos dice que entre más costo tenga el alojamiento, mejor va a ser el nivel de limpieza del mismo.
+
+* Hay una relación directa entre realsum y person_capacity, que entre mayor sea el precio, mayor va a ser la capacidad de personas que va a tener el alojamiento.
