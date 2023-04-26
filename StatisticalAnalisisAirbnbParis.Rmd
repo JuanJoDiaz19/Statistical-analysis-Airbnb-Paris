@@ -140,7 +140,7 @@ library(pastecs)
 La base de datos de la cual vamos a explorar está dentro de un formato .csv y, para una mayor practicidad, vamos a guardar cada una de las variables a explorar dentro de un elemento distinto de nuestro entorno, tal como se continúa a continuación:
 
 ```{r, include = FALSE, message=FALSE}
-setwd('C:/Users/juanj/Desktop/Universidad/4. CUARTO SEMESTRE/Inferencia Estadistica/Proyecto final/Repositorio Github Proyecto Final/Statistical-analysis-Airbnb-Paris')
+setwd('D:/santy/inferencia/Statistical-analysis-Airbnb-Paris')
 
 Paris_weekdays <- read_csv("paris_weekdays.csv")
 datos <- Paris_weekdays
@@ -1184,8 +1184,49 @@ barplot(tabla, beside = FALSE,
         args.legend = list(title = "Tipo de cuarto"))
 ```
 
+
 En esta grafica podemos observar que asombrosamente los alojamientos con fines de negocios tienen una mayor proporción de cuartos compartidos a comparación de los alojamientos que no fueron para fines de negocios.
 
+
+tabla cruzada
+```{r, warning=FALSE}
+tabla <- crosstab(TipoDeCuarto,FinesDeNegocios,prop.c = TRUE,plot = FALSE)
+tabla
+
+
+```
+
+
+#### **Cuarto privado vs Posee mas de un cuarto**
+
+A continuación se muestra una grafica de barras apliladas para mostrar la relación que tienen las variables de cuarto privado y posee mas de un cuarto
+
+```{r, warning=FALSE}
+datos <-data.frame(CuartoPrivado, PoseeMasDeUnCuarto)
+tabla <- table(datos)
+barplot(tabla, beside = FALSE, 
+        main = "Gráfica de barras apliladas", 
+        xlab = "Posee mas de un cuarto", ylab = "Frecuencia", 
+        names.arg = c("No posee mas de un cuarto", "posee mas de un cuarto"),
+        legend.text = rownames(tabla), 
+        args.legend = list(title = "Cuarto privado"))
+```
+Con esta grafica, a diferencia de los alojamientos que no poseen mas de un cuarto, poco menos de la mitad de los alojamientos que poseen mas de un cuarto poseen cuartos privados.
+
+###hipotesis de varias para varibles cualitativas
+
+como podemos ver, queremos conocer si el tipo de cuarto influye en si la habitacion es resevervada con motivos de negocios, por lo tanto planteamos las hipotesis.
+
+H0: el tipo de cuarto no influye en si es reversado con motivos de negocios o no
+
+H1: el tipo de cuarto influye en si es reversado con motivos de negocios o no
+#```{r, warning=FALSE}
+#with(paris_weekdays, chisq.test(TipoDeCuarto, FinesDeNegocios , correct = #TRUE, p = rep(1/length(TipoDeCuarto),length(TipoDeCuarto))))
+
+
+#```
+
+como podemos ver nuestro valor p es mucho menor que 5, por lo tanto podemos concluir que si existe una relacion en si el tipo de cuarto influye en la desicion de las personas que reservan con fines de negocios.
 
 ### **Conclusiones:**
 
