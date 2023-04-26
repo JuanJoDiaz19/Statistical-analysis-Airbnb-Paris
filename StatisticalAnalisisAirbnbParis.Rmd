@@ -170,6 +170,18 @@ $$$$
 boxplot(CalificacionDeLimpieza, horizontal = TRUE)
 ```
 
+Si le quitamos los valores atípicos se vería algo así:
+
+```{r}
+mean_val <- mean(CalificacionDeLimpieza)
+sd_val <- sd(CalificacionDeLimpieza)
+
+# Eliminar los valores atípicos
+CalificacionDeLimpiezaSinAtipicos <- CalificacionDeLimpieza[CalificacionDeLimpieza < (mean_val + 3*sd_val) & CalificacionDeLimpieza > (mean_val - 3*sd_val)]
+boxplot(CalificacionDeLimpiezaSinAtipicos, horizontal = TRUE)
+```
+
+
 ####  **Precio final** 
 
 ```{r}
