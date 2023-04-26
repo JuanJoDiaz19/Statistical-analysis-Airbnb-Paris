@@ -1172,8 +1172,33 @@ barplot(tabla, beside = FALSE,
         args.legend = list(title = "Tipo de cuarto"))
 ```
 
+
 En esta grafica podemos observar que asombrosamente los alojamientos con fines de negocios tienen una mayor proporción de cuartos compartidos a comparación de los alojamientos que no fueron para fines de negocios.
 
+
+tabla cruzada
+```{r, warning=FALSE}
+tabla <- crosstab(room_type,biz,prop.c = TRUE,plot = FALSE)
+tabla
+
+
+```
+
+
+###hipotesis de varias para varibles cualitativas
+
+como podemos ver, queremos conocer si el tipo de cuarto influye en si la habitacion es resevervada con motivos de negocios, por lo tanto planteamos las hipotesis.
+
+H0: el tipo de cuarto no influye en si es reversado con motivos de negocios o no
+
+H1: el tipo de cuarto influye en si es reversado con motivos de negocios o no
+```{r, warning=FALSE}
+with(paris_weekdays, chisq.test(room_type, biz , correct = TRUE, p = rep(1/length(room_type),length(room_type))))
+
+
+```
+
+como podemos ver nuestro valor p es mucho menor que 5, por lo tanto podemos concluir que si existe una relacion en si el tipo de cuarto influye en la desicion de las personas que reservan con fines de negocios.
 
 ### **Conclusiones:**
 
