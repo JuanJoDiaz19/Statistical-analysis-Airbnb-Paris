@@ -140,7 +140,7 @@ library(pastecs)
 La base de datos de la cual vamos a explorar está dentro de un formato .csv y, para una mayor practicidad, vamos a guardar cada una de las variables a explorar dentro de un elemento distinto de nuestro entorno, tal como se continúa a continuación:
 
 ```{r, include = FALSE, message=FALSE}
-setwd('D:/santy/inferencia/Statistical-analysis-Airbnb-Paris')
+setwd('C:/Users/juanj/Desktop/Universidad/4. CUARTO SEMESTRE/Inferencia Estadistica/Proyecto final/Repositorio Github Proyecto Final/Statistical-analysis-Airbnb-Paris')
 
 Paris_weekdays <- read_csv("paris_weekdays.csv")
 datos <- Paris_weekdays
@@ -160,88 +160,6 @@ PoseeMasDeUnCuarto <- datos$multi
 FinesDeNegocios <- datos$biz
 ```
 
-$$$$
-
-### **Gráficos para las variables cuantitativas:**
-
-####  **Calificación de limpieza:**
-
-```{r}
-boxplot(CalificacionDeLimpieza, horizontal = TRUE)
-```
-
-Si le quitamos los valores atípicos se vería algo así:
-
-```{r}
-mean_val <- mean(CalificacionDeLimpieza)
-sd_val <- sd(CalificacionDeLimpieza)
-
-# Eliminar los valores atípicos
-CalificacionDeLimpiezaSinAtipicos <- CalificacionDeLimpieza[CalificacionDeLimpieza < (mean_val + 3*sd_val) & CalificacionDeLimpieza > (mean_val - 3*sd_val)]
-boxplot(CalificacionDeLimpiezaSinAtipicos, horizontal = TRUE)
-```
-
-
-####  **Precio final** 
-
-```{r}
-boxplot(PrecioFinal, horizontal = TRUE)
-```
-
-Si le quitamos los valores atípicos se vería algo así:
-
-```{r}
-mean_val <- mean(PrecioFinal)
-sd_val <- sd(PrecioFinal)
-
-# Eliminar los valores atípicos
-PrecioFinalSinAtipicos <- PrecioFinal[PrecioFinal < (mean_val + 3*sd_val) & PrecioFinal > (mean_val - 3*sd_val)]
-boxplot(PrecioFinalSinAtipicos, horizontal = TRUE)
-
-```
-
-
-####  **Capacidad de personas** 
-
-```{r}
-boxplot(CapacidadPersonas, horizontal = TRUE)
-```
-
-####  **Distancia al centro de la ciudad** 
-
-```{r}
-boxplot(DistanciaCentro, horizontal = TRUE)
-```
-
-
-
-### **Gráficas para variables cualitativas**
-
-### **Gráficas de barras:**
-
-#### **Tipo de cuarto**
-
-```{r}
-barplot(table(TipoDeCuarto)) 
-```
-
-#### **Cuarto privado**
-
-```{r}
-barplot(table(CuartoPrivado), names.arg = c("Sin cuarto privado", "Con cuarto privado"))  
-```
-
-#### **Alojamientos que poseen mas de un cuarto**
-
-```{r}
-barplot(table(PoseeMasDeUnCuarto), names.arg = c("Sin mas de un cuarto", "Con mas de un cuarto")) 
-```
-
-#### **Alojamiento para fines de negocios**
-
-```{r}
-barplot(table(FinesDeNegocios), names.arg = c("Sin fines de negocios", "Con fines de negocios")) 
-```
 
 ## **Estadística descriptiva para las variables**
 
@@ -262,6 +180,9 @@ min
 ```{r, echo = FALSE}
 max <- max(CalificacionDeLimpieza)
 max
+
+descriptivas <- stat.desc(CalificacionDeLimpieza)
+descriptivas
 ```
 
 *Rango:*
@@ -637,6 +558,91 @@ Ahora calculamos la moda
 ```{r, echo = FALSE}
 moda <- names(tablaDeFrecuencia)[which.max(tablaDeFrecuencia)]
 print(moda)
+```
+
+$$$$
+
+### **Gráficos para las variables cuantitativas:**
+
+####  **Calificación de limpieza:**
+
+```{r}
+boxplot(CalificacionDeLimpieza, horizontal = TRUE)
+```
+
+Si le quitamos los valores atípicos se vería algo así:
+
+```{r}
+
+
+mean_val <- mean(CalificacionDeLimpieza)
+sd_val <- sd(CalificacionDeLimpieza)
+
+# Eliminar los valores atípicos
+CalificacionDeLimpiezaSinAtipicos <- CalificacionDeLimpieza[CalificacionDeLimpieza < (mean_val + 3.5*sd_val) & CalificacionDeLimpieza > (mean_val - 3.5*sd_val)]
+boxplot(CalificacionDeLimpiezaSinAtipicos, horizontal = TRUE)
+```
+
+
+####  **Precio final** 
+
+```{r}
+boxplot(PrecioFinal, horizontal = TRUE)
+```
+
+Si le quitamos los valores atípicos se vería algo así:
+
+```{r}
+mean_val <- mean(PrecioFinal)
+sd_val <- sd(PrecioFinal)
+
+# Eliminar los valores atípicos
+PrecioFinalSinAtipicos <- PrecioFinal[PrecioFinal < (mean_val + 3*sd_val) & PrecioFinal > (mean_val - 3*sd_val)]
+boxplot(PrecioFinalSinAtipicos, horizontal = TRUE)
+
+```
+
+
+####  **Capacidad de personas** 
+
+```{r}
+boxplot(CapacidadPersonas, horizontal = TRUE)
+```
+
+####  **Distancia al centro de la ciudad** 
+
+```{r}
+boxplot(DistanciaCentro, horizontal = TRUE)
+```
+
+
+
+### **Gráficas para variables cualitativas**
+
+### **Gráficas de barras:**
+
+#### **Tipo de cuarto**
+
+```{r}
+barplot(table(TipoDeCuarto)) 
+```
+
+#### **Cuarto privado**
+
+```{r}
+barplot(table(CuartoPrivado), names.arg = c("Sin cuarto privado", "Con cuarto privado"))  
+```
+
+#### **Alojamientos que poseen mas de un cuarto**
+
+```{r}
+barplot(table(PoseeMasDeUnCuarto), names.arg = c("Sin mas de un cuarto", "Con mas de un cuarto")) 
+```
+
+#### **Alojamiento para fines de negocios**
+
+```{r}
+barplot(table(FinesDeNegocios), names.arg = c("Sin fines de negocios", "Con fines de negocios")) 
 ```
 
 
