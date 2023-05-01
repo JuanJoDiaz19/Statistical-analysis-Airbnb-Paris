@@ -1262,15 +1262,6 @@ ggplot(data = data.frame(PrecioFinal, CapacidadPersonas), aes(x = PrecioFinal, y
 
 Con esta grafica podemos decir que puede existir una relación entre el precio final y la capacidad de personas en un alojamiento. Asi mismo podriamos decir que dicha relación es directa, es decir que entre mayor sea el precio, mayor cantidad de personas va a tener.
 
-Tabla cruzada
-
-```{r, warning=FALSE}
-tabla <- crosstab(PrecioFinal,CapacidadPersonas,prop.c = TRUE,plot = FALSE)
-tabla
-
-
-```
-
 #### **Tipo de cuarto vs Fines de negocio**
 
 A continuación se muestra una grafica de barras apliladas para mostrar la relación que tienen las variables de tipo de cuarto y alojamiento con fines de negocio
