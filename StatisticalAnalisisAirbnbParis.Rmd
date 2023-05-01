@@ -141,7 +141,7 @@ library(moments)
 La base de datos de la cual vamos a explorar está dentro de un formato .csv y, para una mayor practicidad, vamos a guardar cada una de las variables a explorar dentro de un elemento distinto de nuestro entorno, tal como se continúa a continuación:
 
 ```{r, include = FALSE, message=FALSE}
-setwd('C:/Users/juanj/Desktop/Universidad/4. CUARTO SEMESTRE/Inferencia Estadistica/Proyecto final/Repositorio Github Proyecto Final/Statistical-analysis-Airbnb-Paris')
+setwd('C:/Users/Jardi/Downloads/santy/inferencia/Statistical-analysis-Airbnb-Paris')
 
 Paris_weekdays <- read_csv("paris_weekdays.csv")
 datos <- Paris_weekdays
@@ -385,14 +385,6 @@ curtosis
 
 ### **Capacidad de personas**
 
-*Diagrama de cajas:*
-
-```{r, echo = FALSE}
-boxplot(CapacidadPersonas, horizontal = TRUE)
-```
-
-Vemos que esta distribución no posee datos atipicos por lo que podemos usarla tal cual como está.
-
 *Mínimo:*
 
 ```{r, echo = FALSE}
@@ -466,6 +458,14 @@ cerco_inf
 cerco_sup <- q3 + 1.5*ric
 cerco_sup
 ```
+
+*Diagrama de cajas:*
+
+```{r, echo = FALSE}
+boxplot(CapacidadPersonas, horizontal = TRUE)
+```
+
+Vemos que esta distribución no posee datos atipicos por lo que podemos usarla tal cual como está.
 
 
 ### **Distancia al centro de la ciudad**
@@ -1262,6 +1262,15 @@ ggplot(data = data.frame(PrecioFinal, CapacidadPersonas), aes(x = PrecioFinal, y
 
 Con esta grafica podemos decir que puede existir una relación entre el precio final y la capacidad de personas en un alojamiento. Asi mismo podriamos decir que dicha relación es directa, es decir que entre mayor sea el precio, mayor cantidad de personas va a tener.
 
+Tabla cruzada
+
+```{r, warning=FALSE}
+tabla <- crosstab(PrecioFinal,CapacidadPersonas,prop.c = TRUE,plot = FALSE)
+tabla
+
+
+```
+
 #### **Tipo de cuarto vs Fines de negocio**
 
 A continuación se muestra una grafica de barras apliladas para mostrar la relación que tienen las variables de tipo de cuarto y alojamiento con fines de negocio
@@ -1282,7 +1291,7 @@ barplot(tabla, beside = FALSE,
 En esta grafica podemos observar que asombrosamente los alojamientos con fines de negocios tienen una mayor proporción de cuartos compartidos a comparación de los alojamientos que no fueron para fines de negocios.
 
 
-tabla cruzada
+Tabla cruzada
 ```{r, warning=FALSE}
 tabla <- crosstab(TipoDeCuarto,FinesDeNegocios,prop.c = TRUE,plot = FALSE)
 tabla
@@ -1306,6 +1315,16 @@ barplot(tabla, beside = FALSE,
         args.legend = list(title = "Cuarto privado"))
 ```
 Con esta grafica, a diferencia de los alojamientos que no poseen mas de un cuarto, poco menos de la mitad de los alojamientos que poseen mas de un cuarto poseen cuartos privados.
+
+Tabla cruzada
+
+```{r, warning=FALSE}
+tabla <- crosstab(CuartoPrivado,PoseeMasDeUnCuarto,prop.c = TRUE,plot = FALSE)
+tabla
+
+
+```
+
 
 ###hipotesis de varias para varibles cualitativas
 
