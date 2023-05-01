@@ -12,7 +12,6 @@ output:
     highlight: kate
     code_folding: show
 ---
----
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -116,6 +115,7 @@ A continuación importamos todas las librerias que se van a usar dentro de este 
 
 ```{r,message = FALSE, warning = FALSE}
 # Importar todas las librerias necesarias para el analisis
+library(e1071)
 library(tidyverse)
 library(dplyr)
 library(xts)
@@ -134,6 +134,7 @@ library(descr)
 library(openxlsx)
 library(kableExtra)
 library(pastecs)
+library(moments)
 ```
 
 
@@ -167,22 +168,39 @@ FinesDeNegocios <- datos$biz
 
 ### **Calificación de limpieza**
 
+*Grafico de barras*
+
+```{r}
+boxplot(CalificacionDeLimpieza, horizontal = TRUE)
+```
+
+Si le quitamos los valores atípicos se vería algo así:
+
+```{r}
+mean_val <- mean(CalificacionDeLimpieza)
+sd_val <- sd(CalificacionDeLimpieza)
+primerFiltro <- CalificacionDeLimpieza[CalificacionDeLimpieza < (mean_val + 2.9*sd_val) & CalificacionDeLimpieza > (mean_val - 2.9*sd_val)]
+mean_val2 <- mean(primerFiltro)
+sd_val2 <- sd(primerFiltro)
+segundoFiltro <- primerFiltro[primerFiltro < (mean_val2 + 2.9*sd_val2) & primerFiltro > (mean_val2 - 2.9*sd_val2)] 
+mean_val3 <- mean(segundoFiltro)
+sd_val3 <- sd(segundoFiltro)
+CalificacionDeLimpiezaSinAtipicos <- segundoFiltro[segundoFiltro < (mean_val3 + 2.9*sd_val3) & segundoFiltro > (mean_val3 - 2.9*sd_val3)]  
+boxplot(CalificacionDeLimpiezaSinAtipicos, horizontal = TRUE)
+```
 
 *Mínimo:*
 
 ```{r, echo = FALSE}
-min <- min(CalificacionDeLimpieza)
+min <- min(CalificacionDeLimpiezaSinAtipicos)
 min
 ```
 
 *Máximo:*
 
 ```{r, echo = FALSE}
-max <- max(CalificacionDeLimpieza)
+max <- max(CalificacionDeLimpiezaSinAtipicos)
 max
-
-descriptivas <- stat.desc(CalificacionDeLimpieza)
-descriptivas
 ```
 
 *Rango:*
@@ -195,16 +213,18 @@ rango
 *Media:*
 
 ```{r, echo = FALSE}
-media <- mean(CalificacionDeLimpieza)
+media <- mean(CalificacionDeLimpiezaSinAtipicos)
 media
 ```
 
 *Desviación estándar:*
 
 ```{r, echo = FALSE}
-desv_estándar <- sd(CalificacionDeLimpieza)
+desv_estándar <- sd(CalificacionDeLimpiezaSinAtipicos)
 desv_estándar
 ```
+
+Vemos que la desviacion estandar es menor a 20, por lo que podemos decir que la media si es representativa en esta distribucion
 
 *Coeficiente de variación:*
 
@@ -217,13 +237,12 @@ coef_var
 
 ```{r, echo = FALSE}
 ##Cuartil 1
-q1 <- unname(quantile(CalificacionDeLimpieza, 0.25))
+q1 <- unname(quantile(CalificacionDeLimpiezaSinAtipicos, 0.25))
 q1
 ##Cuartil 3
-q3 <- unname(quantile(CalificacionDeLimpieza, 0.75))
+q3 <- unname(quantile(CalificacionDeLimpiezaSinAtipicos, 0.75))
 q3
 ```
-
 
 *Rango intercuartil:*
 
@@ -243,20 +262,56 @@ cerco_sup <- q3 + 1.5*ric
 cerco_sup
 ```
 
+*Coeficiente de simetria*
+```{r, echo = FALSE}
+skewness(CalificacionDeLimpiezaSinAtipicos)
+```
+
+*Curtosis*
+
+```{r, echo = FALSE}
+cuortosis <- kurtosis(CalificacionDeLimpiezaSinAtipicos)
+cuortosis
+```
+Vemos que el Coeficiente de curotsis es positivo, por lo que  indica que la distribución tiene una cola larga o pesada. Es decir, la distribución tiene una cantidad relativamente grande de valores que se alejan de la media. Por lo tanto, la distribución es más puntiaguda (con más masa concentrada en la parte central) que una distribución normal.
 
 ### **Precio final**
+
+*Grafico de barras*
+
+```{r}
+boxplot(PrecioFinal, horizontal = TRUE)
+```
+
+Si le quitamos los valores atípicos se vería algo así:
+
+```{r}
+mean_val <- mean(PrecioFinal)
+sd_val <- sd(PrecioFinal)
+PrecioFinalSinAtipicos <- PrecioFinal[PrecioFinal < (mean_val + 2.1*sd_val) & PrecioFinal > (mean_val - 2.1*sd_val)]
+mean_val2 <- mean(PrecioFinalSinAtipicos)
+sd_val2 <- sd(PrecioFinalSinAtipicos)
+PrecioFinalSinAtipicos2 <- PrecioFinalSinAtipicos[PrecioFinalSinAtipicos < (mean_val2 + 2.1*sd_val2) & PrecioFinalSinAtipicos > (mean_val2 - 2.1*sd_val2)]
+mean_val3 <- mean(PrecioFinalSinAtipicos2)
+sd_val3 <- sd(PrecioFinalSinAtipicos2)
+PrecioFinalSinAtipicos3 <- PrecioFinalSinAtipicos2[PrecioFinalSinAtipicos2 < (mean_val3 + 2.1*sd_val3) & PrecioFinalSinAtipicos2 > (mean_val3 - 2.1*sd_val3)]
+mean_val4 <- mean(PrecioFinalSinAtipicos3)
+sd_val4 <- sd(PrecioFinalSinAtipicos3)
+PrecioFinalSinAtipicos4 <- PrecioFinalSinAtipicos3[PrecioFinalSinAtipicos3 < (mean_val4 + 2.1*sd_val4) & PrecioFinalSinAtipicos3 > (mean_val4 - 2.1*sd_val4)]
+boxplot(PrecioFinalSinAtipicos4, horizontal = TRUE)
+```
 
 *Mínimo:*
 
 ```{r, echo = FALSE}
-min <- min(PrecioFinal)
+min <- min(PrecioFinalSinAtipicos4)
 min
 ```
 
 *Máximo:*
 
 ```{r, echo = FALSE}
-max <- max(PrecioFinal)
+max <- max(PrecioFinalSinAtipicos4)
 max
 ```
 
@@ -270,16 +325,18 @@ rango
 *Media:*
 
 ```{r, echo = FALSE}
-media <- mean(PrecioFinal)
+media <- mean(PrecioFinalSinAtipicos4)
 media
 ```
 
 *Desviación estándar:*
 
 ```{r, echo = FALSE}
-desv_estándar <- sd(PrecioFinal)
+desv_estándar <- sd(PrecioFinalSinAtipicos4)
 desv_estándar
 ```
+
+Aqui podemos ver que la desviacion estadar es mayor a 20 por lo tanto la media no es representativa para en este caso, por lo que la variable representativa seria la mediana.
 
 *Coeficiente de variación:*
 
@@ -292,10 +349,10 @@ coef_var
 
 ```{r, echo = FALSE}
 ##Cuartil 1
-q1 <- unname(quantile(PrecioFinal, 0.25))
+q1 <- unname(quantile(PrecioFinalSinAtipicos4, 0.25))
 q1
 ##Cuartil 3
-q3 <- unname(quantile(PrecioFinal, 0.75))
+q3 <- unname(quantile(PrecioFinalSinAtipicos4, 0.75))
 q3
 ```
 
@@ -318,7 +375,23 @@ cerco_sup <- q3 + 1.5*ric
 cerco_sup
 ```
 
+*Curtosis*
+```{r, echo = FALSE}
+curtosis <- kurtosis(PrecioFinalSinAtipicos4)
+curtosis
+```
+ 
+
+
 ### **Capacidad de personas**
+
+*Diagrama de cajas:*
+
+```{r, echo = FALSE}
+boxplot(CapacidadPersonas, horizontal = TRUE)
+```
+
+Vemos que esta distribución no posee datos atipicos por lo que podemos usarla tal cual como está.
 
 *Mínimo:*
 
@@ -354,6 +427,8 @@ media
 desv_estándar <- sd(CapacidadPersonas)
 desv_estándar
 ```
+
+Vemos que la desviacion estandar es menor a 20, por lo que podemos decir que la media si es representativa en esta distribucion
 
 *Coeficiente de variación:*
 
@@ -392,21 +467,54 @@ cerco_sup <- q3 + 1.5*ric
 cerco_sup
 ```
 
+
 ### **Distancia al centro de la ciudad**
 
+*Diagrama de cajas:*
 
+```{r, echo = FALSE}
+DistanciaCentro <- datos$dist
+boxplot(DistanciaCentro, horizontal = TRUE)
+```
+
+Vemos que en esta distribución se ven que existen varios atipicos por lo que los vamos a quitar
+
+*Datos Atipicos*
+
+```{r, echo = FALSE}
+mean_val <- mean(DistanciaCentro)
+sd_val <- sd(DistanciaCentro)
+primerFiltro <- DistanciaCentro[DistanciaCentro < (mean_val + 3*sd_val) & DistanciaCentro > (mean_val - 3*sd_val)]
+mean_val1 <- mean(primerFiltro)
+sd_val1 <- sd(primerFiltro)
+DistanciaCentroSinAtipicos <- primerFiltro[primerFiltro < (mean_val1 + 3*sd_val1) & primerFiltro > (mean_val1 - 3*sd_val1)]
+boxplot(DistanciaCentroSinAtipicos, horizontal = TRUE)
+```
+
+*Media:*
+```{r, echo = FALSE}
+mean_val <- mean(DistanciaCentroSinAtipicos)
+mean_val
+```
+
+*Desviación estándar:*
+
+```{r, echo = FALSE}
+sd_val <- sd(DistanciaCentroSinAtipicos)
+sd_val
+```
 
 *Mínimo:*
 
 ```{r, echo = FALSE}
-min <- min(DistanciaCentro)
+min <- min(DistanciaCentroSinAtipicos)
 min
 ```
 
 *Máximo:*
 
 ```{r, echo = FALSE}
-max <- max(DistanciaCentro)
+max <- max(DistanciaCentroSinAtipicos)
 max
 ```
 
@@ -417,19 +525,20 @@ rango <- max-min
 rango
 ```
 
-*Media:*
+*MediaSinAtipicos:*
 
 ```{r, echo = FALSE}
-media <- mean(DistanciaCentro)
-media
+mean_val <- mean(DistanciaCentroSinAtipicos)
+mean_val
 ```
 
-*Desviación estándar:*
+*Desviación estándar sin atipicos:*
 
 ```{r, echo = FALSE}
-desv_estándar <- sd(DistanciaCentro)
-desv_estándar
+sd_val <- sd(DistanciaCentroSinAtipicos)
+sd_val
 ```
+
 
 *Coeficiente de variación:*
 
@@ -442,13 +551,12 @@ coef_var
 
 ```{r, echo = FALSE}
 ##Cuartil 1
-q1 <- unname(quantile(DistanciaCentro, 0.25))
+q1 <- unname(quantile(DistanciaCentroSinAtipicos, 0.25))
 q1
 ##Cuartil 3
-q3 <- unname(quantile(DistanciaCentro, 0.75))
+q3 <- unname(quantile(DistanciaCentroSinAtipicos, 0.75))
 q3
 ```
-
 
 *Rango intercuartil*
 
@@ -467,7 +575,6 @@ cerco_inf
 cerco_sup <- q3 + 1.5*ric
 cerco_sup
 ```
-
 
 
 ## **Estadística descriptiva variables cualitativas:**
@@ -538,25 +645,38 @@ moda <- names(tablaDeFrecuencia)[which.max(tablaDeFrecuencia)]
 print(moda)
 ```
 
+*Gráfico de pastel:*
+```{r, echo = FALSE}
+tabla <- table(PoseeMasDeUnCuarto)
+pie(tabla, main="Posee mas de un cuarto", labels = c("posee un cuarto", "Posee mas de un cuarto"))
+```
+
 ### **Fines de negocios**
 
-Generamos una tabla de frecuencias
-
+*Grafico (falta cambiarlo a circular)*
 ```{r, echo = FALSE}
-tablaDeFrecuencia <- table(FinesDeNegocios)
-print(tablaDeFrecuencia)
-```
-Calculamos la frecuencia relativa 
-
-```{r, echo = FALSE}
-tablaDeFrecuenciaRelativa <- prop.table(tablaDeFrecuencia)
-print(tablaDeFrecuenciaRelativa)
+FinesDeNegocios <- factor(datos$biz, labels = c ("No", "Si"))
+barchart(FinesDeNegocios)
 ```
 
-Ahora calculamos la moda
+*Generamos una tabla de frecuencias*
 
 ```{r, echo = FALSE}
-moda <- names(tablaDeFrecuencia)[which.max(tablaDeFrecuencia)]
+frecuencia_FinNegocios <- table(FinesDeNegocios)
+print(frecuencia_FinNegocios)
+```
+
+*Calculamos la frecuencia relativa* 
+
+```{r, echo = FALSE}
+frecuenciaRelativa_FinNegocios <- prop.table(frecuencia_FinNegocios)
+print(frecuenciaRelativa_FinNegocios)
+```
+
+*Ahora calculamos la moda*
+
+```{r, echo = FALSE}
+moda <- names(frecuencia_FinNegocios)[which.max(frecuencia_FinNegocios)]
 print(moda)
 ```
 
@@ -564,43 +684,11 @@ $$$$
 
 ### **Gráficos para las variables cuantitativas:**
 
-####  **Calificación de limpieza:**
-
-```{r}
-boxplot(CalificacionDeLimpieza, horizontal = TRUE)
-```
-
-Si le quitamos los valores atípicos se vería algo así:
-
-```{r}
-
-
-mean_val <- mean(CalificacionDeLimpieza)
-sd_val <- sd(CalificacionDeLimpieza)
-
-# Eliminar los valores atípicos
-CalificacionDeLimpiezaSinAtipicos <- CalificacionDeLimpieza[CalificacionDeLimpieza < (mean_val + 3.5*sd_val) & CalificacionDeLimpieza > (mean_val - 3.5*sd_val)]
-boxplot(CalificacionDeLimpiezaSinAtipicos, horizontal = TRUE)
-```
 
 
 ####  **Precio final** 
 
-```{r}
-boxplot(PrecioFinal, horizontal = TRUE)
-```
 
-Si le quitamos los valores atípicos se vería algo así:
-
-```{r}
-mean_val <- mean(PrecioFinal)
-sd_val <- sd(PrecioFinal)
-
-# Eliminar los valores atípicos
-PrecioFinalSinAtipicos <- PrecioFinal[PrecioFinal < (mean_val + 3*sd_val) & PrecioFinal > (mean_val - 3*sd_val)]
-boxplot(PrecioFinalSinAtipicos, horizontal = TRUE)
-
-```
 
 
 ####  **Capacidad de personas** 
@@ -933,9 +1021,9 @@ $$$$
 *Buscamos la proporción de esta y tomamos los alojamientos que son con fines de negocios*
 
 ```{r}
-datos_true <- subset(FinesDeNegocios, FinesDeNegocios == 1)
-multi <- sum(datos_true)
-multi
+# <- subset(FinesDeNegocios, FinesDeNegocios == 1)
+#multi <- sum(datos_true)
+#multi
 ```
 
 *Se hara la estimación para los alojamientos que son con fines de negocios*
