@@ -266,6 +266,7 @@ cerco_sup
 ```{r, echo = FALSE}
 skewness(CalificacionDeLimpiezaSinAtipicos)
 ```
+Vemos que el valor de este coeficiente es negativo, podemos decir que esta variable tiene una asimetria hacia la izquierda.
 
 *Curtosis*
 
@@ -274,6 +275,20 @@ cuortosis <- kurtosis(CalificacionDeLimpiezaSinAtipicos)
 cuortosis
 ```
 Vemos que el Coeficiente de curotsis es positivo, por lo que  indica que la distribución tiene una cola larga o pesada. Es decir, la distribución tiene una cantidad relativamente grande de valores que se alejan de la media. Por lo tanto, la distribución es más puntiaguda (con más masa concentrada en la parte central) que una distribución normal.
+
+*Histograma*
+
+```{r}
+calificacion2 <- cut(CalificacionDeLimpiezaSinAtipicos, c(seq(from = 7, to = 11, by = 1),65), include.lowest=TRUE)
+tabla.2 <- freq(ordered(calificacion2))
+```
+*Tabla de frecuencias*
+
+```{r}
+tabla.2
+```
+
+
 
 ### **Precio final**
 
