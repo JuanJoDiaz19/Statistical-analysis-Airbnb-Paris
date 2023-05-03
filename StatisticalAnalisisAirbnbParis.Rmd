@@ -133,8 +133,9 @@ library(moments)
 La base de datos de la cual vamos a explorar está dentro de un formato .csv y, para una mayor practicidad, vamos a guardar cada una de las variables a explorar dentro de un elemento distinto de nuestro entorno, tal como se continúa a continuación:
 
 ```{r, include = FALSE, message=FALSE}
+setwd('C:/Users/Jardi/Downloads/santy/inferencia/Statistical-analysis-Airbnb-Paris')
 #setwd('C:/Users/Mateo Silva/Desktop/rparisino/Statistical-analysis-Airbnb-Paris')
-setwd('C:/Users/juanj/Desktop/Universidad/4. CUARTO SEMESTRE/Inferencia Estadistica/Proyecto final/Repositorio Github Proyecto Final/Statistical-analysis-Airbnb-Paris ')
+#setwd('C:/Users/juanj/Desktop/Universidad/4. CUARTO SEMESTRE/Inferencia Estadistica/Proyecto final/Repositorio Github Proyecto Final/Statistical-analysis-Airbnb-Paris ')
 
 Paris_weekdays <- read_csv("paris_weekdays.csv")
 datos <- Paris_weekdays
@@ -457,6 +458,12 @@ ric <- q3 - q1
 ric
 ```
 
+*Coeficiente de asimetría*
+```{r, echo = FALSE}
+skewness(CapacidadPersonas)
+```
+Como el valor de este coeficiente es positivo, podemos decir que esta variable tiene una asimetria hacia la derecha
+
 *Cerco inferior y superior:*
 
 ```{r, echo = FALSE}
@@ -468,12 +475,27 @@ cerco_sup <- q3 + 1.5*ric
 cerco_sup
 ```
 
-*Diagrama de cajas:*
+*Curtosis*
 
 ```{r, echo = FALSE}
-boxplot(CapacidadPersonas, horizontal = TRUE)
+curtosis <- kurtosis(CapacidadPersonas)
+curtosis
 ```
 
+Como la curtosis tiene un valor de 2.99, podemos decir que los datos tienen una distribucion leptocurtica, es decir, hay muchos datos que estan acumulados cerca de la media.
+
+*Gráfico de barras*   
+
+```{r, echo=FALSE}
+
+tabla.2 <- freq(ordered(CapacidadPersonas))
+```
+
+*Tabla de frecuencias*
+
+```{r}
+tabla.2
+```
 Vemos que esta distribución no posee datos atipicos por lo que podemos usarla tal cual como está.
 
 ### **Distancia al centro de la ciudad**
