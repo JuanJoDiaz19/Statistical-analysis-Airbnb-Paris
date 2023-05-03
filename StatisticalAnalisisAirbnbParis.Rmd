@@ -392,6 +392,18 @@ curtosis <- kurtosis(PrecioFinalSinAtipicos4)
 curtosis
 ```
 
+*coeficiente de simetria*
+
+```{r, echo = FALSE}
+skewness(PrecioFinalSinAtipicos4)
+```
+
+*tabla de frecuencia*
+```{r}
+preciof <- cut(PrecioFinalSinAtipicos4, c(seq(from = 90, to = 600, by = 100)), include.lowest=TRUE)
+tabla.2 <- freq(ordered(preciof))
+tabla.2
+```
 
 
 ### **Capacidad de personas**
@@ -1338,6 +1350,35 @@ H1: el tipo de cuarto influye en si es reversado con motivos de negocios o no #\
 #\`\`\`
 
 como podemos ver nuestro valor p es mucho menor que 5, por lo tanto podemos concluir que si existe una relacion en si el tipo de cuarto influye en la desicion de las personas que reservan con fines de negocios.
+
+### **Ji-Cuadrado**
+
+**Tipo de cuarto vs Fines de negocio**
+
+Ho: No existe relacion entre el tipo de cuarto y si es para fines de negocios.
+
+H1: Existe relacion entre el tipo de cuarto y si es para fines de negocios.
+
+```{r, warning = FALSE}
+with(datos,chisq.test(TipoDeCuarto, FinesDeNegocios,correct = TRUE))
+
+
+```
+
+como podemos ver, el valor p es bastante pequeño por lo que nos permite concluir que si existe una relacion entre estos.
+
+**Cuarto privado vs Posee mas de un cuarto**
+Ho: No existe relacion entre si el cuarto es privado y si es para fines de negocios.
+
+H1: Existe relacion entre si es para cuarto privado y si es para fines de negocios.
+
+```{r, warning = FALSE}
+with(datos,chisq.test(CuartoPrivado,PoseeMasDeUnCuarto,correct = TRUE))
+
+```
+
+aqui podemos ver el valor p el cual vuelve hacer muy pequeño, entonces podemos concluir que si existe un relacion entre cuarto privado y si es para fines de negocios 
+
 
 ### **Conclusiones:**
 
