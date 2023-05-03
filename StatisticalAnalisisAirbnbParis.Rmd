@@ -133,7 +133,8 @@ library(moments)
 La base de datos de la cual vamos a explorar está dentro de un formato .csv y, para una mayor practicidad, vamos a guardar cada una de las variables a explorar dentro de un elemento distinto de nuestro entorno, tal como se continúa a continuación:
 
 ```{r, include = FALSE, message=FALSE}
-setwd('C:/Users/Mateo Silva/Desktop/rparisino/Statistical-analysis-Airbnb-Paris')
+#setwd('C:/Users/Mateo Silva/Desktop/rparisino/Statistical-analysis-Airbnb-Paris')
+setwd('C:/Users/juanj/Desktop/Universidad/4. CUARTO SEMESTRE/Inferencia Estadistica/Proyecto final/Repositorio Github Proyecto Final/Statistical-analysis-Airbnb-Paris ')
 
 Paris_weekdays <- read_csv("paris_weekdays.csv")
 datos <- Paris_weekdays
@@ -275,6 +276,7 @@ Vemos que el Coeficiente de curotsis es positivo, por lo que indica que la distr
 calificacion2 <- cut(CalificacionDeLimpiezaSinAtipicos, c(seq(from = 7, to = 11, by = 1),65), include.lowest=TRUE)
 tabla.2 <- freq(ordered(calificacion2))
 ```
+
 *Tabla de frecuencias*
 
 ```{r}
@@ -532,13 +534,6 @@ rango <- max-min
 rango
 ```
 
-*MediaSinAtipicos:*
-
-```{r, echo = FALSE}
-mean_val <- mean(DistanciaCentroSinAtipicos)
-mean_val
-```
-
 *Desviación estándar sin atipicos:*
 
 ```{r, echo = FALSE}
@@ -607,6 +602,12 @@ moda <- names(tablaDeFrecuencia)[which.max(tablaDeFrecuencia)]
 print(moda)
 ```
 
+*Diagrama de barras*
+
+```{r}
+barplot(table(TipoDeCuarto)) 
+```
+
 ### **Cuarto privado**
 
 Generamos una tabla de frecuencias
@@ -628,6 +629,13 @@ Ahora calculamos la moda
 ```{r, echo = FALSE}
 moda <- names(tablaDeFrecuencia)[which.max(tablaDeFrecuencia)]
 print(moda)
+```
+
+*Grafico de barras*
+
+
+```{r}
+barplot(table(CuartoPrivado), names.arg = c("Sin cuarto privado", "Con cuarto privado"))  
 ```
 
 ### **Múltiples cuartos**
@@ -656,8 +664,15 @@ print(moda)
 *Gráfico de pastel:*
 
 ```{r, echo = FALSE}
+colores <- c("gray62", "black")
 tabla <- table(PoseeMasDeUnCuarto)
-pie(tabla, main="Posee mas de un cuarto", labels = c("posee un cuarto", "Posee mas de un cuarto"))
+pie(tabla, main="Grafico de pastel multiples cuartos", labels = c("Posee un cuarto", "Posee mas de un cuarto"), col = colores)
+```
+
+*Grafico de barras*
+
+```{r}
+barplot(table(PoseeMasDeUnCuarto), names.arg = c("Sin mas de un cuarto", "Con mas de un cuarto")) 
 ```
 
 ### **Fines de negocios**
@@ -690,51 +705,13 @@ moda <- names(frecuencia_FinNegocios)[which.max(frecuencia_FinNegocios)]
 print(moda)
 ```
 
-\$\$\$\$
-
-### **Gráficos para las variables cuantitativas:**
-
-#### **Precio final**
-
-#### **Capacidad de personas**
-
-```{r}
-boxplot(CapacidadPersonas, horizontal = TRUE)
-```
-
-#### **Distancia al centro de la ciudad**
-
-```{r}
-boxplot(DistanciaCentro, horizontal = TRUE)
-```
-
-### **Gráficas para variables cualitativas**
-
-### **Gráficas de barras:**
-
-#### **Tipo de cuarto**
-
-```{r}
-barplot(table(TipoDeCuarto)) 
-```
-
-#### **Cuarto privado**
-
-```{r}
-barplot(table(CuartoPrivado), names.arg = c("Sin cuarto privado", "Con cuarto privado"))  
-```
-
-#### **Alojamientos que poseen mas de un cuarto**
-
-```{r}
-barplot(table(PoseeMasDeUnCuarto), names.arg = c("Sin mas de un cuarto", "Con mas de un cuarto")) 
-```
-
-#### **Alojamiento para fines de negocios**
 
 ```{r}
 barplot(table(FinesDeNegocios), names.arg = c("Sin fines de negocios", "Con fines de negocios")) 
 ```
+
+\$\$\$\$
+
 
 ### **Análisis de resultados:**
 
