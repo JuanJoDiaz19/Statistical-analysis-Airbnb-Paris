@@ -9,5 +9,3 @@ This is an statistical analysis of the data recolected of AirBnb-Paris, during t
 * Mateo Silva 
 * Santiago Espinosa Troncoso
 * Melissa Dayana Mora
-
-hola
