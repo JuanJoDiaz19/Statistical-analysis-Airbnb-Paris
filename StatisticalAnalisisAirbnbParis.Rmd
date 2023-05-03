@@ -633,7 +633,6 @@ print(moda)
 
 *Grafico de barras*
 
-
 ```{r}
 barplot(table(CuartoPrivado), names.arg = c("Sin cuarto privado", "Con cuarto privado"))  
 ```
@@ -664,16 +663,12 @@ print(moda)
 *Gráfico de pastel:*
 
 ```{r, echo = FALSE}
-colores <- c("gray62", "black")
+colores <- c("gray62", "white")
 tabla <- table(PoseeMasDeUnCuarto)
 pie(tabla, main="Grafico de pastel multiples cuartos", labels = c("Posee un cuarto", "Posee mas de un cuarto"), col = colores)
 ```
 
-*Grafico de barras*
 
-```{r}
-barplot(table(PoseeMasDeUnCuarto), names.arg = c("Sin mas de un cuarto", "Con mas de un cuarto")) 
-```
 
 ### **Fines de negocios**
 
@@ -705,6 +700,7 @@ moda <- names(frecuencia_FinNegocios)[which.max(frecuencia_FinNegocios)]
 print(moda)
 ```
 
+*Diagrama de barras*
 
 ```{r}
 barplot(table(FinesDeNegocios), names.arg = c("Sin fines de negocios", "Con fines de negocios")) 
@@ -1014,7 +1010,25 @@ $$[0.24, 0.27]$$
 
 ### **Hipótesis para las variables:**
 
-Dentro de esta sección del estudio vamos a plantear hipótesis a las variables, ya sea respecto a la media o a la proporción, dependiendo de su caracteristica cualitativa o cuantitiva.
+Dentro de esta sección del estudio vamos a plantear hipótesis a las variables, ya sea respecto a la media o a la proporción, dependiendo de su caracteristica cualitativa o cuantitiva. Para realizar esto vamos a utilizar como base para plantear nuestras hipotesis los datos de AirBnb en Roma durante los dias entresemana, a partir de esto vamos a comprobar si se cumplen dichas hipotesis dentro de los Airbnb de Paris durante los dias entresemana.
+
+Importamos los datos de AirBnb Roma entresemana:
+
+```{r}
+rome_weekdays <- read_csv("rome_weekdays.csv")
+#Variables cuantitativas
+CalificacionDeLimpiezaRoma <- rome_weekdays$cleanliness_rating
+PrecioFinalRoma <- rome_weekdays$realSum
+CapacidadPersonasRoma <- rome_weekdays$person_capacity
+DistanciaCentroRoma <- rome_weekdays$dist
+
+#Variables cualitativas
+TipoDeCuartoRoma <-  rome_weekdays$room_type
+CuartoPrivadoRoma <- rome_weekdays$room_private
+PoseeMasDeUnCuartoRoma <- rome_weekdays$multi
+FinesDeNegociosRoma <- rome_weekdays$biz
+```
+
 
 \$\$\$\$
 
@@ -1022,18 +1036,24 @@ Dentro de esta sección del estudio vamos a plantear hipótesis a las variables,
 
 #### **Puntaje de limpieza**
 
-Para la plataforma Airbnb es de gran imporancia la calificación de la limpieza de sus alojamientos, es por esto que se espera que la mayoría de sus alojamientos posean un buen puntaje de limpieza. Se estima que el puntaje de limpieza promedio que ponen los usuarios a los alojamientos es mayor o igual a 9.5. Para esto se plantean las siguientes hipótesis:
+Para la plataforma Airbnb es de gran imporancia la calificación de la limpieza de sus alojamientos, es por esto que se espera que la mayoría de sus alojamientos posean un buen puntaje de limpieza. Para poder plantear la hipotesis vamos a mirar cual es la media muestral de los Airbnb en Roma:
 
--   $H_0: \pi \geq 9.5$
--   $H_1: \pi < 9.5$
+```{r}
+mean(CalificacionDeLimpiezaRoma)
+```
+
+Vemos que su calificacion promedio es 9.52. Ahora queremos saber si el puntaje de limpieza en Paris es igual a 9.52, por lo que podemos plantear las siguientes hipotesis:
+
+-   $H_0: \pi = 9.52$
+-   $H_1: \pi \neq  9.52$
 
 *Usamos el siguiente código para encontrar el valor de p:*
 
 ```{r}
-with(datos, (t.test(CalificacionDeLimpieza, alternative = "less", mu = 9.5, conf.level = 0.95)))
+with(datos, (t.test(CalificacionDeLimpieza, alternative = "two.sided", mu = 9.52, conf.level = 0.95)))
 ```
 
-Con el resultado anterior podemos observar como $p < 0.05$, sabiendo esto, podemos rechazar la hipótesis nula y podemos afirmar que con un nivel de confianza del 95%, la calificación media de los alojamientos de Airbnbn en la ciudad de París fue menor a 9.5.
+Con el resultado anterior podemos observar como $p < 0.05$, sabiendo esto, podemos rechazar la hipótesis nula y podemos afirmar que con un nivel de confianza del 95%, la calificación media de los alojamientos de Airbnb en la ciudad de París es diferente a 9.52.
 
 #### **Precio final**
 
@@ -1091,21 +1111,30 @@ Como el valor p es mucho menor que el valor de alfa, podemos rechazar el hipóte
 
 #### **Tipo de cuarto**
 
-Dentro de la industria de Airbnb está la incertidumbre acerca de la posible proporción de alojamientos que ofrecen el apartamento o la casa completa, ya que esto permite una mayor comodidad y exclusividad al usuario. Se estima que a nivel de la Unión Europea, aproximadamente más del 70% de los alojamientos de Airbnb son por toda la casa o el apartamento. A continuación, se muestra una prueba de hipótesis de esta información con un nivel de confianza del 95%:
+Dentro de la industria de Airbnb está la incertidumbre acerca de la posible proporción de alojamientos que ofrecen el apartamento o la casa completa, ya que esto permite una mayor comodidad y exclusividad al usuario. Para poder sacar un punto de comparacion para nuestro estudio vamos a usar los datos de Roma en esta situacion:
+
+```{r}
+sum(TipoDeCuartoRoma == "Entire home/apt")/ length(TipoDeCuartoRoma)
+```
+
+
+Ahora, gracias a este resultado queremos saber si la proporcion de alojamientos que proporcionan todo la casa o apartamento esta por debajo del 61.3%. A continuación, se muestra una prueba de hipótesis de esta información con un nivel de confianza del 95%:
+
+Dentro de nuestro estudio queremos saber si
 
 Planteamos las siguientes hipótesis:
 
--   $H_0: \pi \geq 0.7$
--   $H_1: \pi < 0.7$
+-   $H_0: \pi \geq 0.613$
+-   $H_1: \pi < 0.613$
 
 Para comprobar estas hipótesis utilizamos el siguiente código:
 
 ```{r}
-daticos<- prop.test( sum(TipoDeCuarto== "Entire home/apt"), n = length(datos$room_type), p = 0.7, alternative = "less")
+daticos<- prop.test( sum(TipoDeCuarto== "Entire home/apt"), n = length(datos$room_type), p = 0.613, alternative = "less")
 daticos
 ```
 
-Como podemos ver que el valor p es mayor al valor de confianza que fue de 0.05, por lo tanto, no podemos rechazar la hipótesis nula $H_0$. Es decir, que podemos afirmar que la probabilidad de que los alojamientos de Airbnb ofrezcan cuartos es mayor al 70%.
+Como podemos ver que el valor p es mayor al valor de confianza que fue de 0.05, por lo tanto, no podemos rechazar la hipótesis nula $H_0$. Es decir, que podemos afirmar que la probabilidad de que los alojamientos de Airbnb ofrezcan todo el apartamento o casa es mayor al 61.3%.
 
 #### **Cuarto Privado**
 
