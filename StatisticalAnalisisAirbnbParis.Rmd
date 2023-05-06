@@ -510,7 +510,7 @@ tabla.2
 ```
 Vemos que esta distribución no posee datos atipicos por lo que podemos usarla tal cual como está.
 
-### **Distancia al centro de la ciudad**
+### **Distancia al centro de la ciuudadd**
 
 *Diagrama de cajas:*
 
