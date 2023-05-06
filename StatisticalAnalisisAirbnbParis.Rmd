@@ -583,7 +583,7 @@ coef_var <- desv_estándar/media
 coef_var
 ```
 
-*Cuartiles 1 y 3:*
+*Cuartiles 1 and 3:*
 
 ```{r, echo = FALSE}
 ##Cuartil 1
