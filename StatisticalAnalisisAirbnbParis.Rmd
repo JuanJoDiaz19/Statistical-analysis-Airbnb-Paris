@@ -136,7 +136,7 @@ La base de datos de la cual vamos a explorar está dentro de un formato .csv y, 
 
 #setwd('C:/Users/Jardi/Downloads/santy/inferencia/Statistical-analysis-Airbnb-Paris)
 #setwd('C:/Users/melyb/OneDrive/Documentos/GitHub/Statistical-analysis-Airbnb-Paris)
-setwd('C:/Users/Mateo Silva/Desktop/rparisino/Statistical-analysis-Airbnb-Paris')
+setwd('C:/Users/melyb/OneDrive/Documentos/GitHub/Statistical-analysis-Airbnb-Paris')
 #setwd('C:/Users/juanj/Desktop/Universidad/4. CUARTO SEMESTRE/Inferencia Estadistica/Proyecto final/Repositorio Github Proyecto Final/Statistical-analysis-Airbnb-Paris ')
 
 getwd
@@ -513,7 +513,7 @@ tabla.2
 ```
 Vemos que esta distribución no posee datos atipicos por lo que podemos usarla tal cual como está.
 
-### **Distancia al centro de la ciuudad **
+### **Distancia al centro de la ciudad **
 
 *Diagrama de cajas:*
 
@@ -522,7 +522,7 @@ DistanciaCentro <- datos$dist
 boxplot(DistanciaCentro, horizontal = TRUE)
 ```
 
-Vemos que en esta distribución se ven que existen vari os atipicos por lo que los vamos a quitar
+Vemos que en esta distribución se ven que existen varios atipicos por lo que los vamos a quitar
 
 *Datos Atipicos*
 
@@ -571,17 +571,10 @@ rango <- max-min
 rango
 ```
 
-*Desviación estándar sin atipicos:*
-
-```{r, echo = FALSE}
-sd_val <- sd(DistanciaCentroSinAtipicos)
-sd_val
-```
-
 *Coeficiente de variación:*
 
 ```{r, echo = FALSE}
-coef_var <- desv_estándar/media
+coef_var <- sd_val/mean_val
 coef_var
 ```
 
@@ -614,13 +607,32 @@ cerco_sup <- q3 + 1.5*ric
 cerco_sup
 ```
 
-*Curtosis*
+*Curtosis:*
 
 ```{r, echo = FALSE}
 curtosis <- kurtosis(DistanciaCentroSinAtipicos)
 curtosis
 ```
 
+Aqui realizamos la curtosis por lo que la desviacion estandar incluso sin atipicos es menor a 20. La distribucion normal Tiene una curtosis de 0. Esto significa que tiene colas moderadas y una concentración equilibrada de valores alrededor de la media. Cuando la curtosis de una distribución es diferente de 0, indica que la distribución tiene una forma diferente a la de una distribución normal.Podemos ver una curtosis positiva, esto implica que hay una mayor concentración de valores extremos y una menor dispersión de valores alrededor de la media.  En resumen, al mencionar que la curtosis indica desviaciones respecto a la distribución normal, se está señalando que se están evaluando las diferencias en la forma de la distribución en relación con una distribución de referencia teórica, que es la distribución normal. Esto permite identificar características distintivas de la distribución de los datos en estudio.
+
+
+*Coeficiente de simetria:*
+
+```{r, echo = FALSE}
+skewness(DistanciaCentroSinAtipicos)
+```
+
+Este coeficiente nos dice que tiene una asimetria positiva, por lo que nos dice que la distribucion tiene una cola derecha mas larga que la izquierda
+
+*Tabla de frecuencia*
+
+```{r, warning=FALSE}
+rangos <- cut(DistanciaCentroSinAtipicos, breaks = 5)
+
+tabla_frecuenciaD <- table(rangos)
+print(tabla_frecuenciaD)
+```
 
 
 ## **Estadística descriptiva variables cualitativas:**
