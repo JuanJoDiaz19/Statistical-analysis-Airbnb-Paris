@@ -93,7 +93,7 @@ Dentro de nuestro estudio se van a estudiar ocho variables, de las cuales 4 van 
 
 #### **Variables cualitativas:**
 
--   ***Tipo de cuarto:*** Tipo de alojamiento que es ofrecido. Los valores que puede tomar son los siguientes: Casa o apartamento entero, cuarto privado, cuarto compartido.
+-   ***Tipo de alojamiento:*** Tipo de alojamiento que es ofrecido. Los valores que puede tomar son los siguientes: Casa o apartamento entero, cuarto privado, cuarto compartido.
 
 -   ***Cuarto privado:*** Es el valor de si el cuarto es privado o no. Esta variable es de tipo booleano, es decir que solo puede tener los valores de TRUE y FALSE.
 
@@ -133,10 +133,13 @@ library(moments)
 La base de datos de la cual vamos a explorar está dentro de un formato .csv y, para una mayor practicidad, vamos a guardar cada una de las variables a explorar dentro de un elemento distinto de nuestro entorno, tal como se continúa a continuación:
 
 ```{r, include = FALSE, message=FALSE}
-#setwd('C:/Users/Jardi/Downloads/santy/inferencia/Statistical-analysis-Airbnb-Paris')
+
+#setwd('C:/Users/Jardi/Downloads/santy/inferencia/Statistical-analysis-Airbnb-Paris)
+#setwd('C:/Users/melyb/OneDrive/Documentos/GitHub/Statistical-analysis-Airbnb-Paris)
 #setwd('C:/Users/Mateo Silva/Desktop/rparisino/Statistical-analysis-Airbnb-Paris')
 setwd('C:/Users/juanj/Desktop/Universidad/4. CUARTO SEMESTRE/Inferencia Estadistica/Proyecto final/Repositorio Github Proyecto Final/Statistical-analysis-Airbnb-Paris ')
 
+getwd
 Paris_weekdays <- read_csv("paris_weekdays.csv")
 datos <- Paris_weekdays
 ```
@@ -510,7 +513,7 @@ tabla.2
 ```
 Vemos que esta distribución no posee datos atipicos por lo que podemos usarla tal cual como está.
 
-### **Distancia al centro de la ciudad**
+### **Distancia al centro de la ciuudad **
 
 *Diagrama de cajas:*
 
@@ -519,7 +522,7 @@ DistanciaCentro <- datos$dist
 boxplot(DistanciaCentro, horizontal = TRUE)
 ```
 
-Vemos que en esta distribución se ven que existen varios atipicos por lo que los vamos a quitar
+Vemos que en esta distribución se ven que existen vari os atipicos por lo que los vamos a quitar
 
 *Datos Atipicos*
 
@@ -582,7 +585,7 @@ coef_var <- desv_estándar/media
 coef_var
 ```
 
-*Cuartiles 1 y 3:*
+*Cuartiles 1 and 3:*
 
 ```{r, echo = FALSE}
 ##Cuartil 1
@@ -610,6 +613,15 @@ cerco_inf
 cerco_sup <- q3 + 1.5*ric
 cerco_sup
 ```
+
+*Curtosis*
+
+```{r, echo = FALSE}
+curtosis <- kurtosis(DistanciaCentroSinAtipicos)
+curtosis
+```
+
+
 
 ## **Estadística descriptiva variables cualitativas:**
 
@@ -706,12 +718,7 @@ pie(tabla, main="Grafico de pastel multiples cuartos", labels = c("Posee un cuar
 
 ### **Fines de negocios**
 
-*Grafico (falta cambiarlo a circular)*
 
-```{r, echo = FALSE}
-FinesDeNegocios <- factor(datos$biz, labels = c ("No", "Si"))
-barchart(FinesDeNegocios)
-```
 
 *Generamos una tabla de frecuencias*
 
@@ -737,7 +744,9 @@ print(moda)
 *Diagrama de barras*
 
 ```{r}
-barplot(table(FinesDeNegocios), names.arg = c("Sin fines de negocios", "Con fines de negocios")) 
+colores <- c("gray62", "white")
+tabla <- table(FinesDeNegocios)
+pie(tabla, main="Grafico de pastel fines de negocios", labels = c("Sin fines de negocios", "Con fines de negocios"), col = colores)
 ```
 
 \$\$\$\$
@@ -1350,6 +1359,67 @@ H1: el tipo de cuarto influye en si es reversado con motivos de negocios o no #\
 #\`\`\`
 
 como podemos ver nuestro valor p es mucho menor que 5, por lo tanto podemos concluir que si existe una relacion en si el tipo de cuarto influye en la desicion de las personas que reservan con fines de negocios.
+
+### **Anova - Análisis de la Varianza**
+
+
+
+Dentro de esta seccion del informe vamos a realizar Anova con las diferentes variables que tenemos, sacando secciones a partir de otras variables para comprobar si existen diferencias entre sus medias. A si mismo, en caso de haber un rechazo se procedera a realizar un pos-anova.
+
+$$$$
+
+
+#### **Compracion del precio teniendo en cuenta su tipo de alojamiento**
+
+Para AirBnb resulta importante poder comparar los diferentes precios que hay deacuerdo con el tipo de alojamiento. Teniendo en cuenta que el tipo de cuarto tiene 3 posibles valores que son : Apartamento/Casa entera, cuarto privado y cuarto compartido, se van a plantear si el precio en cada uno de estos grupos es igual:
+
+
+$$H_0: \mu_{Completo} =  \mu_{Privado} = \mu_{Compartido}$$
+
+$$H_1: \mu_{Completo} \neq  \mu_{Privado} \neq \mu_{Compartido}$$
+*Ejecutamos el codigo de anova:*
+
+```{r}
+anova<-aov(lm(PrecioFinal~TipoDeCuarto))
+summary(anova)
+```
+Con esto podemos ver que el valor p es mas pequeño que 0.05 por lo que podemos rechazar la hipotesis nula y decir que existen medias diferentes entre los grupos. Por lo que en este caso resulta pertinente realizar un Pos-anova para mirar cual es la relacion entre sus medias:
+
+*Ejecutamos el codigo del Pos-anova*
+
+```{r}
+TukeyHSD(anova)
+```
+
+Teniendo en cuenta el criterio del anova podemos decir que el precio mas alto es el de apartamento o casa entera, seguida de cuarto privado seguido por cuarto compartido. Esto se veria de la siguiente manera:
+
+$$\mu_{Completo} >  \mu_{Privado} > \mu_{Compartido}$$
+
+#### **Compracion del puntaje de limpieza teniendo en cuenta su tipo de alojamiento**
+
+Para AirBnb es sumamente importante mirar si hay algun tipo de diferencia en el puntaje de limpieza deacuerdo a las categorias del tipo de alojamiento. Teniendo en cuenta que el tipo de cuarto tiene 3 posibles valores que son : Apartamento/Casa entera, cuarto privado y cuarto compartido, se van a plantear si el precio en cada uno de estos grupos es igual: 
+
+$$H_0: \mu_{Completo} =  \mu_{Privado} = \mu_{Compartido}$$
+
+$$H_1: \mu_{Completo} \neq  \mu_{Privado} \neq \mu_{Compartido}$$
+*Ejecutamos el codigo de anova:*
+
+```{r}
+anova<-aov(lm(CalificacionDeLimpieza~TipoDeCuarto))
+summary(anova)
+```
+Con esto podemos ver que el valor p es mas pequeño que 0.05 por lo que podemos rechazar la hipotesis nula y decir que existen medias diferentes entre los grupos. Por lo que en este caso resulta pertinente realizar un Pos-anova para mirar cual es la relacion entre sus medias:
+
+*Ejecutamos el codigo del Pos-anova*
+
+```{r}
+TukeyHSD(anova)
+```
+
+
+
+$$$$
+
 
 ### **Ji-Cuadrado**
 
