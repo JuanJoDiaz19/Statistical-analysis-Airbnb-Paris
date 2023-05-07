@@ -1395,6 +1395,8 @@ Teniendo en cuenta el criterio del anova podemos decir que el precio mas alto es
 
 $$\mu_{Completo} >  \mu_{Privado} > \mu_{Compartido}$$
 
+$$$$
+
 #### **Compracion del puntaje de limpieza teniendo en cuenta su tipo de alojamiento**
 
 Para AirBnb es sumamente importante mirar si hay algun tipo de diferencia en el puntaje de limpieza deacuerdo a las categorias del tipo de alojamiento. Teniendo en cuenta que el tipo de cuarto tiene 3 posibles valores que son : Apartamento/Casa entera, cuarto privado y cuarto compartido, se van a plantear si el precio en cada uno de estos grupos es igual: 
@@ -1416,38 +1418,44 @@ Con esto podemos ver que el valor p es mas pequeño que 0.05 por lo que podemos 
 TukeyHSD(anova)
 ```
 
+Teniendo en cuenta el criterio del pos-anova podemos decir que el tipo de alojamiento que: 
 
+* El tipo de alojamiento que tiene un cuarto privado tiene en promedio un mayor puntaje que cuando el alojamiento es de una casa o apartamento completo.  
+
+* No hay diferencia del puntaje de limpieza entre cuando tienen un cuarto compartido y cuando el alojamiento es de una casa o apartamento completo.
+
+* El tipo de alojamiento que tiene un cuarto compartido tiene en promedio una calificacion de limpieza menor que cuando es un cuarto privado
 
 $$$$
 
 
 ### **Ji-Cuadrado**
 
-**Tipo de cuarto vs Fines de negocio**
+Esta sección del informe se va a aplicar los tests de chi cuadrado, en la que se evaluará si existe una relación significativa entre dos variables categóricas. Estos tests se van a aplicar tanto a las variables cuantitativas como a las cualitativas de nuestro estudio:
 
-Ho: No existe relacion entre el tipo de cuarto y si es para fines de negocios.
+#### **Tipo de cuarto vs Fines de negocio**
 
-H1: Existe relacion entre el tipo de cuarto y si es para fines de negocios.
+$$Ho: No~existe~relacion~entre~el~tipo~de~cuarto~y~si~es~para~fines~de~negocios.$$
+$$H1: Existe~relacion~entre~el~tipo~de~cuarto~y~si~es~para~fines~de~negocios.$$
 
 ```{r, warning = FALSE}
 with(datos,chisq.test(TipoDeCuarto, FinesDeNegocios,correct = TRUE))
-
-
 ```
 
 como podemos ver, el valor p es bastante pequeño por lo que nos permite concluir que si existe una relacion entre estos.
 
-**Cuarto privado vs Posee mas de un cuarto**
-Ho: No existe relacion entre si el cuarto es privado y si es para fines de negocios.
+#### **Cuarto privado vs Posee mas de un cuarto**
 
-H1: Existe relacion entre si es para cuarto privado y si es para fines de negocios.
+$$Ho: No~existe~relacion~entre~si~el~cuarto~es~privado~y~si~es~para~fines~de~negocios.$$
+
+$$H1: Existe~relacion~entre~si~es~para~cuarto~privado~y~si~es~para~fines~de~negocios.$$
 
 ```{r, warning = FALSE}
 with(datos,chisq.test(CuartoPrivado,PoseeMasDeUnCuarto,correct = TRUE))
 
 ```
 
-aqui podemos ver el valor p el cual vuelve hacer muy pequeño, entonces podemos concluir que si existe un relacion entre cuarto privado y si es para fines de negocios 
+Aqui podemos ver el valor p el cual vuelve hacer muy pequeño (menor a 0.05), entonces podemos concluir que si existe un relacion entre cuarto privado y si es para fines de negocios. 
 
 
 ### **Conclusiones:**
