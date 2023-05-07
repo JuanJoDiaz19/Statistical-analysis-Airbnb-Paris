@@ -1247,6 +1247,68 @@ daticos
 
 Como podemos ver, el valor p es mayor que nuestro nivel de confianza, por lo que no podemos rechazar $H_0$. Por lo tanto, no hay suficiente información para afirmar que más del 26% de los alojamientos se pueden utilizar para fines de negocios.
 
+### **Hipotesis para varias variables**
+
+ultimamente alrededor de europa, las personas estan inovando sus destinos, pues la grandes metropolis a pesar de ser muy bonitas, suelen ser muy pobladas, y las personas buscan tranquilidad. 
+
+
+```{r}
+budapest_weekdays <- read_csv("rome_weekdays.csv")
+#Variables cuantitativas
+CalificacionDeLimpiezaBudapest <- budapest_weekdays$cleanliness_rating
+PrecioFinalBudapest <- budapest_weekdays$realSum
+CapacidadPersonasBudapest <- budapest_weekdays$person_capacity
+DistanciaCentroBudapest <- budapest_weekdays$dist
+
+#Variables cualitativas
+TipoDeCuartoBudapest <- budapest_weekdays$room_type
+CuartoPrivadoBudapest <- budapest_weekdays$room_private
+PoseeMasDeUnCuartoBudapest <- budapest_weekdays$multi
+FinesDeNegociosBudapest <- budapest_weekdays$biz
+```
+
+Budapest se ha vuelto un destino muy apetecido los turistas europeos, asi que los rbnb quieren saber el porque y quieren comparar para ver si sus precios son menores a los suyos.
+
+para comprobar esto primero debemos plantear hipotesis de varianzas y poder ver si podemos tomar varianzas iguales o diferentes
+
+
+$\sigma_1^2$: varianza de precio en rbnb de paris
+
+$\sigma_2^2$: varianza de precio en rbnb de budapest
+
+ 
+$H_0: \sigma_1^2 = \sigma_2^2$
+
+$H_1: \sigma_1^2 \neq \sigma_2^2$
+
+```{r}
+var.test(PrecioFinalSinAtipicos4,PrecioFinalBudapest, alternative = "greater",conf.level = 0.95)
+```
+
+como podemos ver, el valor p es mayor a 0.05, por lo tanto asumimos varianzas iguales
+
+ahora, compararemos la media de los precios asumiendo varianzas iguales
+
+$\mu_1$: media de precios de rbnb en paris
+
+$\mu_2$: media de precios de rbnb en budapest
+
+$H_0: \mu_1 \leq \mu_2$
+
+$H_1: \mu_1 > \mu_2$
+
+
+
+```{r}
+t.test(PrecioFinalSinAtipicos4, PrecioFinalBudapest,
+       alternative = "greater",
+       mu = 0, paired = FALSE, var.equal = TRUE,
+       conf.level = 0.95)
+```
+
+como podemos ver, nuestro valor p es menor que 0,05 por lo tanto concluimos que el precio de los rbnb es mayor en paris que en budapest.
+
+
 ### **Cruces de variables**
 
 Dentro de esta sección, de acuerdo a los objetivos planteados al inicio del informe, vamos a comparar diferentes variables entre sí con el fin de buscar algún tipo de relación entre ellas. A continuación se presentan las gráficas que ilustran dicha comparación o cruce.
