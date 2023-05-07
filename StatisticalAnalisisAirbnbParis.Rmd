@@ -136,8 +136,8 @@ La base de datos de la cual vamos a explorar está dentro de un formato .csv y, 
 
 #setwd('C:/Users/Jardi/Downloads/santy/inferencia/Statistical-analysis-Airbnb-Paris)
 #setwd('C:/Users/melyb/OneDrive/Documentos/GitHub/Statistical-analysis-Airbnb-Paris)
-#setwd('C:/Users/Mateo Silva/Desktop/rparisino/Statistical-analysis-Airbnb-Paris')
-setwd('C:/Users/juanj/Desktop/Universidad/4. CUARTO SEMESTRE/Inferencia Estadistica/Proyecto final/Repositorio Github Proyecto Final/Statistical-analysis-Airbnb-Paris ')
+setwd('C:/Users/Mateo Silva/Desktop/rparisino/Statistical-analysis-Airbnb-Paris')
+#setwd('C:/Users/juanj/Desktop/Universidad/4. CUARTO SEMESTRE/Inferencia Estadistica/Proyecto final/Repositorio Github Proyecto Final/Statistical-analysis-Airbnb-Paris ')
 
 getwd
 Paris_weekdays <- read_csv("paris_weekdays.csv")
@@ -1100,21 +1100,27 @@ Con el resultado anterior podemos observar como $p < 0.05$, sabiendo esto, podem
 
 #### **Precio final**
 
-Una de las principales preocupaciones dentro de la industria de Airbnb son los altos precios de los alojamientos en las ciudades europeas. Normalmente, los precios rondan los 400 euros. Se desea saber si, con un nivel de confianza del 0.05, se cumple como hipótesis nula que los precios de los Airbnb en París son menores a 400.
+sin duda para los rbnb en paris quieren brindar la mejor atencion a sus clientes con los precios mas justos de acuerdo a su experiencia, por lo tanto van a comparar con rbnb en roma
 
+```{r}
+mean(PrecioFinalRoma)
+```
+
+
+como vemos la media de precios en roma es de 201, por lo tanto,
 Planteamos las siguientes hipótesis:
 
--   $H_0: \mu \leq 400$
--   $H_1: \mu > 400$
+-   $H_0: \mu \leq 200$
+-   $H_1: \mu > 200$
 
 *Aplicamos el siguiente código para comprobar nuestras hipótesis:*
 
 ```{r}
-with(datos, (t.test(realSum, alternative = "greater", mu = 400, conf.level = 0.95)))
+with(datos, (t.test(PrecioFinalSinAtipicos4, alternative = "greater", mu =200, conf.level = 0.95)))
 
 ```
 
-Como $H_0: \mu \leq 400$ el valor $p=0.56$ esta por encima de nuestro alfa, por lo tanto no podemos rechazar la hipótesis nula. Es decir que no podemos rechazar el hecho de que el precio medio de los Airbnb en París superen los 400 Euros.
+para $H_0: \mu \leq 200$ el valor p es bastante pequeño asi que podemos rechazar esta hipotesis nula y podemos concluir que los rbnb en paris tiene un precio mas elevado que el de roma.
 
 #### **Capacidad de personas**
 
@@ -1181,21 +1187,25 @@ Como podemos ver que el valor p es mayor al valor de confianza que fue de 0.05, 
 
 #### **Cuarto Privado**
 
-Se estima que el número de alojamientos de Airbnb que tienen cuartos privados es aproximadamente del 35%; sin embargo, se desea comprobar dicha información con un nivel de confianza del 95%.
-
-Planteamos las siguientes hipótesis:
-
--   $H_0: \pi = 0.35$
--   $H_1: \pi \neq 0.35$
-
-Para comprobar esto tenemos que utilizar dos colas en la curva y lo hacemos con la siguiente función:
+las organizaciones rbnb en paris son las mas visitadas en el mundo, pues Francia es un pais bastante turisto, y ademas paris es la ciudad que mas turistas recibe en el mundo, debido a esto quieren dar la mejor atencion a sus turistas, pues gran parte vive de estos; ahora bien no a todos les alcanza el dinero y les toca compartir, pero ellos desean saber cual es la proporcion de personas que tienen cuarto privado, por esto van a comparar con los rbnb en roma.
 
 ```{r}
-daticos<- prop.test(sum(datos$room_private[datos$room_private== "TRUE"] ), n = length(datos$room_private), p = 0.35, alternative = "two.sided")
+sum(CuartoPrivadoRoma == "TRUE")/ length(CuartoPrivadoRoma)
+```
+
+como podemos ver, la proporcion en roma de personas que poseen un cuarto privado es de 0,38, entonces,planteamos las siguientes hipótesis:
+
+-   $H_0: \pi < 0.38$
+-   $H_1: \pi \geq 0.38$
+
+Para comprobar esto tenemos que utilizar una hipotesis alternativa de maypu en la curva y lo hacemos con la siguiente función:
+
+```{r}
+daticos<- prop.test(sum(CuartoPrivado[CuartoPrivado== "TRUE"] ), n = length(CuartoPrivado), p = 0.38, alternative = "greater")
 daticos
 ```
 
-Como podemos ver que el valor p es menor al valor de confianza que fue de 0.05, por lo tanto, rechazamos la hipótesis nula. Es decir, que podemos afirmar que la probabilidad de que los alojamientos de Airbnb tengan cuartos privados es diferente al 35%.
+como podemos ver el valor p es bastante mayor al 5% por lo tanto no existe alguna evidencia para decir que la proporcion de personas con cuarto privado en paris es menor que la de roma.
 
 #### **Multiples cuartos**
 
