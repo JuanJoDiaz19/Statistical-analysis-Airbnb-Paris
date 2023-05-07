@@ -625,13 +625,21 @@ skewness(DistanciaCentroSinAtipicos)
 
 Este coeficiente nos dice que tiene una asimetria positiva, por lo que nos dice que la distribucion tiene una cola derecha mas larga que la izquierda
 
+
+
 *Tabla de frecuencia*
+*grafico de barras*
 
 ```{r, warning=FALSE}
-rangos <- cut(DistanciaCentroSinAtipicos, breaks = 5)
+rangos <- cut(DistanciaCentroSinAtipicos,  c(seq(from = 0, to =7 , by = 2),8), include.lowest=TRUE)
 
 tabla_frecuenciaD <- table(rangos)
 print(tabla_frecuenciaD)
+
+tabla.D <- freq(ordered(rangos))
+tabla.D
+
+
 ```
 
 
