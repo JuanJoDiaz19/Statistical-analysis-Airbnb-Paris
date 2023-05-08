@@ -137,7 +137,7 @@ La base de datos de la cual vamos a explorar está dentro de un formato .csv y, 
 #setwd('C:/Users/Jardi/Downloads/santy/inferencia/Statistical-analysis-Airbnb-Paris')
 #setwd('C:/Users/melyb/OneDrive/Documentos/GitHub/Statistical-analysis-Airbnb-Paris)
 #setwd('C:/Users/melyb/OneDrive/Documentos/GitHub/Statistical-analysis-Airbnb-Paris')
-setwd('C:/Users/juanj/Desktop/Universidad/4. CUARTO SEMESTRE/Inferencia Estadistica/Proyecto final/Repositorio Github Proyecto Final/Statistical-analysis-Airbnb-Paris ')
+setwd('C:/Users/melyb/OneDrive/Documentos/GitHub/Statistical-analysis-Airbnb-Paris')
 
 getwd
 Paris_weekdays <- read_csv("paris_weekdays.csv")
@@ -1303,7 +1303,7 @@ Como podemos ver, el valor p es mayor que nuestro nivel de confianza, por lo que
 
 ### **Hipotesis para varias variables**
 
-Ultimamente alrededor de Europa, las personas estan inovando sus destinos, pues la grandes metropolis a pesar de ser muy bonitas, suelen ser muy pobladas, y las personas buscan tranquilidad. 
+Ultimamente alrededor de Europa, las personas estan innovando sus destinos, pues la grandes metropolis a pesar de ser muy bonitas, suelen ser muy pobladas y las personas buscan tranquilidad. 
 
 
 ```{r}
@@ -1321,14 +1321,16 @@ PoseeMasDeUnCuartoBudapest <- budapest_weekdays$multi
 FinesDeNegociosBudapest <- budapest_weekdays$biz
 ```
 
-Budapest se ha vuelto un destino muy apetecido los turistas europeos, asi que los Airbnb quieren saber el porque y quieren comparar para ver si sus precios son menores a los suyos.
+*PrecioFinal*
 
-para comprobar esto primero debemos plantear hipotesis de varianzas y poder ver si podemos tomar varianzas iguales o diferentes
+Budapest se ha vuelto un destino muy apetecido para turistas europeos, asi que los Airbnb quieren saber el porque y quieren comparar para ver si sus precios son menores a los suyos.
 
+Para comprobar esto primero debemos plantear hipotesis de varianzas y poder ver si podemos tomar varianzas iguales o diferentes
 
-$\sigma_1^2$: varianza de precio en Airbnb de paris
+ 
+$\sigma_1^2$: varianza de precio en Airbnb de Paris
 
-$\sigma_2^2$: varianza de precio en Airbnb de budapest
+$\sigma_2^2$: varianza de precio en Airbnb de Budapest
 
  
 $H_0: \sigma_1^2 = \sigma_2^2$
@@ -1339,13 +1341,13 @@ $H_1: \sigma_1^2 \neq \sigma_2^2$
 var.test(PrecioFinalSinAtipicos4,PrecioFinalBudapest, alternative = "greater",conf.level = 0.95)
 ```
 
-como podemos ver, el valor p es mayor a 0.05, por lo tanto asumimos varianzas iguales
+Como podemos ver, el valor p es mayor a 0.05, por lo tanto asumimos varianzas iguales
 
-ahora, compararemos la media de los precios asumiendo varianzas iguales
+Ahora, compararemos la media de los precios asumiendo varianzas iguales
 
-$\mu_1$: media de precios de Airbnb en paris
+$\mu_1$: Media de precios de Airbnb en Paris
 
-$\mu_2$: media de precios de Airbnb en budapest
+$\mu_2$: Media de precios de Airbnb en Budapest
 
 $H_0: \mu_1 \leq \mu_2$
 
@@ -1359,8 +1361,9 @@ t.test(PrecioFinalSinAtipicos4, PrecioFinalBudapest,
        mu = 0, paired = FALSE, var.equal = TRUE,
        conf.level = 0.95)
 ```
+
 Podemos ver como el valor p es menor que 0.05, por lo que concluimos que la capacidad de personas de Paris es mayor que la de Budapest.
-como podemos ver, nuestro valor p es menor que 0,05 por lo tanto concluimos que el precio de los rbnb es mayor en paris que en Budapest.
+Como podemos ver, nuestro valor p es menor que 0,05 por lo tanto concluimos que el precio de los Airbnb es mayor en Paris que en Budapest.
 
 *Capacidad de personas*
 
@@ -1368,9 +1371,9 @@ Como se dijo anteriormente, Budapest ultimamente ha sido un destino muy apetecid
 
 A continuacion se planteara una hipotesis para dos variables para comprobar si la capacidad media de personas en Paris es mayor que la capacidad media de personas en Budapest. Primero vamos a verificar si podemos asumir varianzas iguales o diferentes:
 
-$\sigma_1^2$: varianza de capacidad de personas en Airbnb de paris
+$\sigma_1^2$: Varianza de capacidad de personas en Airbnb de Paris
 
-$\sigma_2^2$: varianza de capacidad de personas en Airbnb de Budapest
+$\sigma_2^2$: Varianza de capacidad de personas en Airbnb de Budapest
 
  
 $H_0: \sigma_1^2 = \sigma_2^2$
@@ -1385,9 +1388,9 @@ Podemos ver como el valor $p$ es mayor que 0.05, por lo que podemos asumir varia
 
 Ahora, compararemos la capacidad media de personas asumiendo varianzas iguales
 
-$\mu_1$: capacidad media de personas de rbnb en paris
+$\mu_1$: capacidad media de personas de Airbnb en Paris
 
-$\mu_2$: capacidad media de personas en budapest
+$\mu_2$: capacidad media de personas en Budapest
 
 $H_0: \mu_1 \leq \mu_2$
 
@@ -1399,6 +1402,47 @@ t.test(CapacidadPersonas, CapacidadPersonasBudapest,
        mu = 0, paired = FALSE, var.equal = TRUE,
        conf.level = 0.95)
 ```
+
+*Distancia Centro*
+
+La ciudad de Budapest ultimamente ha sido un destino muy aclamado en general, Airbnb lo sabe por lo cual quiere saber si esto se debe a la distancia hacia el centro que tiene Budapest en comparacion a Paris. Debido a que esta ciudad en general sea centro, sur o norte siempre es muy apetecida.
+
+Es por esto que se propuso una hipotesis para dos variables para comprobar si la distancia al centro en Paris es mayor que la distancia al centro en Budapest. El primer paso es revisar si se puede asumir varianzas iguales o diferentes con un nivel del confianza del 95%:
+
+$\sigma_1^2$: Varianza de Distancia al centro en Airbnb de Paris
+
+$\sigma_2^2$: Varianza de Distancia al centro en Airbnb de Budapest
+
+
+$H_0: \sigma_1^2 = \sigma_2^2$ Igual 
+
+$H_1: \sigma_1^2 \neq \sigma_2^2$ Diferente
+
+
+
+```{r}
+var.test(DistanciaCentro,DistanciaCentroBudapest, alternative = "greater",conf.level = 0.95)
+```
+
+El valor p es mayor que el nivel de significancia al 95% (osea 0.05), a partir de esto se interpreta que las varianzas son iguales. Por ende, se puede comparar la distancia al centro de ambos destinos con varianzas iguales. Al igual con un nivel de confianza del 95%:
+
+$\mu_1$: Distancia al centro de Airbnb en Paris
+
+$\mu_2$: Distancia al centro de Airbnb en Budapest
+
+$H_0: \mu_1 \leq \mu_2$
+
+$H_1: \mu_1 > \mu_2$
+
+```{r}
+t.test(DistanciaCentro, DistanciaCentroBudapest,
+       alternative = "greater",
+       mu = 0, paired = FALSE, var.equal = TRUE,
+       conf.level = 0.95)
+```
+El valor p es 0.82, es mayor a 0.05 por ende no hay suficiente evidencia para rechazar la hipotesis nula. 
+
+
 
 ### **Cruces de variables**
 
@@ -1494,7 +1538,6 @@ Tabla cruzada
 tabla <- crosstab(TipoDeCuarto,FinesDeNegocios,prop.c = TRUE,plot = FALSE)
 tabla
 
-
 ```
 
 #### **Cuarto privado vs Posee mas de un cuarto**
@@ -1525,7 +1568,7 @@ tabla
 
 ###hipotesis de varias para varibles cualitativas
 
-como podemos ver, queremos conocer si el tipo de cuarto influye en si la habitacion es resevervada con motivos de negocios, por lo tanto planteamos las hipotesis.
+Como podemos ver, queremos conocer si el tipo de cuarto influye en si la habitacion es resevervada con motivos de negocios, por lo tanto planteamos las hipotesis.
 
 H0: el tipo de cuarto no influye en si es reversado con motivos de negocios o no
 
@@ -1572,7 +1615,7 @@ $$\mu_{Completo} >  \mu_{Privado} > \mu_{Compartido}$$
 
 $$$$
 
-#### **Compracion del puntaje de limpieza teniendo en cuenta su tipo de alojamiento**
+#### **Comparacion del puntaje de limpieza teniendo en cuenta su tipo de alojamiento**
 
 Para AirBnb es sumamente importante mirar si hay algun tipo de diferencia en el puntaje de limpieza deacuerdo a las categorias del tipo de alojamiento. Teniendo en cuenta que el tipo de cuarto tiene 3 posibles valores que son : Apartamento/Casa entera, cuarto privado y cuarto compartido, se van a plantear si el precio en cada uno de estos grupos es igual: 
 
