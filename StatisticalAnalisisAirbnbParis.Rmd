@@ -134,10 +134,10 @@ La base de datos de la cual vamos a explorar está dentro de un formato .csv y, 
 
 ```{r, include = FALSE, message=FALSE}
 
-#setwd('C:/Users/Jardi/Downloads/santy/inferencia/Statistical-analysis-Airbnb-Paris)
+setwd('C:/Users/Jardi/Downloads/santy/inferencia/Statistical-analysis-Airbnb-Paris')
 #setwd('C:/Users/melyb/OneDrive/Documentos/GitHub/Statistical-analysis-Airbnb-Paris)
 #setwd('C:/Users/melyb/OneDrive/Documentos/GitHub/Statistical-analysis-Airbnb-Paris')
-setwd('C:/Users/juanj/Desktop/Universidad/4. CUARTO SEMESTRE/Inferencia Estadistica/Proyecto final/Repositorio Github Proyecto Final/Statistical-analysis-Airbnb-Paris ')
+#setwd('C:/Users/juanj/Desktop/Universidad/4. CUARTO SEMESTRE/Inferencia Estadistica/Proyecto final/Repositorio Github Proyecto Final/Statistical-analysis-Airbnb-Paris ')
 
 getwd
 Paris_weekdays <- read_csv("paris_weekdays.csv")
@@ -156,6 +156,8 @@ TipoDeCuarto<-  datos$room_type
 CuartoPrivado <- datos$room_private
 PoseeMasDeUnCuarto <- datos$multi
 FinesDeNegocios <- datos$biz
+
+budapest_weekdays <- read_csv("rome_weekdays.csv")
 ```
 
 ## **Estadística descriptiva para las variables**
@@ -1143,21 +1145,26 @@ Vemos que el valor p es bastante pequeño, (menor al 0.05) asi que podemos recha
 
 #### **Capacidad de personas**
 
-La capacidad de personas que caben dentro de un alojamiento es sumamente importante en la industria de Airbnb. Expertos recomiendan que, en promedio, los cuartos tengan por lo menos la capacidad de 3 personas. Se desea saber si, con un nivel de confianza del 95%, se cumple como hipótesis nula que la capacidad de personas promedio está por encima de 3..
+
+```{r, include = FALSE, message=FALSE}
+
+mean(CapacidadPersonasRoma)
+```
+La capacidad de personas que caben dentro de un alojamiento es sumamente importante en la industria de Airbnb. En la ciudad de Roma se realizo un estudio que concluyo en que la capacidad media es de 3.35 personas por alojamiento. Se desea saber si, con un nivel de confianza del 95%, se cumple como hipótesis nula que la capacidad de personas promedio es mayor o igual que la capacidad de personas promedio de Roma.
 
 Planteamos las siguientes hipótesis:
 
--   $H_0: \mu \geq 3$
--   $H_1: \mu < 3$
+-   $H_0: \mu \geq 3.35$
+-   $H_1: \mu < 3.35$
 
 *Aplicamos el siguiente código para comprobar nuestras hipótesis:*
 
 ```{r}
-with(datos, (t.test(realSum, alternative = "greater", mu = 400, conf.level = 0.95)))
+with(datos, (t.test(CapacidadPersonas, alternative = "less", mu = 3.35, conf.level = 0.95)))
 
 ```
 
-Como $H_0: \mu \leq 400$ el valor $p=0.56$ esta por encima de nuestro alfa, por lo tanto no podemos rechazar la hipótesis nula. Es decir que no podemos rechazar el hecho de que el precio medio de los Airbnb en París supere los 400 Euros.
+Como podemos ver, el valor p es menor que nuestro alfa, por lo tanto podemos rechazar la hipotesis nula y decir que la capacidad media de personas de los alojamientos de paris es mayor a la de roma.
 
 #### **Distancia al centro**
 
@@ -1276,7 +1283,7 @@ Ultimamente alrededor de Europa, las personas estan inovando sus destinos, pues 
 
 
 ```{r}
-budapest_weekdays <- read_csv("rome_weekdays.csv")
+
 #Variables cuantitativas
 CalificacionDeLimpiezaBudapest <- budapest_weekdays$cleanliness_rating
 PrecioFinalBudapest <- budapest_weekdays$realSum
@@ -1290,14 +1297,14 @@ PoseeMasDeUnCuartoBudapest <- budapest_weekdays$multi
 FinesDeNegociosBudapest <- budapest_weekdays$biz
 ```
 
-Budapest se ha vuelto un destino muy apetecido los turistas europeos, asi que los rbnb quieren saber el porque y quieren comparar para ver si sus precios son menores a los suyos.
+Budapest se ha vuelto un destino muy apetecido los turistas europeos, asi que los Airbnb quieren saber el porque y quieren comparar para ver si sus precios son menores a los suyos.
 
 para comprobar esto primero debemos plantear hipotesis de varianzas y poder ver si podemos tomar varianzas iguales o diferentes
 
 
-$\sigma_1^2$: varianza de precio en rbnb de paris
+$\sigma_1^2$: varianza de precio en Airbnb de paris
 
-$\sigma_2^2$: varianza de precio en rbnb de budapest
+$\sigma_2^2$: varianza de precio en Airbnb de budapest
 
  
 $H_0: \sigma_1^2 = \sigma_2^2$
@@ -1312,9 +1319,9 @@ como podemos ver, el valor p es mayor a 0.05, por lo tanto asumimos varianzas ig
 
 ahora, compararemos la media de los precios asumiendo varianzas iguales
 
-$\mu_1$: media de precios de rbnb en paris
+$\mu_1$: media de precios de Airbnb en paris
 
-$\mu_2$: media de precios de rbnb en budapest
+$\mu_2$: media de precios de Airbnb en budapest
 
 $H_0: \mu_1 \leq \mu_2$
 
@@ -1328,9 +1335,46 @@ t.test(PrecioFinalSinAtipicos4, PrecioFinalBudapest,
        mu = 0, paired = FALSE, var.equal = TRUE,
        conf.level = 0.95)
 ```
+Podemos ver como el valor p es menor que 0.05, por lo que concluimos que la capacidad de personas de Paris es mayor que la de Budapest.
+como podemos ver, nuestro valor p es menor que 0,05 por lo tanto concluimos que el precio de los rbnb es mayor en paris que en Budapest.
 
-como podemos ver, nuestro valor p es menor que 0,05 por lo tanto concluimos que el precio de los rbnb es mayor en paris que en budapest.
+*Capacidad de personas*
 
+Como se dijo anteriormente, Budapest ultimamente ha sido un destino muy apetecido por los turistas, es por esto que la empresa Airbnb quiere saber si se puede tratar de la capacidad de personas que ofrece la ciudad de Budapest con respecto a Paris, que por muchos años ha sido uno de los destinos mas importantes para la empresa.
+
+A continuacion se planteara una hipotesis para dos variables para comprobar si la capacidad media de personas en Paris es mayor que la capacidad media de personas en Budapest. Primero vamos a verificar si podemos asumir varianzas iguales o diferentes:
+
+$\sigma_1^2$: varianza de capacidad de personas en Airbnb de paris
+
+$\sigma_2^2$: varianza de capacidad de personas en Airbnb de Budapest
+
+ 
+$H_0: \sigma_1^2 = \sigma_2^2$
+
+$H_1: \sigma_1^2 \neq \sigma_2^2$
+
+```{r}
+var.test(CapacidadPersonas,CapacidadPersonasBudapest, alternative = "greater",conf.level = 0.95)
+```
+
+Podemos ver como el valor $p$ es mayor que 0.05, por lo que podemos asumir varianzas iguales.
+
+Ahora, compararemos la capacidad media de personas asumiendo varianzas iguales
+
+$\mu_1$: capacidad media de personas de rbnb en paris
+
+$\mu_2$: capacidad media de personas en budapest
+
+$H_0: \mu_1 \leq \mu_2$
+
+$H_1: \mu_1 > \mu_2$
+
+```{r}
+t.test(CapacidadPersonas, CapacidadPersonasBudapest,
+       alternative = "greater",
+       mu = 0, paired = FALSE, var.equal = TRUE,
+       conf.level = 0.95)
+```
 
 ### **Cruces de variables**
 
