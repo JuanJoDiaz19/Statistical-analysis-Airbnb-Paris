@@ -1161,20 +1161,25 @@ with(datos, (t.test(realSum, alternative = "greater", mu = 400, conf.level = 0.9
 Como $H_0: \mu \leq 400$ el valor $p=0.56$ esta por encima de nuestro alfa, por lo tanto no podemos rechazar la hipótesis nula. Es decir que no podemos rechazar el hecho de que el precio medio de los Airbnb en París supere los 400 Euros.
 
 #### **Distancia al centro**
+```{r}
+mean(DistanciaCentroRoma)
+```
 
-Se sabe que la distancia media que hay entre los alojamientos (de Airbnb y externos a la plataforma) y el centro de la ciudad es de 2.1 kilómetros. Airbnb requiere saber si es cierto que los alojamientos que se publican en su plataforma tienen una distancia hasta el centro de la ciudad igual o menor que 2.1. Para esto, se plantean las siguientes hipótesis:
 
--   $H_0: \mu \leq 2.1$
--   $H_1: \mu > 2.1$
+Se sabe que los alojamientos de Airbnb en Roma tienen una distancia hacia el centro de su ciudad de 3.04 kilómetros. Airbnb en PariS requiere saber si la distancia de sus alojamientos es igual a 3.04 kilometros con respecto a la distancia hacia el centro de Paris. Para esto, se plantean las siguientes hipótesis con un nivel de confianza del 95%:
+
+-   $H_0: \pi = 3.04$
+-   $H_1: \pi \neq  3.04$
 
 Calculamos el valor de p con el siguiente código
 
+
 ```{r}
-with(datos, (t.test(dist, alternative = "greater", mu = 2.1, conf.level = 0.95)))
+with(datos, (t.test(DistanciaCentro, alternative = "two.sided", mu = 3.04, conf.level = 0.95)))
 
 ```
 
-Como el valor p es mucho menor que el valor de alfa, podemos rechazar el hipótesis $H_0$ y, por lo tanto, podemos decir que a un nivel de confiabilidad del 95% de que el promedio de las distancias de los Airbnb al centro de la cuidad sea mayor a 2.1 kilometros.
+Como el valor p es mucho menor que el valor de alfa, podemos rechazar el hipótesis $H_0$ y, por lo tanto, podemos decir que a un nivel de confiabilidad del 95% de que el promedio de las distancias de los Airbnb al centro de Paris sea diferente a 3.04 kilometros.
 
 ### **Variables cualitativas**
 
