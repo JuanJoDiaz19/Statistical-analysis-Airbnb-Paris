@@ -1149,17 +1149,17 @@ mean(PrecioFinalRoma)
 
 Como vemos la media de precios en roma es de 201, por lo tanto, vamor a plantear las siguientes hipótesis:
 
--   $H_0: \mu \leq 200$
--   $H_1: \mu > 200$
+-   $H_0: \mu \leq 201$
+-   $H_1: \mu > 201$
 
 *Aplicamos el siguiente código para comprobar nuestras hipótesis:*
 
 ```{r}
-with(datos, (t.test(PrecioFinalSinAtipicos4, alternative = "greater", mu =200, conf.level = 0.95)))
+with(datos, (t.test(PrecioFinalSinAtipicos4, alternative = "greater", mu =201, conf.level = 0.95)))
 
 ```
 
-Vemos que el valor p es bastante pequeño, (menor al 0.05) asi que podemos rechazar esta hipotesis nula y podemos concluir que los Airbnb en paris tiene un precio mayor a 200 Euros.
+Vemos que el valor p es bastante pequeño, (menor al 0.05) asi que podemos rechazar esta hipotesis nula y podemos concluir que los Airbnb en paris tiene un precio mayor a 201 Euros.
 
 #### **Capacidad de personas**
 
@@ -1283,17 +1283,23 @@ Como podemos ver, el valor p es mayor a nuestro nivel de confianza, por lo que p
 
 #### **Fines de negocios**
 
-Se estima que como mínimo, el 26% de los alojamientos se puede utilizar para fines de negocios, sin embargo, se desea comprobar dicha estimación con un nivel de confianza del 92%. Para esto se plantean las siguientes hipótesis:
-
--   $H_0: \pi \geq 0.26$
--   $H_1: \pi < 0.26$
+Para poder plantear las hipotesis nos basamos en las estadisticas de Roma tal como lo hicimos en las anteriores hipotesis:
 
 ```{r}
-daticos<- prop.test(sum(datos$biz[datos$biz== "1"] ), n = length(datos$biz), p = 0.26, alternative = "greater", conf.level = 0.92)
+mean(FinesDeNegociosRoma)
+```
+
+Para este caso se desea comprobar si en Paris se cumple que menos del 33% de los alojamientos es para fines de negocios, para dicha estimación vamos a usar un nivel de confianza del 92%. Para esto se plantean las siguientes hipótesis:
+
+-   $H_0: \pi \geq 0.33$
+-   $H_1: \pi < 0.33$
+
+```{r}
+daticos<- prop.test(sum(datos$biz[datos$biz== "1"] ), n = length(datos$biz), p = 0.33, alternative = "less", conf.level = 0.92)
 daticos
 ```
 
-Como podemos ver, el valor p es mayor que nuestro nivel de confianza, por lo que no podemos rechazar $H_0$. Por lo tanto, no hay suficiente información para afirmar que más del 26% de los alojamientos se pueden utilizar para fines de negocios.
+Como podemos ver, el valor p es mayor que nuestro nivel de confianza, por lo que no podemos rechazar $H_0$. Por lo tanto, no hay suficiente información para afirmar que más del 33% de los alojamientos se pueden utilizar para fines de negocios.
 
 ### **Hipotesis para varias variables**
 
