@@ -137,8 +137,8 @@ La base de datos de la cual vamos a explorar está dentro de un formato .csv y, 
 #setwd('C:/Users/Jardi/Downloads/santy/inferencia/Statistical-analysis-Airbnb-Paris')
 #setwd('C:/Users/melyb/OneDrive/Documentos/GitHub/Statistical-analysis-Airbnb-Paris)
 #setwd('C:/Users/melyb/OneDrive/Documentos/GitHub/Statistical-analysis-Airbnb-Paris')
+#setwd('C:/Users/Mateo Silva/Desktop/rparisino/Statistical-analysis-Airbnb-Paris')
 setwd('C:/Users/juanj/Desktop/Universidad/4. CUARTO SEMESTRE/Inferencia Estadistica/Proyecto final/Repositorio Github Proyecto Final/Statistical-analysis-Airbnb-Paris ')
-
 getwd
 Paris_weekdays <- read_csv("paris_weekdays.csv")
 datos <- Paris_weekdays
@@ -1303,25 +1303,15 @@ Como podemos ver, el valor p es mayor que nuestro nivel de confianza, por lo que
 
 ### **Hipotesis para varias variables**
 
-Ultimamente alrededor de Europa, las personas estan inovando sus destinos, pues la grandes metropolis a pesar de ser muy bonitas, suelen ser muy pobladas, y las personas buscan tranquilidad. 
+los rbnb en paris quieren saber como varian sus precios de acuerdo a si el cuarto es compartido o no.
 
 
 ```{r}
-
-#Variables cuantitativas
-CalificacionDeLimpiezaBudapest <- budapest_weekdays$cleanliness_rating
-PrecioFinalBudapest <- budapest_weekdays$realSum
-CapacidadPersonasBudapest <- budapest_weekdays$person_capacity
-DistanciaCentroBudapest <- budapest_weekdays$dist
-
-#Variables cualitativas
-TipoDeCuartoBudapest <- budapest_weekdays$room_type
-CuartoPrivadoBudapest <- budapest_weekdays$room_private
-PoseeMasDeUnCuartoBudapest <- budapest_weekdays$multi
-FinesDeNegociosBudapest <- budapest_weekdays$biz
+datosC1 <- subset(datos,room_shared=="TRUE")
+datosC2 <- subset(datos,room_shared=="FALSE")
 ```
 
-Budapest se ha vuelto un destino muy apetecido los turistas europeos, asi que los Airbnb quieren saber el porque y quieren comparar para ver si sus precios son menores a los suyos.
+
 
 para comprobar esto primero debemos plantear hipotesis de varianzas y poder ver si podemos tomar varianzas iguales o diferentes
 
@@ -1336,16 +1326,16 @@ $H_0: \sigma_1^2 = \sigma_2^2$
 $H_1: \sigma_1^2 \neq \sigma_2^2$
 
 ```{r}
-var.test(PrecioFinalSinAtipicos4,PrecioFinalBudapest, alternative = "greater",conf.level = 0.95)
+var.test(datosC1$realSum,datosC2$realSum, alternative = "two.sided",conf.level = 0.95)
 ```
 
-como podemos ver, el valor p es mayor a 0.05, por lo tanto asumimos varianzas iguales
+como podemos ver, el valor p es mucho menor que 0.05 por lo tanto asumimos varianzas diferentes
 
-ahora, compararemos la media de los precios asumiendo varianzas iguales
+ahora, compararemos la media de los precios asumiendo varianzas diferentes
 
-$\mu_1$: media de precios de Airbnb en paris
+$\mu_1$: media de precios de Airbnb en paris con cuarto compartido
 
-$\mu_2$: media de precios de Airbnb en budapest
+$\mu_2$: media de precios de Airbnb en paris con cuarto no compartido
 
 $H_0: \mu_1 \leq \mu_2$
 
@@ -1354,51 +1344,59 @@ $H_1: \mu_1 > \mu_2$
 
 
 ```{r}
-t.test(PrecioFinalSinAtipicos4, PrecioFinalBudapest,
-       alternative = "greater",
-       mu = 0, paired = FALSE, var.equal = TRUE,
-       conf.level = 0.95)
+t.test(datosC1$realSum,datosC2$realSum,
+      alternative = "greater",
+      mu = 0, paired = FALSE, var.equal = FALSE,
+     conf.level = 0.95)
 ```
-Podemos ver como el valor p es menor que 0.05, por lo que concluimos que la capacidad de personas de Paris es mayor que la de Budapest.
-como podemos ver, nuestro valor p es menor que 0,05 por lo tanto concluimos que el precio de los rbnb es mayor en paris que en Budapest.
+Podemos ver que el valor p es mayor que 0,05, por lo tanto podemos concluir que no existe evidencia para decir que el precio de las habitaciones no compartidas es mayor al de las compartidas
+
 
 *Capacidad de personas*
 
-Como se dijo anteriormente, Budapest ultimamente ha sido un destino muy apetecido por los turistas, es por esto que la empresa Airbnb quiere saber si se puede tratar de la capacidad de personas que ofrece la ciudad de Budapest con respecto a Paris, que por muchos años ha sido uno de los destinos mas importantes para la empresa.
+los rbnb en paris desean conocer que capacidad tiene sus habitacion cuando son privadas o publicas
 
-A continuacion se planteara una hipotesis para dos variables para comprobar si la capacidad media de personas en Paris es mayor que la capacidad media de personas en Budapest. Primero vamos a verificar si podemos asumir varianzas iguales o diferentes:
+```{r}
+datosC1 <- subset(datos,room_private=="TRUE")
+datosC2 <- subset(datos,room_private=="FALSE")
+```
 
-$\sigma_1^2$: varianza de capacidad de personas en Airbnb de paris
+A continuacion se planteara una hipotesis para dos variables para comprobar si la capacidad media de personas de un cuarto publico es mayor al de uno privado. Primero vamos a verificar si podemos asumir varianzas iguales o diferentes:
 
-$\sigma_2^2$: varianza de capacidad de personas en Airbnb de Budapest
+$\sigma_1^2$: Varianza de capacidad de personas con cuarto publico
 
+$\sigma_2^2$: Varianza de capacidad de personas con cuarto privado
  
 $H_0: \sigma_1^2 = \sigma_2^2$
 
 $H_1: \sigma_1^2 \neq \sigma_2^2$
 
 ```{r}
-var.test(CapacidadPersonas,CapacidadPersonasBudapest, alternative = "greater",conf.level = 0.95)
+var.test(datosC2$person_capacity,datosC1$person_capacity, alternative = "greater",conf.level = 0.95)
 ```
 
-Podemos ver como el valor $p$ es mayor que 0.05, por lo que podemos asumir varianzas iguales.
+Podemos ver como el valor $p$ es mucho menor que 0.05, por lo que podemos asumir varianzas varianzas diferentes.
 
-Ahora, compararemos la capacidad media de personas asumiendo varianzas iguales
+Ahora, compararemos la capacidad media de personas asumiendo varianzas diferentes
 
-$\mu_1$: capacidad media de personas de rbnb en paris
+$\mu_1$: capacidad media de personas de con cuarto privado
 
-$\mu_2$: capacidad media de personas en budapest
+$\mu_2$: capacidad media de personas con cuarto publico
 
 $H_0: \mu_1 \leq \mu_2$
 
 $H_1: \mu_1 > \mu_2$
 
 ```{r}
-t.test(CapacidadPersonas, CapacidadPersonasBudapest,
+t.test(datosC1$person_capacity,datosC2$person_capacity,
        alternative = "greater",
        mu = 0, paired = FALSE, var.equal = TRUE,
        conf.level = 0.95)
 ```
+
+aqui podemos ver que el valor p es mucho mayor a 0,05, por lo tanto podemos concluir que no existe evidencia para decir que la media de personas con cuarto privado tenga menos capacidad de personas que los cuartos publicos.
+
+
 
 ### **Cruces de variables**
 
@@ -1494,7 +1492,6 @@ Tabla cruzada
 tabla <- crosstab(TipoDeCuarto,FinesDeNegocios,prop.c = TRUE,plot = FALSE)
 tabla
 
-
 ```
 
 #### **Cuarto privado vs Posee mas de un cuarto**
@@ -1525,11 +1522,12 @@ tabla
 
 ###hipotesis de varias para varibles cualitativas
 
-como podemos ver, queremos conocer si el tipo de cuarto influye en si la habitacion es resevervada con motivos de negocios, por lo tanto planteamos las hipotesis.
+Como podemos ver, queremos conocer si el tipo de cuarto influye en si la habitacion es resevervada con motivos de negocios, por lo tanto planteamos las hipotesis.
 
 H0: el tipo de cuarto no influye en si es reversado con motivos de negocios o no
 
-H1: el tipo de cuarto influye en si es reversado con motivos de negocios o no #\`\`\`{r, warning=FALSE} #with(paris_weekdays, chisq.test(TipoDeCuarto, FinesDeNegocios , correct = #TRUE, p = rep(1/length(TipoDeCuarto),length(TipoDeCuarto))))
+H1: el tipo de cuarto influye en si es reversado con motivos de negocios o no 
+#\`\`\`{r, warning=FALSE} #with(paris_weekdays, chisq.test(TipoDeCuarto, FinesDeNegocios , correct = #TRUE, p = rep(1/length(TipoDeCuarto),length(TipoDeCuarto))))
 
 #\`\`\`
 
@@ -1621,9 +1619,32 @@ Teniendo en cuenta el criterio del pos-anova podemos decir que el tipo de alojam
 $$$$
 
 
+
 ### **Ji-Cuadrado**
 
-En esta sección del informe se va a aplicar los tests de chi cuadrado, en la que se evaluará si existe una relación significativa entre dos variables categóricas. Estos tests se van a aplicar tanto a las variables cuantitativas como a las cualitativas de nuestro estudio:
+Esta sección del informe se va a aplicar los tests de chi cuadrado, en la que se evaluará si existe una relación significativa entre dos variables categóricas. Estos tests se van a aplicar tanto a las variables cuantitativas como a las cualitativas de nuestro estudio:
+
+#### **Fines de negocio vs Posee mas de un cuarto**
+
+$$Ho: No~existe~relacion~entre~si~es~por~fin~de~negocio~y~posee~mas~de~un~cuarto.$$
+
+$$H1: Existe~relacion~entre~si~es~para~fin~de~negocio~y~si~posee~mas~de~un~cuarto.$$
+
+```{r, warning = FALSE}
+with(datos,chisq.test(FinesDeNegocios, PoseeMasDeUnCuarto, correct = TRUE))
+```
+El valor p es muy pequeño por loq ue se concluye que si hay una relacion
+
+#### **Fines de negocio vs Posee mas de un cuarto**
+
+$$Ho: No~existe~relacion~entre~si~es~por~fin~de~negocio~y~posee~mas~de~un~cuarto.$$
+
+$$H1: Existe~relacion~entre~si~es~para~fin~de~negocio~y~si~posee~mas~de~un~cuarto.$$
+
+```{r, warning = FALSE}
+with(datos,chisq.test(FinesDeNegocios, PoseeMasDeUnCuarto, correct = TRUE))
+```
+El valor p es muy pequeño por loq ue se concluye que si hay una relacion
 
 #### **Tipo de cuarto vs Fines de negocio**
 
@@ -1634,20 +1655,20 @@ $$H1: Existe~relacion~entre~el~tipo~de~cuarto~y~si~es~para~fines~de~negocios.$$
 with(datos,chisq.test(TipoDeCuarto, FinesDeNegocios,correct = TRUE))
 ```
 
-Como podemos ver, el valor p es bastante pequeño por lo que nos permite concluir que si existe una relacion entre estos.
+como podemos ver, el valor p es bastante pequeño por lo que nos permite concluir que si existe una relacion entre estos.
 
 #### **Cuarto privado vs Posee mas de un cuarto**
 
-$$Ho: No~existe~relacion~entre~si~el~cuarto~es~privado~y~si~es~para~fines~de~negocios.$$
+$$Ho: No~existe~relacion~entre~si~el~cuarto~es~privado~y~si~posee~mas~de~un~cuarto.$$
 
-$$H1: Existe~relacion~entre~si~es~para~cuarto~privado~y~si~es~para~fines~de~negocios.$$
+$$H1: Existe~relacion~entre~si~es~para~cuarto~privado~y~si~posee~mas~de~un~cuarto.$$
 
 ```{r, warning = FALSE}
 with(datos,chisq.test(CuartoPrivado,PoseeMasDeUnCuarto,correct = TRUE))
 
 ```
 
-Aqui podemos ver el valor p el cual vuelve hacer muy pequeño (menor a 0.05), entonces podemos concluir que si existe un relacion entre cuarto privado y si es para fines de negocios. 
+Aqui podemos ver el valor p el cual vuelve a ser muy pequeño (menor a 0.05), entonces podemos concluir que si existe una relacion entre cuarto privado y si posee mas de un cuarto. 
 
 
 ### **Conclusiones:**
