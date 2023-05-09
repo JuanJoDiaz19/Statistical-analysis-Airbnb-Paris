@@ -134,10 +134,10 @@ La base de datos de la cual vamos a explorar está dentro de un formato .csv y, 
 
 ```{r, include = FALSE, message=FALSE}
 
-#setwd('C:/Users/Jardi/Downloads/santy/inferencia/Statistical-analysis-Airbnb-Paris')
+setwd('C:/Users/Jardi/Downloads/santy/inferencia/Statistical-analysis-Airbnb-Paris')
 #setwd('C:/Users/melyb/OneDrive/Documentos/GitHub/Statistical-analysis-Airbnb-Paris)
 #setwd('C:/Users/melyb/OneDrive/Documentos/GitHub/Statistical-analysis-Airbnb-Paris')
-setwd('C:/Users/Mateo Silva/Desktop/rparisino/Statistical-analysis-Airbnb-Paris')
+#setwd('C:/Users/Mateo Silva/Desktop/rparisino/Statistical-analysis-Airbnb-Paris')
 
 getwd
 Paris_weekdays <- read_csv("paris_weekdays.csv")
@@ -1526,7 +1526,8 @@ Como podemos ver, queremos conocer si el tipo de cuarto influye en si la habitac
 
 H0: el tipo de cuarto no influye en si es reversado con motivos de negocios o no
 
-H1: el tipo de cuarto influye en si es reversado con motivos de negocios o no #\`\`\`{r, warning=FALSE} #with(paris_weekdays, chisq.test(TipoDeCuarto, FinesDeNegocios , correct = #TRUE, p = rep(1/length(TipoDeCuarto),length(TipoDeCuarto))))
+H1: el tipo de cuarto influye en si es reversado con motivos de negocios o no 
+#\`\`\`{r, warning=FALSE} #with(paris_weekdays, chisq.test(TipoDeCuarto, FinesDeNegocios , correct = #TRUE, p = rep(1/length(TipoDeCuarto),length(TipoDeCuarto))))
 
 #\`\`\`
 
@@ -1618,16 +1619,16 @@ como podemos ver, el valor p es bastante pequeño por lo que nos permite conclui
 
 #### **Cuarto privado vs Posee mas de un cuarto**
 
-$$Ho: No~existe~relacion~entre~si~el~cuarto~es~privado~y~si~es~para~fines~de~negocios.$$
+$$Ho: No~existe~relacion~entre~si~el~cuarto~es~privado~y~si~posee~mas~de~un~cuarto.$$
 
-$$H1: Existe~relacion~entre~si~es~para~cuarto~privado~y~si~es~para~fines~de~negocios.$$
+$$H1: Existe~relacion~entre~si~es~para~cuarto~privado~y~si~posee~mas~de~un~cuarto.$$
 
 ```{r, warning = FALSE}
 with(datos,chisq.test(CuartoPrivado,PoseeMasDeUnCuarto,correct = TRUE))
 
 ```
 
-Aqui podemos ver el valor p el cual vuelve hacer muy pequeño (menor a 0.05), entonces podemos concluir que si existe un relacion entre cuarto privado y si es para fines de negocios. 
+Aqui podemos ver el valor p el cual vuelve a ser muy pequeño (menor a 0.05), entonces podemos concluir que si existe una relacion entre cuarto privado y si posee mas de un cuarto. 
 
 
 ### **Conclusiones:**
