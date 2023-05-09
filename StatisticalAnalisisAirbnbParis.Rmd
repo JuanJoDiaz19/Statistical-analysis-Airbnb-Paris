@@ -1303,7 +1303,12 @@ Como podemos ver, el valor p es mayor que nuestro nivel de confianza, por lo que
 
 ### **Hipotesis para varias variables**
 
-los rbnb en paris quieren saber como varian sus precios de acuerdo a si el cuarto es compartido o no.
+
+Dentro de esta seccion se van a comparar tanto la media o la proporcion de 2 variables cruzadas dentro de nuestro estudio para poder sacar una conclucion de estas:
+
+#### **Precios del AirBnb deacuerdo al si el cuarto es compartido**
+
+Dentro de este estudio queremos saber como varian sus precios los AirBnb de acuerdo a si el cuarto es compartido o no.
 
 
 ```{r}
@@ -1313,7 +1318,7 @@ datosC2 <- subset(datos,room_shared=="FALSE")
 
 
 
-para comprobar esto primero debemos plantear hipotesis de varianzas y poder ver si podemos tomar varianzas iguales o diferentes
+Para comprobar esto primero debemos plantear hipotesis de varianzas y poder ver si podemos tomar varianzas iguales o diferentes
 
 
 $\sigma_1^2$: varianza de precio en Airbnb de paris

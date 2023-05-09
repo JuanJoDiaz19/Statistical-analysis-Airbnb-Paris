@@ -2805,11 +2805,17 @@ de los alojamientos se pueden utilizar para fines de negocios.</p>
 </div>
 <div id="hipotesis-para-varias-variables" class="section level3">
 <h3><strong>Hipotesis para varias variables</strong></h3>
-<p>los rbnb en paris quieren saber como varian sus precios de acuerdo a
-si el cuarto es compartido o no.</p>
+<p>Dentro de esta seccion se van a comparar tanto la media o la
+proporcion de 2 variables cruzadas dentro de nuestro estudio para poder
+sacar una conclucion de estas:</p>
+<div id="precios-del-airbnb-deacuerdo-al-si-el-cuarto-es-compartido" class="section level4">
+<h4><strong>Precios del AirBnb deacuerdo al si el cuarto es
+compartido</strong></h4>
+<p>Dentro de este estudio queremos saber como varian sus precios los
+AirBnb de acuerdo a si el cuarto es compartido o no.</p>
 <div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="#cb188-1" aria-hidden="true" tabindex="-1"></a>datosC1 <span class="ot">&lt;-</span> <span class="fu">subset</span>(datos,room_shared<span class="sc">==</span><span class="st">&quot;TRUE&quot;</span>)</span>
 <span id="cb188-2"><a href="#cb188-2" aria-hidden="true" tabindex="-1"></a>datosC2 <span class="ot">&lt;-</span> <span class="fu">subset</span>(datos,room_shared<span class="sc">==</span><span class="st">&quot;FALSE&quot;</span>)</span></code></pre></div>
-<p>para comprobar esto primero debemos plantear hipotesis de varianzas y
+<p>Para comprobar esto primero debemos plantear hipotesis de varianzas y
 poder ver si podemos tomar varianzas iguales o diferentes</p>
 <p><span class="math inline">\(\sigma_1^2\)</span>: varianza de precio
 en Airbnb de paris</p>
@@ -2916,6 +2922,7 @@ personas con cuarto publico</p>
 podemos concluir que no existe evidencia para decir que la media de
 personas con cuarto privado tenga menos capacidad de personas que los
 cuartos publicos.</p>
+</div>
 </div>
 <div id="cruces-de-variables" class="section level3">
 <h3><strong>Cruces de variables</strong></h3>
