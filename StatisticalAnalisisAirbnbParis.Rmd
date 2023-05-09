@@ -1551,7 +1551,16 @@ Para AirBnb resulta importante poder comparar los diferentes precios que hay dea
 
 $$H_0: \mu_{Completo} =  \mu_{Privado} = \mu_{Compartido}$$
 
-$$H_1: \mu_{Completo} \neq  \mu_{Privado} \neq \mu_{Compartido}$$
+$$H_1: Al~menos~una~de~ellas~es~diferente$$
+
+Antes de realizar el codigo de anova podemos analizar el comportamiento de los grupos en forma de diagramas de cajas y bigotes:
+
+```{r}
+boxplot(PrecioFinal~TipoDeCuarto, data = Paris_weekdays, ylim = c(0,1500) )
+```
+
+Despues de haber hecho esto si podemos ejecutar el codigo del anova:
+
 *Ejecutamos el codigo de anova:*
 
 ```{r}
@@ -1578,7 +1587,15 @@ Para AirBnb es sumamente importante mirar si hay algun tipo de diferencia en el 
 
 $$H_0: \mu_{Completo} =  \mu_{Privado} = \mu_{Compartido}$$
 
-$$H_1: \mu_{Completo} \neq  \mu_{Privado} \neq \mu_{Compartido}$$
+$$H_1: Al~menos~una~de~ellas~es~diferente$$
+
+Antes de ejecutar el coddigo de anova podemos mirar como ser verian los diagramas de cajas y bigotes de estos 3 grupos:
+
+```{r}
+boxplot(CalificacionDeLimpieza~TipoDeCuarto)
+```
+
+
 *Ejecutamos el codigo de anova:*
 
 ```{r}
@@ -1606,7 +1623,7 @@ $$$$
 
 ### **Ji-Cuadrado**
 
-Esta sección del informe se va a aplicar los tests de chi cuadrado, en la que se evaluará si existe una relación significativa entre dos variables categóricas. Estos tests se van a aplicar tanto a las variables cuantitativas como a las cualitativas de nuestro estudio:
+En esta sección del informe se va a aplicar los tests de chi cuadrado, en la que se evaluará si existe una relación significativa entre dos variables categóricas. Estos tests se van a aplicar tanto a las variables cuantitativas como a las cualitativas de nuestro estudio:
 
 #### **Tipo de cuarto vs Fines de negocio**
 
@@ -1617,7 +1634,7 @@ $$H1: Existe~relacion~entre~el~tipo~de~cuarto~y~si~es~para~fines~de~negocios.$$
 with(datos,chisq.test(TipoDeCuarto, FinesDeNegocios,correct = TRUE))
 ```
 
-como podemos ver, el valor p es bastante pequeño por lo que nos permite concluir que si existe una relacion entre estos.
+Como podemos ver, el valor p es bastante pequeño por lo que nos permite concluir que si existe una relacion entre estos.
 
 #### **Cuarto privado vs Posee mas de un cuarto**
 
