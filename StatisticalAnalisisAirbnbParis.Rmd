@@ -1601,10 +1601,54 @@ Teniendo en cuenta el criterio del pos-anova podemos decir que el tipo de alojam
 
 $$$$
 
+#### **Comparacion de la capacidad de personas con su tipo de alojamiento **
+
+Para AirBnb es muy importante el poder comparar la diversa capacidad de personas deacuerdo con el tipo de alojamiento. Teniendo en cuenta que el tipo de cuarto tiene 3 posibles valores que son : Apartamento/Casa entera, cuarto privado y cuarto compartido, se van a plantear si su capacidad en cada uno de estos grupos es igual:
+
+
+$$H_0: \mu_{Completo} =  \mu_{Privado} = \mu_{Compartido}$$
+
+$$H_1: \mu_{Completo} \neq  \mu_{Privado} \neq \mu_{Compartido}$$
+
+*Ejecutamos el codigo de anova:*
+
+```{r}
+anova<-aov(lm(CapacidadPersonas~TipoDeCuarto))
+summary(anova)
+```
+Con esto podemos ver que el valor p es mucho mas pequeño que 0.05 por lo que podemos rechazar la hipotesis nula y decir que existen medias diferentes entre los grupos. Por ende se puede realizar un Pos-anova para mirar cual es la relacion entre sus medias:
+
+*Ejecutamos el codigo del Pos-anova*
+
+```{r}
+TukeyHSD(anova)
+```
+
+
 
 ### **Ji-Cuadrado**
 
 Esta sección del informe se va a aplicar los tests de chi cuadrado, en la que se evaluará si existe una relación significativa entre dos variables categóricas. Estos tests se van a aplicar tanto a las variables cuantitativas como a las cualitativas de nuestro estudio:
+
+#### **Fines de negocio vs Posee mas de un cuarto**
+
+$$Ho: No~existe~relacion~entre~si~es~por~fin~de~negocio~y~posee~mas~de~un~cuarto.$$
+
+$$H1: Existe~relacion~entre~si~es~para~fin~de~negocio~y~si~posee~mas~de~un~cuarto.$$
+
+```{r, warning = FALSE}
+with(datos,chisq.test(FinesDeNegocios, PoseeMasDeUnCuarto, correct = TRUE))
+```
+El valor p es muy pequeño por loq ue se concluye que si hay una relacion#### **Fines de negocio vs Posee mas de un cuarto**
+
+$$Ho: No~existe~relacion~entre~si~es~por~fin~de~negocio~y~posee~mas~de~un~cuarto.$$
+
+$$H1: Existe~relacion~entre~si~es~para~fin~de~negocio~y~si~posee~mas~de~un~cuarto.$$
+
+```{r, warning = FALSE}
+with(datos,chisq.test(FinesDeNegocios, PoseeMasDeUnCuarto, correct = TRUE))
+```
+El valor p es muy pequeño por loq ue se concluye que si hay una relacion
 
 #### **Tipo de cuarto vs Fines de negocio**
 
