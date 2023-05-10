@@ -1418,38 +1418,11 @@ Dentro de esta sección, de acuerdo a los objetivos planteados al inicio del inf
 
 \$\$\$\$
 
-#### **Precio final vs Calificación de limpieza**
 
-A continuación se ve en el eje x la calificación de limpieza y en el eje y el precio final.
-
-```{r, warning = FALSE}
-df <- data.frame(x = PrecioFinal, y = CalificacionDeLimpieza)
-ggplot(data = data.frame(PrecioFinal, CalificacionDeLimpieza), aes(x = PrecioFinal, y = CalificacionDeLimpieza)) +
-  geom_point() + xlim(0, 3000) + ylim(0, 10) +
-  geom_smooth(method = "lm", formula = y ~ poly(x, 1, raw = TRUE) ) +
-  labs(x = "Precio Final", y = "Calificación de limpieza")
-```
-
-Con esta grafica podemos ver si existe una relación entre el precio final de un alojamiento de Airbnb con respecto a la calificación de limpieza. Ademas, podemos afirmar que esta relación es directamente proporcional, es decir que entre mayor sea el precio, mayor va a ser la calificación de limpieza. Esto nos puede indicar que entre mas elevado es el precio, mas limpio podria llegar a ser el cuarto.
-
-
-
-
-\$\$\$\$
 
 #### **Precio final vs Distancia al centro de la ciudad**
 
-A continuación se muestra una grafica de dispersión del precio final vs la distancia del alojamiento al centro de la ciudad:
-
-```{r, warning = FALSE}
-df <- data.frame(x = PrecioFinal, y = DistanciaCentro)
-ggplot(data = data.frame(PrecioFinal, CalificacionDeLimpieza), aes(x = PrecioFinal, y = DistanciaCentro)) +
-  geom_point() + xlim(0, 5000) + ylim(0, 10) +
-  geom_smooth(method = "lm", formula = y ~ poly(x, 2, raw = TRUE) ) +
-  labs(x = "Precio final", y = "Distancia al centro")
-```
-
-Con esta gráfica no podemos hacer conclusiones fuertes, por lo que podemos decir que en el caso específico de los Airbnb en París no hay una relación entre la distancia al centro de la ciudad con los precios.
+A continuación se muestra muestra una grafica de barras apliadas de estas dos variables y tambien se muestra una tabla cruzada:
 
 ```{r, warning = FALSE}
 
@@ -1462,17 +1435,8 @@ cruce
 
 #### **Precio final vs Capacidad de personas**
 
-En el siguiente gráfico se presenta en el eje x el precio final de los alojamientos y en el eje y la capacidad de personas:
+A continuación se muestra muestra una grafica de barras apliadas de estas dos variables y tambien se muestra una tabla cruzada:
 
-```{r, warning = FALSE}
-df <- data.frame(x = PrecioFinal, y = CapacidadPersonas)
-ggplot(data = data.frame(PrecioFinal, CapacidadPersonas), aes(x = PrecioFinal, y = CapacidadPersonas)) +
-  geom_point() + xlim(0, 1700) + ylim(0, 7) +
-  geom_smooth(method = "lm", formula = y ~ poly(x, 2, raw = TRUE) ) +
-  labs(x = "Precio final", y = "Capacidad personas")
-```
-
-Con esta grafica podemos decir que puede existir una relación entre el precio final y la capacidad de personas en un alojamiento. Asi mismo podriamos decir que dicha relación es directa, es decir que entre mayor sea el precio, mayor cantidad de personas va a tener.
 
 ```{r, warning = FALSE}
 
@@ -1534,18 +1498,6 @@ tabla
 
 ```
 
-###hipotesis de varias para varibles cualitativas
-
-Como podemos ver, queremos conocer si el tipo de cuarto influye en si la habitacion es resevervada con motivos de negocios, por lo tanto planteamos las hipotesis.
-
-H0: el tipo de cuarto no influye en si es reversado con motivos de negocios o no
-
-H1: el tipo de cuarto influye en si es reversado con motivos de negocios o no 
-#\`\`\`{r, warning=FALSE} #with(paris_weekdays, chisq.test(TipoDeCuarto, FinesDeNegocios , correct = #TRUE, p = rep(1/length(TipoDeCuarto),length(TipoDeCuarto))))
-
-#\`\`\`
-
-como podemos ver nuestro valor p es mucho menor que 5, por lo tanto podemos concluir que si existe una relacion en si el tipo de cuarto influye en la desicion de las personas que reservan con fines de negocios.
 
 ### **Anova - Análisis de la Varianza**
 
