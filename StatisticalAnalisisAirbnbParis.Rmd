@@ -134,11 +134,11 @@ La base de datos de la cual vamos a explorar está dentro de un formato .csv y, 
 
 ```{r, include = FALSE, message=FALSE}
 
-#setwd('C:/Users/Jardi/Downloads/santy/inferencia/Statistical-analysis-Airbnb-Paris')
+setwd('C:/Users/Jardi/Downloads/santy/inferencia/Statistical-analysis-Airbnb-Paris')
 #setwd('C:/Users/melyb/OneDrive/Documentos/GitHub/Statistical-analysis-Airbnb-Paris)
 #setwd('C:/Users/melyb/OneDrive/Documentos/GitHub/Statistical-analysis-Airbnb-Paris')
 #setwd('C:/Users/Mateo Silva/Desktop/rparisino/Statistical-analysis-Airbnb-Paris')
-setwd('C:/Users/juanj/Desktop/Universidad/4. CUARTO SEMESTRE/Inferencia Estadistica/Proyecto final/Repositorio Github Proyecto Final/Statistical-analysis-Airbnb-Paris ')
+#setwd('C:/Users/juanj/Desktop/Universidad/4. CUARTO SEMESTRE/Inferencia Estadistica/Proyecto final/Repositorio Github Proyecto Final/Statistical-analysis-Airbnb-Paris ')
 getwd
 Paris_weekdays <- read_csv("paris_weekdays.csv")
 datos <- Paris_weekdays
@@ -671,15 +671,20 @@ Generamos una tabla de frecuencias
 
 ```{r, echo = FALSE}
 tablaDeFrecuencia <- table(TipoDeCuarto)
-print(tablaDeFrecuencia)
+tabla <- as.data.frame.table(tablaDeFrecuencia)
+frec_rel <- prop.table(tablaDeFrecuencia)
+frec_rel_acum <- cumsum(frec_rel)
+
+tabla <- as.data.frame.table(tablaDeFrecuencia)
+tabla$frec_rel <- frec_rel
+tabla$frec_rel_acum <- frec_rel_acum
+tabla <- tabla[,c(1, 2, 3, 4)]
+colnames(tabla) <- c("categoria", "frec. abs", "frec. rel", "frec. rel. acum")
+rownames(tabla) <- NULL
+
+print(tabla)
 ```
 
-Calculamos la frecuencia relativa
-
-```{r, echo = FALSE}
-tablaDeFrecuenciaRelativa <- prop.table(tablaDeFrecuencia)
-print(tablaDeFrecuenciaRelativa)
-```
 
 Ahora calculamos la moda
 
@@ -700,14 +705,18 @@ Generamos una tabla de frecuencias
 
 ```{r, echo = FALSE}
 tablaDeFrecuencia <- table(CuartoPrivado)
-print(tablaDeFrecuencia)
-```
+tabla <- as.data.frame.table(tablaDeFrecuencia)
+frec_rel <- prop.table(tablaDeFrecuencia)
+frec_rel_acum <- cumsum(frec_rel)
 
-Calculamos la frecuencia relativa
+tabla <- as.data.frame.table(tablaDeFrecuencia)
+tabla$frec_rel <- frec_rel
+tabla$frec_rel_acum <- frec_rel_acum
+tabla <- tabla[,c(1, 2, 3, 4)]
+colnames(tabla) <- c("categoria", "frec. abs", "frec. rel", "frec. rel. acum")
+rownames(tabla) <- NULL
 
-```{r, echo = FALSE}
-tablaDeFrecuenciaRelativa <- prop.table(tablaDeFrecuencia)
-print(tablaDeFrecuenciaRelativa)
+print(tabla)
 ```
 
 Ahora calculamos la moda
@@ -717,11 +726,14 @@ moda <- names(tablaDeFrecuencia)[which.max(tablaDeFrecuencia)]
 print(moda)
 ```
 
-*Grafico de barras*
+*Gráfico de pastel:*
 
-```{r}
-barplot(table(CuartoPrivado), names.arg = c("Sin cuarto privado", "Con cuarto privado"))  
+```{r, echo = FALSE}
+colores <- c("gray62", "white")
+tabla <- table(CuartoPrivado)
+pie(tabla, main="Grafico de pastel Cuarto privado", labels = c("Sin cuarto privado", "Con cuarto privado"), col = colores)
 ```
+
 
 ### **Múltiples cuartos**
 
@@ -729,14 +741,18 @@ Generamos una tabla de frecuencias
 
 ```{r, echo = FALSE}
 tablaDeFrecuencia <- table(PoseeMasDeUnCuarto)
-print(tablaDeFrecuencia)
-```
+tabla <- as.data.frame.table(tablaDeFrecuencia)
+frec_rel <- prop.table(tablaDeFrecuencia)
+frec_rel_acum <- cumsum(frec_rel)
 
-Calculamos la frecuencia relativa
+tabla <- as.data.frame.table(tablaDeFrecuencia)
+tabla$frec_rel <- frec_rel
+tabla$frec_rel_acum <- frec_rel_acum
+tabla <- tabla[,c(1, 2, 3, 4)]
+colnames(tabla) <- c("categoria", "frec. abs", "frec. rel", "frec. rel. acum")
+rownames(tabla) <- NULL
 
-```{r, echo = FALSE}
-tablaDeFrecuenciaRelativa <- prop.table(tablaDeFrecuencia)
-print(tablaDeFrecuenciaRelativa)
+print(tabla)
 ```
 
 Ahora calculamos la moda
@@ -764,14 +780,18 @@ pie(tabla, main="Grafico de pastel multiples cuartos", labels = c("Posee un cuar
 
 ```{r, echo = FALSE}
 frecuencia_FinNegocios <- table(FinesDeNegocios)
-print(frecuencia_FinNegocios)
-```
+tabla <- as.data.frame.table(frecuencia_FinNegocios)
+frec_rel <- prop.table(frecuencia_FinNegocios)
+frec_rel_acum <- cumsum(frec_rel)
 
-*Calculamos la frecuencia relativa*
+tabla <- as.data.frame.table(frecuencia_FinNegocios)
+tabla$frec_rel <- frec_rel
+tabla$frec_rel_acum <- frec_rel_acum
+tabla <- tabla[,c(1, 2, 3, 4)]
+colnames(tabla) <- c("categoria", "frec. abs", "frec. rel", "frec. rel. acum")
+rownames(tabla) <- NULL
 
-```{r, echo = FALSE}
-frecuenciaRelativa_FinNegocios <- prop.table(frecuencia_FinNegocios)
-print(frecuenciaRelativa_FinNegocios)
+print(tabla)
 ```
 
 *Ahora calculamos la moda*
