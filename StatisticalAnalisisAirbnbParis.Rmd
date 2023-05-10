@@ -1324,11 +1324,24 @@ Como podemos ver, el valor p es mayor que nuestro nivel de confianza, por lo que
 ### **Hipotesis para varias variables**
 
 
-Dentro de esta seccion se van a comparar tanto la media o la proporcion de 2 variables cruzadas dentro de nuestro estudio para poder sacar una conclucion de estas:
+Dentro de esta seccion se van a comparar tanto la media o la proporcion de 2 variables cruzadas dentro de nuestro estudio para poder sacar conclusiones sobre estas:
+$$$$
 
 #### **Precios del AirBnb deacuerdo al si el cuarto es compartido**
 
-Dentro de este estudio queremos saber como varian sus precios los AirBnb de acuerdo a si el cuarto es compartido o no.
+Dentro de este estudio queremos saber como varian sus precios los AirBnb de acuerdo a si el cuarto es compartido o no, por lo que vamos a plantear las siguientes hipotesis:
+
+
+$$H_0: \mu_1 \leq \mu_2$$
+
+$$H_1: \mu_1 > \mu_2$$
+
+Siendo:
+
+* $\mu_1$: Media de precios de Airbnb en paris con cuarto compartido
+
+* $\mu_2$: Media de precios de Airbnb en paris con cuarto no compartido
+
 
 
 ```{r}
@@ -1338,34 +1351,25 @@ datosC2 <- subset(datos,room_shared=="FALSE")
 
 
 
-Para comprobar esto primero debemos plantear hipotesis de varianzas y poder ver si podemos tomar varianzas iguales o diferentes
+Para comprobar esto primero debemos plantear hipotesis de varianzas y poder ver si podemos tomar varianzas iguales o diferentes, por lo que vamos a plantear las siguientes hipotesis:
 
+$$H_0: \sigma_1^2 = \sigma_2^2$$
 
-$\sigma_1^2$: varianza de precio en Airbnb de paris
+$$H_1: \sigma_1^2 \neq \sigma_2^2$$
+Siendo:
 
-$\sigma_2^2$: varianza de precio en Airbnb de budapest
+* $\sigma_1^2$: Varianza de precio en Airbnb de Paris
+
+* $\sigma_2^2$: Varianza de precio en Airbnb de Budapest
 
  
-$H_0: \sigma_1^2 = \sigma_2^2$
 
-$H_1: \sigma_1^2 \neq \sigma_2^2$
 
 ```{r}
 var.test(datosC1$realSum,datosC2$realSum, alternative = "two.sided",conf.level = 0.95)
 ```
 
-como podemos ver, el valor p es mucho menor que 0.05 por lo tanto asumimos varianzas diferentes
-
-ahora, compararemos la media de los precios asumiendo varianzas diferentes
-
-$\mu_1$: media de precios de Airbnb en paris con cuarto compartido
-
-$\mu_2$: media de precios de Airbnb en paris con cuarto no compartido
-
-$H_0: \mu_1 \leq \mu_2$
-
-$H_1: \mu_1 > \mu_2$
-
+Como podemos ver, el valor p es mucho menor que 0.05 por lo tanto podemos **asumir varianzas diferentes**. Ahora, compararemos la media de los precios asumiendo varianzas diferentes:
 
 
 ```{r}
@@ -1374,12 +1378,23 @@ t.test(datosC1$realSum,datosC2$realSum,
       mu = 0, paired = FALSE, var.equal = FALSE,
      conf.level = 0.95)
 ```
-Podemos ver que el valor p es mayor que 0,05, por lo tanto podemos concluir que no existe evidencia para decir que el precio de las habitaciones no compartidas es mayor al de las compartidas
+
+Podemos ver que el valor p es mayor que 0,05, por lo tanto podemos concluir que no existe evidencia para decir que el precio de las habitaciones no compartidas es mayor al de las compartidas.
 
 
-*Capacidad de personas*
+#### **Capacidad de personas cuando sus habitaciones son privadas o publicas**
 
-los rbnb en paris desean conocer que capacidad tiene sus habitacion cuando son privadas o publicas
+Se desea conocer que relacion tiene media la capacidad de personas cuando las habitaciones cuando son privadas o publicas, es por esto que se plantean las siguientes hipotesis:
+
+$$H_0: \mu_1 \leq \mu_2$$
+
+$$H_1: \mu_1 > \mu_2$$
+
+Siendo:
+
+* $\mu_1$: capacidad media de personas de con cuarto privado
+
+* $\mu_2$: capacidad media de personas con cuarto publico
 
 ```{r}
 datosC1 <- subset(datos,room_private=="TRUE")
@@ -1388,29 +1403,23 @@ datosC2 <- subset(datos,room_private=="FALSE")
 
 A continuacion se planteara una hipotesis para dos variables para comprobar si la capacidad media de personas de un cuarto publico es mayor al de uno privado. Primero vamos a verificar si podemos asumir varianzas iguales o diferentes:
 
-$\sigma_1^2$: Varianza de capacidad de personas con cuarto publico
 
-$\sigma_2^2$: Varianza de capacidad de personas con cuarto privado
  
-$H_0: \sigma_1^2 = \sigma_2^2$
+$$H_0: \sigma_1^2 = \sigma_2^2$$
 
-$H_1: \sigma_1^2 \neq \sigma_2^2$
+$$H_1: \sigma_1^2 \neq \sigma_2^2$$
+
+Siendo:
+
+* $\sigma_1^2$: Varianza de capacidad de personas con cuarto publico
+
+* $\sigma_2^2$: Varianza de capacidad de personas con cuarto privado
 
 ```{r}
 var.test(datosC2$person_capacity,datosC1$person_capacity, alternative = "greater",conf.level = 0.95)
 ```
 
-Podemos ver como el valor $p$ es mucho menor que 0.05, por lo que podemos asumir varianzas varianzas diferentes.
-
-Ahora, compararemos la capacidad media de personas asumiendo varianzas diferentes
-
-$\mu_1$: capacidad media de personas de con cuarto privado
-
-$\mu_2$: capacidad media de personas con cuarto publico
-
-$H_0: \mu_1 \leq \mu_2$
-
-$H_1: \mu_1 > \mu_2$
+Podemos ver como el valor $p$ es mucho menor que 0.05, por lo que podemos asumir varianzas varianzas diferentes. Ahora, compararemos la capacidad media de personas asumiendo varianzas diferentes:
 
 ```{r}
 t.test(datosC1$person_capacity,datosC2$person_capacity,
@@ -1419,7 +1428,7 @@ t.test(datosC1$person_capacity,datosC2$person_capacity,
        conf.level = 0.95)
 ```
 
-aqui podemos ver que el valor p es mucho mayor a 0,05, por lo tanto podemos concluir que no existe evidencia para decir que la media de personas con cuarto privado tenga menos capacidad de personas que los cuartos publicos.
+Aqui podemos ver que el valor p es mucho mayor a 0,05, por lo tanto podemos concluir que no existe evidencia para decir que la media de personas con cuarto privado tenga menos capacidad de personas que los cuartos publicos.
 
 
 
@@ -1429,38 +1438,11 @@ Dentro de esta sección, de acuerdo a los objetivos planteados al inicio del inf
 
 \$\$\$\$
 
-#### **Precio final vs Calificación de limpieza**
 
-A continuación se ve en el eje x la calificación de limpieza y en el eje y el precio final.
-
-```{r, warning = FALSE}
-df <- data.frame(x = PrecioFinal, y = CalificacionDeLimpieza)
-ggplot(data = data.frame(PrecioFinal, CalificacionDeLimpieza), aes(x = PrecioFinal, y = CalificacionDeLimpieza)) +
-  geom_point() + xlim(0, 3000) + ylim(0, 10) +
-  geom_smooth(method = "lm", formula = y ~ poly(x, 1, raw = TRUE) ) +
-  labs(x = "Precio Final", y = "Calificación de limpieza")
-```
-
-Con esta grafica podemos ver si existe una relación entre el precio final de un alojamiento de Airbnb con respecto a la calificación de limpieza. Ademas, podemos afirmar que esta relación es directamente proporcional, es decir que entre mayor sea el precio, mayor va a ser la calificación de limpieza. Esto nos puede indicar que entre mas elevado es el precio, mas limpio podria llegar a ser el cuarto.
-
-
-
-
-\$\$\$\$
 
 #### **Precio final vs Distancia al centro de la ciudad**
 
-A continuación se muestra una grafica de dispersión del precio final vs la distancia del alojamiento al centro de la ciudad:
-
-```{r, warning = FALSE}
-df <- data.frame(x = PrecioFinal, y = DistanciaCentro)
-ggplot(data = data.frame(PrecioFinal, CalificacionDeLimpieza), aes(x = PrecioFinal, y = DistanciaCentro)) +
-  geom_point() + xlim(0, 5000) + ylim(0, 10) +
-  geom_smooth(method = "lm", formula = y ~ poly(x, 2, raw = TRUE) ) +
-  labs(x = "Precio final", y = "Distancia al centro")
-```
-
-Con esta gráfica no podemos hacer conclusiones fuertes, por lo que podemos decir que en el caso específico de los Airbnb en París no hay una relación entre la distancia al centro de la ciudad con los precios.
+A continuación se muestra muestra una grafica de barras apliadas de estas dos variables y tambien se muestra una tabla cruzada:
 
 ```{r, warning = FALSE}
 
@@ -1473,17 +1455,8 @@ cruce
 
 #### **Precio final vs Capacidad de personas**
 
-En el siguiente gráfico se presenta en el eje x el precio final de los alojamientos y en el eje y la capacidad de personas:
+A continuación se muestra muestra una grafica de barras apliadas de estas dos variables y tambien se muestra una tabla cruzada:
 
-```{r, warning = FALSE}
-df <- data.frame(x = PrecioFinal, y = CapacidadPersonas)
-ggplot(data = data.frame(PrecioFinal, CapacidadPersonas), aes(x = PrecioFinal, y = CapacidadPersonas)) +
-  geom_point() + xlim(0, 1700) + ylim(0, 7) +
-  geom_smooth(method = "lm", formula = y ~ poly(x, 2, raw = TRUE) ) +
-  labs(x = "Precio final", y = "Capacidad personas")
-```
-
-Con esta grafica podemos decir que puede existir una relación entre el precio final y la capacidad de personas en un alojamiento. Asi mismo podriamos decir que dicha relación es directa, es decir que entre mayor sea el precio, mayor cantidad de personas va a tener.
 
 ```{r, warning = FALSE}
 
@@ -1545,18 +1518,6 @@ tabla
 
 ```
 
-###hipotesis de varias para varibles cualitativas
-
-Como podemos ver, queremos conocer si el tipo de cuarto influye en si la habitacion es resevervada con motivos de negocios, por lo tanto planteamos las hipotesis.
-
-H0: el tipo de cuarto no influye en si es reversado con motivos de negocios o no
-
-H1: el tipo de cuarto influye en si es reversado con motivos de negocios o no 
-#\`\`\`{r, warning=FALSE} #with(paris_weekdays, chisq.test(TipoDeCuarto, FinesDeNegocios , correct = #TRUE, p = rep(1/length(TipoDeCuarto),length(TipoDeCuarto))))
-
-#\`\`\`
-
-como podemos ver nuestro valor p es mucho menor que 5, por lo tanto podemos concluir que si existe una relacion en si el tipo de cuarto influye en la desicion de las personas que reservan con fines de negocios.
 
 ### **Anova - Análisis de la Varianza**
 
