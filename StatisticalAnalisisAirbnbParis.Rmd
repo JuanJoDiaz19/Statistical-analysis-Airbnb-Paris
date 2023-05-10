@@ -1636,6 +1636,15 @@ with(datos,chisq.test(CuartoPrivado,PoseeMasDeUnCuarto,correct = TRUE))
 
 Aqui podemos ver el valor p el cual vuelve a ser muy pequeño (menor a 0.05), entonces podemos concluir que si existe una relacion entre cuarto privado y si posee mas de un cuarto. 
 
+### **Regresion lineal - PONER CUALES SON LAS VARIABLES QUE QUEREMOS HACER JEJEJE**
+
+```{r}
+#names(Paris_weekdays)
+baseSinAtipicos <- filter(Paris_weekdays, Paris_weekdays$realSum < 900)
+
+plot(baseSinAtipicos$realSum, baseSinAtipicos$cleanliness_rating)
+```
+
 
 ### **Conclusiones:**
 
