@@ -2807,23 +2807,37 @@ de los alojamientos se pueden utilizar para fines de negocios.</p>
 <h3><strong>Hipotesis para varias variables</strong></h3>
 <p>Dentro de esta seccion se van a comparar tanto la media o la
 proporcion de 2 variables cruzadas dentro de nuestro estudio para poder
-sacar una conclucion de estas:</p>
+sacar conclusiones sobre estas: $$$$</p>
 <div id="precios-del-airbnb-deacuerdo-al-si-el-cuarto-es-compartido" class="section level4">
 <h4><strong>Precios del AirBnb deacuerdo al si el cuarto es
 compartido</strong></h4>
 <p>Dentro de este estudio queremos saber como varian sus precios los
-AirBnb de acuerdo a si el cuarto es compartido o no.</p>
+AirBnb de acuerdo a si el cuarto es compartido o no, por lo que vamos a
+plantear las siguientes hipotesis:</p>
+<p><span class="math display">\[H_0: \mu_1 \leq \mu_2\]</span></p>
+<p><span class="math display">\[H_1: \mu_1 &gt; \mu_2\]</span></p>
+<p>Siendo:</p>
+<ul>
+<li><p><span class="math inline">\(\mu_1\)</span>: Media de precios de
+Airbnb en paris con cuarto compartido</p></li>
+<li><p><span class="math inline">\(\mu_2\)</span>: Media de precios de
+Airbnb en paris con cuarto no compartido</p></li>
+</ul>
 <div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="#cb188-1" aria-hidden="true" tabindex="-1"></a>datosC1 <span class="ot">&lt;-</span> <span class="fu">subset</span>(datos,room_shared<span class="sc">==</span><span class="st">&quot;TRUE&quot;</span>)</span>
 <span id="cb188-2"><a href="#cb188-2" aria-hidden="true" tabindex="-1"></a>datosC2 <span class="ot">&lt;-</span> <span class="fu">subset</span>(datos,room_shared<span class="sc">==</span><span class="st">&quot;FALSE&quot;</span>)</span></code></pre></div>
 <p>Para comprobar esto primero debemos plantear hipotesis de varianzas y
-poder ver si podemos tomar varianzas iguales o diferentes</p>
-<p><span class="math inline">\(\sigma_1^2\)</span>: varianza de precio
-en Airbnb de paris</p>
-<p><span class="math inline">\(\sigma_2^2\)</span>: varianza de precio
-en Airbnb de budapest</p>
-<p><span class="math inline">\(H_0: \sigma_1^2 = \sigma_2^2\)</span></p>
-<p><span class="math inline">\(H_1: \sigma_1^2 \neq
-\sigma_2^2\)</span></p>
+poder ver si podemos tomar varianzas iguales o diferentes, por lo que
+vamos a plantear las siguientes hipotesis:</p>
+<p><span class="math display">\[H_0: \sigma_1^2 =
+\sigma_2^2\]</span></p>
+<p><span class="math display">\[H_1: \sigma_1^2 \neq \sigma_2^2\]</span>
+Siendo:</p>
+<ul>
+<li><p><span class="math inline">\(\sigma_1^2\)</span>: Varianza de
+precio en Airbnb de Paris</p></li>
+<li><p><span class="math inline">\(\sigma_2^2\)</span>: Varianza de
+precio en Airbnb de Budapest</p></li>
+</ul>
 <div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="#cb189-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var.test</span>(datosC1<span class="sc">$</span>realSum,datosC2<span class="sc">$</span>realSum, <span class="at">alternative =</span> <span class="st">&quot;two.sided&quot;</span>,<span class="at">conf.level =</span> <span class="fl">0.95</span>)</span></code></pre></div>
 <pre><code>## 
 ##  F test to compare two variances
@@ -2836,16 +2850,9 @@ en Airbnb de budapest</p>
 ## sample estimates:
 ## ratio of variances 
 ##         0.02542338</code></pre>
-<p>como podemos ver, el valor p es mucho menor que 0.05 por lo tanto
-asumimos varianzas diferentes</p>
-<p>ahora, compararemos la media de los precios asumiendo varianzas
-diferentes</p>
-<p><span class="math inline">\(\mu_1\)</span>: media de precios de
-Airbnb en paris con cuarto compartido</p>
-<p><span class="math inline">\(\mu_2\)</span>: media de precios de
-Airbnb en paris con cuarto no compartido</p>
-<p><span class="math inline">\(H_0: \mu_1 \leq \mu_2\)</span></p>
-<p><span class="math inline">\(H_1: \mu_1 &gt; \mu_2\)</span></p>
+<p>Como podemos ver, el valor p es mucho menor que 0.05 por lo tanto
+podemos <strong>asumir varianzas diferentes</strong>. Ahora,
+compararemos la media de los precios asumiendo varianzas diferentes:</p>
 <div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="#cb191-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(datosC1<span class="sc">$</span>realSum,datosC2<span class="sc">$</span>realSum,</span>
 <span id="cb191-2"><a href="#cb191-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">alternative =</span> <span class="st">&quot;greater&quot;</span>,</span>
 <span id="cb191-3"><a href="#cb191-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">mu =</span> <span class="dv">0</span>, <span class="at">paired =</span> <span class="cn">FALSE</span>, <span class="at">var.equal =</span> <span class="cn">FALSE</span>,</span>
@@ -2863,23 +2870,40 @@ Airbnb en paris con cuarto no compartido</p>
 ##  139.7981  402.7349</code></pre>
 <p>Podemos ver que el valor p es mayor que 0,05, por lo tanto podemos
 concluir que no existe evidencia para decir que el precio de las
-habitaciones no compartidas es mayor al de las compartidas</p>
-<p><em>Capacidad de personas</em></p>
-<p>los rbnb en paris desean conocer que capacidad tiene sus habitacion
-cuando son privadas o publicas</p>
+habitaciones no compartidas es mayor al de las compartidas.</p>
+</div>
+<div id="capacidad-de-personas-cuando-sus-habitaciones-son-privadas-o-publicas" class="section level4">
+<h4><strong>Capacidad de personas cuando sus habitaciones son privadas o
+publicas</strong></h4>
+<p>Se desea conocer que relacion tiene media la capacidad de personas
+cuando las habitaciones cuando son privadas o publicas, es por esto que
+se plantean las siguientes hipotesis:</p>
+<p><span class="math display">\[H_0: \mu_1 \leq \mu_2\]</span></p>
+<p><span class="math display">\[H_1: \mu_1 &gt; \mu_2\]</span></p>
+<p>Siendo:</p>
+<ul>
+<li><p><span class="math inline">\(\mu_1\)</span>: capacidad media de
+personas de con cuarto privado</p></li>
+<li><p><span class="math inline">\(\mu_2\)</span>: capacidad media de
+personas con cuarto publico</p></li>
+</ul>
 <div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="#cb193-1" aria-hidden="true" tabindex="-1"></a>datosC1 <span class="ot">&lt;-</span> <span class="fu">subset</span>(datos,room_private<span class="sc">==</span><span class="st">&quot;TRUE&quot;</span>)</span>
 <span id="cb193-2"><a href="#cb193-2" aria-hidden="true" tabindex="-1"></a>datosC2 <span class="ot">&lt;-</span> <span class="fu">subset</span>(datos,room_private<span class="sc">==</span><span class="st">&quot;FALSE&quot;</span>)</span></code></pre></div>
 <p>A continuacion se planteara una hipotesis para dos variables para
 comprobar si la capacidad media de personas de un cuarto publico es
 mayor al de uno privado. Primero vamos a verificar si podemos asumir
 varianzas iguales o diferentes:</p>
-<p><span class="math inline">\(\sigma_1^2\)</span>: Varianza de
-capacidad de personas con cuarto publico</p>
-<p><span class="math inline">\(\sigma_2^2\)</span>: Varianza de
-capacidad de personas con cuarto privado</p>
-<p><span class="math inline">\(H_0: \sigma_1^2 = \sigma_2^2\)</span></p>
-<p><span class="math inline">\(H_1: \sigma_1^2 \neq
-\sigma_2^2\)</span></p>
+<p><span class="math display">\[H_0: \sigma_1^2 =
+\sigma_2^2\]</span></p>
+<p><span class="math display">\[H_1: \sigma_1^2 \neq
+\sigma_2^2\]</span></p>
+<p>Siendo:</p>
+<ul>
+<li><p><span class="math inline">\(\sigma_1^2\)</span>: Varianza de
+capacidad de personas con cuarto publico</p></li>
+<li><p><span class="math inline">\(\sigma_2^2\)</span>: Varianza de
+capacidad de personas con cuarto privado</p></li>
+</ul>
 <div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="#cb194-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var.test</span>(datosC2<span class="sc">$</span>person_capacity,datosC1<span class="sc">$</span>person_capacity, <span class="at">alternative =</span> <span class="st">&quot;greater&quot;</span>,<span class="at">conf.level =</span> <span class="fl">0.95</span>)</span></code></pre></div>
 <pre><code>## 
 ##  F test to compare two variances
@@ -2897,12 +2921,6 @@ mucho menor que 0.05, por lo que podemos asumir varianzas varianzas
 diferentes.</p>
 <p>Ahora, compararemos la capacidad media de personas asumiendo
 varianzas diferentes</p>
-<p><span class="math inline">\(\mu_1\)</span>: capacidad media de
-personas de con cuarto privado</p>
-<p><span class="math inline">\(\mu_2\)</span>: capacidad media de
-personas con cuarto publico</p>
-<p><span class="math inline">\(H_0: \mu_1 \leq \mu_2\)</span></p>
-<p><span class="math inline">\(H_1: \mu_1 &gt; \mu_2\)</span></p>
 <div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="#cb196-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(datosC1<span class="sc">$</span>person_capacity,datosC2<span class="sc">$</span>person_capacity,</span>
 <span id="cb196-2"><a href="#cb196-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">alternative =</span> <span class="st">&quot;greater&quot;</span>,</span>
 <span id="cb196-3"><a href="#cb196-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">mu =</span> <span class="dv">0</span>, <span class="at">paired =</span> <span class="cn">FALSE</span>, <span class="at">var.equal =</span> <span class="cn">TRUE</span>,</span>
@@ -2918,7 +2936,7 @@ personas con cuarto publico</p>
 ## sample estimates:
 ## mean of x mean of y 
 ##  2.281003  3.160202</code></pre>
-<p>aqui podemos ver que el valor p es mucho mayor a 0,05, por lo tanto
+<p>Aqui podemos ver que el valor p es mucho mayor a 0,05, por lo tanto
 podemos concluir que no existe evidencia para decir que la media de
 personas con cuarto privado tenga menos capacidad de personas que los
 cuartos publicos.</p>
