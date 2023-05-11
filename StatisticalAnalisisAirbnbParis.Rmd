@@ -137,8 +137,8 @@ La base de datos de la cual vamos a explorar está dentro de un formato .csv y, 
 #setwd('C:/Users/Jardi/Downloads/santy/inferencia/Statistical-analysis-Airbnb-Paris')
 #setwd('C:/Users/melyb/OneDrive/Documentos/GitHub/Statistical-analysis-Airbnb-Paris)
 #setwd('C:/Users/melyb/OneDrive/Documentos/GitHub/Statistical-analysis-Airbnb-Paris')
-#setwd('C:/Users/Mateo Silva/Desktop/rparisino/Statistical-analysis-Airbnb-Paris')
-setwd('C:/Users/juanj/Desktop/Universidad/4. CUARTO SEMESTRE/Inferencia Estadistica/Proyecto final/Repositorio Github Proyecto Final/Statistical-analysis-Airbnb-Paris ')
+setwd('C:/Users/Mateo Silva/Desktop/rparisino/Statistical-analysis-Airbnb-Paris')
+#setwd('C:/Users/juanj/Desktop/Universidad/4. CUARTO SEMESTRE/Inferencia Estadistica/Proyecto final/Repositorio Github Proyecto Final/Statistical-analysis-Airbnb-Paris ')
 getwd
 Paris_weekdays <- read_csv("paris_weekdays.csv")
 datos <- Paris_weekdays
@@ -1452,13 +1452,7 @@ barplot(tabla, beside = FALSE,
 
 En esta grafica podemos observar que asombrosamente los alojamientos con fines de negocios tienen una mayor proporción de cuartos compartidos a comparación de los alojamientos que no fueron para fines de negocios.
 
-Tabla cruzada
 
-```{r, warning=FALSE}
-tabla <- crosstab(TipoDeCuarto,FinesDeNegocios,prop.c = TRUE,plot = FALSE)
-tabla
-
-```
 
 #### **Cuarto privado vs Posee mas de un cuarto**
 
@@ -1477,14 +1471,6 @@ barplot(tabla, beside = FALSE,
 
 Con esta grafica, a diferencia de los alojamientos que no poseen mas de un cuarto, poco menos de la mitad de los alojamientos que poseen mas de un cuarto poseen cuartos privados.
 
-Tabla cruzada
-
-```{r, warning=FALSE}
-tabla <- crosstab(CuartoPrivado,PoseeMasDeUnCuarto,prop.c = TRUE,plot = FALSE)
-tabla
-
-
-```
 
 
 ### **Anova - Análisis de la Varianza**
@@ -1593,16 +1579,14 @@ with(datos,chisq.test(FinesDeNegocios, PoseeMasDeUnCuarto, correct = TRUE))
 ```
 El valor p es muy pequeño por loq ue se concluye que si hay una relacion
 
-#### **Fines de negocio vs Posee mas de un cuarto**
+```{r, warning=FALSE}
+tabla <- crosstab(FinesDeNegocios,PoseeMasDeUnCuarto,prop.c = TRUE,plot = FALSE)
+tabla
 
-$$Ho: No~existe~relacion~entre~si~es~por~fin~de~negocio~y~posee~mas~de~un~cuarto.$$
-
-$$H1: Existe~relacion~entre~si~es~para~fin~de~negocio~y~si~posee~mas~de~un~cuarto.$$
-
-```{r, warning = FALSE}
-with(datos,chisq.test(FinesDeNegocios, PoseeMasDeUnCuarto, correct = TRUE))
 ```
-El valor p es muy pequeño por loq ue se concluye que si hay una relacion
+
+
+
 
 #### **Tipo de cuarto vs Fines de negocio**
 
@@ -1614,6 +1598,12 @@ with(datos,chisq.test(TipoDeCuarto, FinesDeNegocios,correct = TRUE))
 ```
 
 como podemos ver, el valor p es bastante pequeño por lo que nos permite concluir que si existe una relacion entre estos.
+
+```{r, warning=FALSE}
+tabla <- crosstab(TipoDeCuarto,FinesDeNegocios,prop.c = TRUE,plot = FALSE)
+tabla
+
+```
 
 #### **Cuarto privado vs Posee mas de un cuarto**
 
@@ -1627,6 +1617,12 @@ with(datos,chisq.test(CuartoPrivado,PoseeMasDeUnCuarto,correct = TRUE))
 ```
 
 Aqui podemos ver el valor p el cual vuelve a ser muy pequeño (menor a 0.05), entonces podemos concluir que si existe una relacion entre cuarto privado y si posee mas de un cuarto. 
+
+```{r, warning=FALSE}
+tabla <- crosstab(CuartoPrivado,PoseeMasDeUnCuarto,prop.c = TRUE,plot = FALSE)
+tabla
+
+```
 
 ### **Regresion lineal - PONER CUALES SON LAS VARIABLES QUE QUEREMOS HACER JEJEJE**
 
