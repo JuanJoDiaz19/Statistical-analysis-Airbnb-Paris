@@ -135,10 +135,9 @@ La base de datos de la cual vamos a explorar está dentro de un formato .csv y, 
 ```{r, include = FALSE, message=FALSE}
 
 #setwd('C:/Users/Jardi/Downloads/santy/inferencia/Statistical-analysis-Airbnb-Paris')
-#setwd('C:/Users/melyb/OneDrive/Documentos/GitHub/Statistical-analysis-Airbnb-Paris)
 #setwd('C:/Users/melyb/OneDrive/Documentos/GitHub/Statistical-analysis-Airbnb-Paris')
-setwd('C:/Users/Mateo Silva/Desktop/rparisino/Statistical-analysis-Airbnb-Paris')
-#setwd('C:/Users/juanj/Desktop/Universidad/4. CUARTO SEMESTRE/Inferencia Estadistica/Proyecto final/Repositorio Github Proyecto Final/Statistical-analysis-Airbnb-Paris ')
+#setwd('C:/Users/Mateo Silva/Desktop/rparisino/Statistical-analysis-Airbnb-Paris')
+setwd('C:/Users/juanj/Desktop/Universidad/4. CUARTO SEMESTRE/Inferencia Estadistica/Proyecto final/Repositorio Github Proyecto Final/Statistical-analysis-Airbnb-Paris ')
 getwd
 Paris_weekdays <- read_csv("paris_weekdays.csv")
 datos <- Paris_weekdays
@@ -1624,32 +1623,112 @@ tabla
 
 ```
 
-### **Regresion lineal - PONER CUALES SON LAS VARIABLES QUE QUEREMOS HACER JEJEJE**
+### **Regresion lineal - Distancia al centro vs Precio final**
+
+Dentro de esta seccion del informe se va a plantear una regresion lineal entre las varaibles de distancia al centro de la ciudad, siendo esta la variable independiente y el precio final del alojamiento que seria la variable dependiente. Sin embargo cuando graficamos estas 2 variables en una grafico de dispersion tenemos el siguiente resultado:
 
 ```{r}
 #names(Paris_weekdays)
 baseSinAtipicos <- filter(Paris_weekdays, Paris_weekdays$realSum < 1500)
-baseSinAtipicos1 <-  filter(baseSinAtipicos, baseSinAtipicos$room_type == "Entire home/apt")
-baseSinAtipicos1 <-  filter(baseSinAtipicos1, baseSinAtipicos1$person_capacity == 2)
-baseSinAtipicos1 <-  filter(baseSinAtipicos1, baseSinAtipicos1$multi == 1)
-baseSinAtipicos1 <-  filter(baseSinAtipicos1, baseSinAtipicos1$cleanliness_rating == 10)
 
+plot(baseSinAtipicos$dist, baseSinAtipicos$realSum)
 
-plot(baseSinAtipicos1$dist, baseSinAtipicos1$realSum)
-
-cor.test(baseSinAtipicos1$dist, baseSinAtipicos1$realSum)
 ```
+
+Aqui podemos ver que los datos estan muy dispersos y no siguen alguna tendencia que se pueda observar a simple vista. Esto se debe a que realmente el precio de un alojamiento en AirBnb no depende exclusivamente de la distancia al centro de la ciudad, sino tambien por otros atributos como si es compartido o privado, los metros cuadrados que tiene o sus acabados. Es por esto que para este caso vamos a fijar una de las variables que intervienen en nuestro modelo que seria el del tipo de alojamiento y lo vamos a fijar como "Cuarto compartido". A continuacion se ve el grafico de dispersion de esto:
 
 ```{r}
 baseSinAtipicos1 <-  filter(baseSinAtipicos, baseSinAtipicos$room_type == "Shared room")
-#baseSinAtipicos1 <-  filter(baseSinAtipicos1, baseSinAtipicos1$person_capacity > 4)
 
 plot(baseSinAtipicos1$dist, baseSinAtipicos1$realSum)
+```
 
+#### **Formulacion de hipotesis:**
+
+##### **Relacion entre las variables**
+
+Queremos probar si hay una relacion entre los años de experiencia y el salario, por lo que se hacen la siguientes hipotesis:
+
+$$H_0: \rho = 0$$
+$$H_1: \rho \neq 0$$
+
+```{r}
 cor.test(baseSinAtipicos1$dist, baseSinAtipicos1$realSum)
 ```
 
+Con esto podemos ver que existe una relacion entre la distancia del alojamiento y el precio dado que es un cuarto privado. Ademas, vemos que tienen una relacion debil negativa puesto que el coeficiente de relacion entre las dos variables es de: $r = -0.38689$. Es decir que entre mas lejano sea el AirBnb del centro de la ciudad menor va a ser el precio
 
+##### **Prueba de linealidad**
+
+A continuacion hacemos la prueba de linealidad en nuestro modelo:
+
+$$H_0: \beta_1 = 0$$
+$$H_1: \beta_1 \neq 0$$
+
+```{r}
+Regresion <- lm(baseSinAtipicos1$realSum~dist, data = baseSinAtipicos1)
+summary(Regresion)
+```
+
+Vemos que nuestro valor p es bastante menor que nuestro nivel de significancia ya que $0.00722 < 0.05$, por lo que se rechaza $H_0$ y podemos decir que si existe una relacion lineal entre las variables. 
+
+El modelo de regresion que se ajusta a este caso es el siguiente:
+
+$$\hat{Y} = \beta_0 + \beta_1X $$
+$$\hat{Y} = 200.5 -18.2X $$
+
+Vemos que en esta ecucion el intersecto es 7197 y la pendiente es -18.2. Es decir que por cada 1km que se separe del centro el precio del AirBnb se reduce 18.2 Euros.
+
+#### **Supuestos de la regresion (Residuos)**
+
+Con el siguiente codigo sacamos todos los residuos de nuestro modelo de regresion:
+
+```{r}
+Residuos <- residuals(Regresion)
+```
+
+##### **Supuesto de normalidad**
+
+A continuacion se va a realizar la prueba de normalidad a los residuos de la regresion usando la prueba de Shapiro ya que se utilizaron mas de 50 datos. Para esto se plantean las siguiente hipotesis:
+
+
+$$H_0: Los~residuos~se~distribuyen~de~forma~normal$$
+$$H_0: Los~residuos~no~se~distribuyen~de~forma~normal$$
+
+
+$$$$
+
+```{r}
+shapiro.test(Residuos)
+```
+
+Según el resultado del test de Shapiro, el valor p obtenido es menor que el nivel de significancia establecido (alfa), lo que indica que debemos rechazar la hipótesis nula ($H_0$). En consecuencia, podemos concluir que los residuos no siguen una distribución normal.
+
+No obstante, podemos considerar la asunción de normalidad en los residuos debido al **Teorema Central del Límite**, ya que se ha utilizado un tamaño de muestra mayor a 30.
+
+##### **Supuesto de homogeneidad**
+
+Para esta prueba vamos a usar el test de Breush Pagan y vamos a plantear las siguientes hipotesis:
+
+$$H_0: Los~residuos~presentan~varianzas~constante.$$
+$$H_0: Los~residuos~no~presentan~varianzas~constante.$$
+```{r, echo = FALSE}
+baseSinAtipicos <- filter(Paris_weekdays, Paris_weekdays$realSum < 400)
+baseSinAtipicos1 <-  filter(baseSinAtipicos, baseSinAtipicos$room_type == "Shared room")
+Regresion <- lm(baseSinAtipicos1$realSum~dist, data = baseSinAtipicos1)
+```
+
+
+
+```{r}
+bptest(Regresion)
+```
+
+Vemos que el valor p ($0.44$) es mayor que nuestro alfa, por lo que no podemos rechazar la hipotesis nula y por lo tanto podemos decir que los residuos si tienen varianzas constantes.
+
+#### **Supuesto de independencia**
+
+En este caso no podemos aplicar la prueba de independencia de los residuos puesto que el analisis entre la distancia y el precio final o tiene series de tiempo.
 
 ### **Conclusiones:**
 
