@@ -134,11 +134,11 @@ La base de datos de la cual vamos a explorar está dentro de un formato .csv y, 
 
 ```{r, include = FALSE, message=FALSE}
 
-setwd('C:/Users/Jardi/Downloads/santy/inferencia/Statistical-analysis-Airbnb-Paris')
+#setwd('C:/Users/Jardi/Downloads/santy/inferencia/Statistical-analysis-Airbnb-Paris')
 #setwd('C:/Users/melyb/OneDrive/Documentos/GitHub/Statistical-analysis-Airbnb-Paris)
 #setwd('C:/Users/melyb/OneDrive/Documentos/GitHub/Statistical-analysis-Airbnb-Paris')
 #setwd('C:/Users/Mateo Silva/Desktop/rparisino/Statistical-analysis-Airbnb-Paris')
-#setwd('C:/Users/juanj/Desktop/Universidad/4. CUARTO SEMESTRE/Inferencia Estadistica/Proyecto final/Repositorio Github Proyecto Final/Statistical-analysis-Airbnb-Paris ')
+setwd('C:/Users/juanj/Desktop/Universidad/4. CUARTO SEMESTRE/Inferencia Estadistica/Proyecto final/Repositorio Github Proyecto Final/Statistical-analysis-Airbnb-Paris ')
 getwd
 Paris_weekdays <- read_csv("paris_weekdays.csv")
 datos <- Paris_weekdays
@@ -663,9 +663,9 @@ eda(DistanciaCentroSinAtipicos)
 
 
 
-## **Estadística descriptiva variables cualitativas:**
+### **Estadística descriptiva variables cualitativas:**
 
-### **Tipo de cuarto**
+#### **Tipo de cuarto**
 
 Generamos una tabla de frecuencias
 
@@ -699,7 +699,7 @@ print(moda)
 barplot(table(TipoDeCuarto)) 
 ```
 
-### **Cuarto privado**
+#### **Cuarto privado**
 
 Generamos una tabla de frecuencias
 
@@ -735,7 +735,7 @@ pie(tabla, main="Grafico de pastel Cuarto privado", labels = c("Sin cuarto priva
 ```
 
 
-### **Múltiples cuartos**
+#### **Múltiples cuartos**
 
 Generamos una tabla de frecuencias
 
@@ -772,9 +772,7 @@ pie(tabla, main="Grafico de pastel multiples cuartos", labels = c("Posee un cuar
 
 
 
-### **Fines de negocios**
-
-
+#### **Fines de negocios**
 
 *Generamos una tabla de frecuencias*
 
@@ -812,11 +810,11 @@ pie(tabla, main="Grafico de pastel fines de negocios", labels = c("Sin fines de 
 \$\$\$\$
 
 
-### **Análisis de resultados:**
+#### **Análisis de resultados:**
 
 Para esta sección se van a estimar parámetros de interés a través de intervalos de confianza para cada una de las variables, ya sea para la media poblacional o la proporción. Así mismo, se van a realizar pruebas de hipótesis para la media y la proporción. \$\$\$\$
 
-### **Intervalos de confianza:**
+#### **Intervalos de confianza:**
 
 Para estimar los intervalos de confianza, tenemos en cuenta que la base de datos que tenemos es una muestra de toda la población de alojamientos de París en Airbnb entre semana. Por lo tanto, para cada una de estas estimaciones, vamos a utilizar las fórmulas de la distribución t-Student, ya que no contamos con la desviación estándar poblacional.
 
@@ -1436,36 +1434,6 @@ Aqui podemos ver que el valor p es mucho mayor a 0,05, por lo tanto podemos conc
 
 Dentro de esta sección, de acuerdo a los objetivos planteados al inicio del informe, vamos a comparar diferentes variables entre sí con el fin de buscar algún tipo de relación entre ellas. A continuación se presentan las gráficas que ilustran dicha comparación o cruce.
 
-\$\$\$\$
-
-
-
-#### **Precio final vs Distancia al centro de la ciudad**
-
-A continuación se muestra muestra una grafica de barras apliadas de estas dos variables y tambien se muestra una tabla cruzada:
-
-```{r, warning = FALSE}
-
-realsum2 <- cut(PrecioFinal, c(seq(from = 90, to = 600, by = 100)), include.lowest=TRUE)
-
-#distancia2 <- 
-cruce <- crosstab(realsum2, CalificacionDeLimpieza, prop.c = TRUE, plot=TRUE)
-cruce
-```
-
-#### **Precio final vs Capacidad de personas**
-
-A continuación se muestra muestra una grafica de barras apliadas de estas dos variables y tambien se muestra una tabla cruzada:
-
-
-```{r, warning = FALSE}
-
-realsum2 <- cut(PrecioFinal, c(seq(from = 90, to = 600, by = 100)), include.lowest=TRUE)
-
-#distancia2 <- 
-cruce <- crosstab(realsum2, CapacidadPersonas, prop.c = TRUE, plot=TRUE)
-cruce
-```
 
 #### **Tipo de cuarto vs Fines de negocio**
 
@@ -1540,7 +1508,10 @@ $$H_1: Al~menos~una~de~ellas~es~diferente$$
 Antes de realizar el codigo de anova podemos analizar el comportamiento de los grupos en forma de diagramas de cajas y bigotes:
 
 ```{r}
-boxplot(PrecioFinal~TipoDeCuarto, data = Paris_weekdays, ylim = c(0,1500) )
+baseSinAtipicos <- filter(Paris_weekdays, Paris_weekdays$realSum < 800)
+boxplot(baseSinAtipicos$realSum~baseSinAtipicos$room_type, data = baseSinAtipicos)
+PrecioFinalSinAtipicos  <- baseSinAtipicos$realSum
+TipoDeCuartoSinAtipicos <- baseSinAtipicos$room_type
 ```
 
 Despues de haber hecho esto si podemos ejecutar el codigo del anova:
@@ -1548,7 +1519,7 @@ Despues de haber hecho esto si podemos ejecutar el codigo del anova:
 *Ejecutamos el codigo de anova:*
 
 ```{r}
-anova<-aov(lm(PrecioFinal~TipoDeCuarto))
+anova<-aov(lm(PrecioFinalSinAtipicos~TipoDeCuartoSinAtipicos))
 summary(anova)
 ```
 Con esto podemos ver que el valor p es mas pequeño que 0.05 por lo que podemos rechazar la hipotesis nula y decir que existen medias diferentes entre los grupos. Por lo que en este caso resulta pertinente realizar un Pos-anova para mirar cual es la relacion entre sus medias:
@@ -1583,6 +1554,7 @@ boxplot(CalificacionDeLimpieza~TipoDeCuarto)
 *Ejecutamos el codigo de anova:*
 
 ```{r}
+
 anova<-aov(lm(CalificacionDeLimpieza~TipoDeCuarto))
 summary(anova)
 ```
@@ -1661,8 +1633,10 @@ Aqui podemos ver el valor p el cual vuelve a ser muy pequeño (menor a 0.05), en
 ```{r}
 #names(Paris_weekdays)
 baseSinAtipicos <- filter(Paris_weekdays, Paris_weekdays$realSum < 900)
+baseSinAtipicos1 <-  filter(baseSinAtipicos, baseSinAtipicos$room_type == "Entire home/apt")
 
-plot(baseSinAtipicos$realSum, baseSinAtipicos$cleanliness_rating)
+plot(baseSinAtipicos1$realSum, baseSinAtipicos1$person_capacity)
+plot(baseSinAtipicos1$realSum, baseSinAtipicos1$cleanliness_rating)
 ```
 
 
