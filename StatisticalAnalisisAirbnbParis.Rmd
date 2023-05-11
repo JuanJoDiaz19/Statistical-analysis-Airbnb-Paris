@@ -1632,12 +1632,27 @@ Aqui podemos ver el valor p el cual vuelve a ser muy pequeño (menor a 0.05), en
 
 ```{r}
 #names(Paris_weekdays)
-baseSinAtipicos <- filter(Paris_weekdays, Paris_weekdays$realSum < 900)
+baseSinAtipicos <- filter(Paris_weekdays, Paris_weekdays$realSum < 1500)
 baseSinAtipicos1 <-  filter(baseSinAtipicos, baseSinAtipicos$room_type == "Entire home/apt")
+baseSinAtipicos1 <-  filter(baseSinAtipicos1, baseSinAtipicos1$person_capacity == 2)
+baseSinAtipicos1 <-  filter(baseSinAtipicos1, baseSinAtipicos1$multi == 1)
+baseSinAtipicos1 <-  filter(baseSinAtipicos1, baseSinAtipicos1$cleanliness_rating == 10)
 
-plot(baseSinAtipicos1$realSum, baseSinAtipicos1$person_capacity)
-plot(baseSinAtipicos1$realSum, baseSinAtipicos1$cleanliness_rating)
+
+plot(baseSinAtipicos1$dist, baseSinAtipicos1$realSum)
+
+cor.test(baseSinAtipicos1$dist, baseSinAtipicos1$realSum)
 ```
+
+```{r}
+baseSinAtipicos1 <-  filter(baseSinAtipicos, baseSinAtipicos$room_type == "Shared room")
+#baseSinAtipicos1 <-  filter(baseSinAtipicos1, baseSinAtipicos1$person_capacity > 4)
+
+plot(baseSinAtipicos1$dist, baseSinAtipicos1$realSum)
+
+cor.test(baseSinAtipicos1$dist, baseSinAtipicos1$realSum)
+```
+
 
 
 ### **Conclusiones:**
