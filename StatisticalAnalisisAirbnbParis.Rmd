@@ -1730,6 +1730,29 @@ Vemos que el valor p ($0.44$) es mayor que nuestro alfa, por lo que no podemos r
 
 En este caso no podemos aplicar la prueba de independencia de los residuos puesto que el analisis entre la distancia y el precio final o tiene series de tiempo.
 
+#### **Intervalos de confianza**
+
+A continuacion se muestran los intervalos de confianza del modelo de regresion con un intervalo entre 0 km y 6km con saltos de 0.1 km:
+```{r}
+rango <- seq(0, 6, by = 0.1)
+nuevos_valores <- data.frame(dist = rango)
+intervalos_confianza <- predict(Regresion, newdata = nuevos_valores, interval = "confidence", level = 0.95)
+intervalos_confianza
+```
+
+
+#### **Intervalos de prediccion**
+
+
+A continuacion se muestran los intervalos de prediccion del modelo de regresion con un intervalo entre 0 km y 6km con saltos de 0.1 km:
+
+```{r}
+predicciones <- predict(Regresion, newdata = nuevos_valores, interval = "prediction", level = 0.95)
+predicciones
+```
+
+
+
 ### **Conclusiones:**
 
 A continuación se listarán las conclusiones que se hicieron a partir de la investigación hecha:
