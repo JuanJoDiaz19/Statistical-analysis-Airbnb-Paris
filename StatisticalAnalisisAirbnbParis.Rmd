@@ -136,8 +136,8 @@ La base de datos de la cual vamos a explorar está dentro de un formato .csv y, 
 
 #setwd('C:/Users/Jardi/Downloads/santy/inferencia/Statistical-analysis-Airbnb-Paris')
 #setwd('C:/Users/melyb/OneDrive/Documentos/GitHub/Statistical-analysis-Airbnb-Paris')
-#setwd('C:/Users/Mateo Silva/Desktop/rparisino/Statistical-analysis-Airbnb-Paris')
-setwd('C:/Users/juanj/Desktop/Universidad/4. CUARTO SEMESTRE/Inferencia Estadistica/Proyecto final/Repositorio Github Proyecto Final/Statistical-analysis-Airbnb-Paris ')
+setwd('C:/Users/Mateo Silva/Desktop/rparisino/Statistical-analysis-Airbnb-Paris')
+#setwd('C:/Users/juanj/Desktop/Universidad/4. CUARTO SEMESTRE/Inferencia Estadistica/Proyecto final/Repositorio Github Proyecto Final/Statistical-analysis-Airbnb-Paris ')
 getwd
 Paris_weekdays <- read_csv("paris_weekdays.csv")
 datos <- Paris_weekdays
@@ -156,7 +156,7 @@ CuartoPrivado <- datos$room_private
 PoseeMasDeUnCuarto <- datos$multi
 FinesDeNegocios <- datos$biz
 
-budapest_weekdays <- read_csv("rome_weekdays.csv")
+
 ```
 
 ## **Estadística descriptiva para las variables**
@@ -406,7 +406,7 @@ curtosis
 ```{r, echo = FALSE}
 skewness(PrecioFinalSinAtipicos4)
 ```
-
+Vemos que el valor de este coeficiente es positivo, podemos decir que esta variable tiene una asimetria hacia la derecha.
 *tabla de frecuencia*
 ```{r}
 preciof <- cut(PrecioFinalSinAtipicos4, c(seq(from = 90, to = 600, by = 100)), include.lowest=TRUE)
@@ -1761,7 +1761,6 @@ A continuación se listarán las conclusiones que se hicieron a partir de la inv
 
 -   Los alojamientos de Airbnb publicados en París poseen un puntaje de limpieza promedio entre 9.21 y 9.30 puntos, lo cual asegura la calidad del servicio que se presta.
 
--   No hay una relación notable entre las variables dist y realsum, esto quiere decir que el valor del alojamiento no depende realmente de la distancia que hay hasta el centro de París.
 
 -   El precio promedio de los alojamientos se encuentra en un rango entre 384.90 y 412.69 euros.
 
@@ -1772,3 +1771,14 @@ A continuación se listarán las conclusiones que se hicieron a partir de la inv
 -   Existe una relación entre realsum y cleanliness_rating, la cual nos dice que entre más costo tenga el alojamiento, mejor va a ser el nivel de limpieza del mismo.
 
 -   Hay una relación directa entre realsum y person_capacity, que entre mayor sea el precio, mayor va a ser la capacidad de personas que va a tener el alojamiento.
+
+- No existe alguna evidencia que me muestre que los cuartos no compartidos sean mas caros que los cuartos compartidos.
+
+- como bien sabemos existen tres tipos de cuartos, compartido, privado y completo, en esta caso podemos ver que existen diferencias en las medias y segun la prueba hecha despues de hacer el analisis para ver notar sus diferentes medias obtenemos que 
+$\mu_{Completo} >  \mu_{Privado} > \mu_{Compartido}$
+
+- podemos que el tipo de cuarto influye es si este es para negocio o no, pues podemos ver que cuando este visita es con fines de negocios se decantan mas por cuartos compartidos
+
+- podemos ver que existe una relacion lineal inversa entre la distancia al centro y el precio
+
+- aunque nuestra prueba shapiro nos indique que no encontro que estos residuos se distribuyan normal, nosotros lo asumimos pues tenemos mas de 3000 datos, los cuales son mas que suficientes para considerar normalidad.
