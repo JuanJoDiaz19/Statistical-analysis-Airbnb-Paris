@@ -130,13 +130,13 @@ library(pastecs)
 library(moments)
 ```
 
-La base de datos de la cual vamos a explorar está dentro de un formato .csv y, para una mayor practicidad, vamos a guardar cada una de las variables a explorar dentro de un elemento distinto de nuestro entorno, tal como se continúa a continuación:
+La base de datos de la cual vamos a explorar está dentro de un formato .csv y, para una mayor practicidad, vamos a guardar cada una de las variables a explorar dentro de un elemento distinto de nuestro entorno, tal como se muestra a continuación:
 
 ```{r, include = FALSE, message=FALSE}
 
-#setwd('C:/Users/Jardi/Downloads/santy/inferencia/Statistical-analysis-Airbnb-Paris')
+setwd('C:/Users/Jardi/Downloads/santy/inferencia/Statistical-analysis-Airbnb-Paris')
 #setwd('C:/Users/melyb/OneDrive/Documentos/GitHub/Statistical-analysis-Airbnb-Paris')
-setwd('C:/Users/Mateo Silva/Desktop/rparisino/Statistical-analysis-Airbnb-Paris')
+#setwd('C:/Users/Mateo Silva/Desktop/rparisino/Statistical-analysis-Airbnb-Paris')
 #setwd('C:/Users/juanj/Desktop/Universidad/4. CUARTO SEMESTRE/Inferencia Estadistica/Proyecto final/Repositorio Github Proyecto Final/Statistical-analysis-Airbnb-Paris ')
 getwd
 Paris_weekdays <- read_csv("paris_weekdays.csv")
@@ -159,11 +159,11 @@ FinesDeNegocios <- datos$biz
 
 ```
 
-## **Estadística descriptiva para las variables**
-
-### **Variables cuantitativas**
+## **Estadística descriptiva para las Variables cuantitativas**
 
 ### **Calificación de limpieza**
+
+Antes de realizar el analisis de esta variable, vamos a realizar un filtro de valores atipicos, este se vera representado con los siguientes graficos:
 
 *Grafico de barras*
 
@@ -296,6 +296,8 @@ eda(CalificacionDeLimpiezaSinAtipicos)
 
 
 ### **Precio final**
+
+Antes de realizar el analisis de esta variable, vamos a realizar un filtro de valores atipicos, este se vera representado con los siguientes graficos:
 
 *Grafico de barras*
 
@@ -531,6 +533,8 @@ Vemos que esta distribución no posee datos atipicos por lo que podemos usarla t
 
 ### **Distancia al centro de la ciudad **
 
+Se graficara la variable para ver si tiene valores atipicos:
+
 *Diagrama de cajas:*
 
 ```{r, echo = FALSE}
@@ -630,7 +634,7 @@ curtosis <- kurtosis(DistanciaCentroSinAtipicos)
 curtosis
 ```
 
-Aqui realizamos la curtosis por lo que la desviacion estandar incluso sin atipicos es menor a 20. La distribucion normal Tiene una curtosis de 0. Esto significa que tiene colas moderadas y una concentración equilibrada de valores alrededor de la media. Cuando la curtosis de una distribución es diferente de 0, indica que la distribución tiene una forma diferente a la de una distribución normal.Podemos ver una curtosis positiva, esto implica que hay una mayor concentración de valores extremos y una menor dispersión de valores alrededor de la media.  En resumen, al mencionar que la curtosis indica desviaciones respecto a la distribución normal, se está señalando que se están evaluando las diferencias en la forma de la distribución en relación con una distribución de referencia teórica, que es la distribución normal. Esto permite identificar características distintivas de la distribución de los datos en estudio.
+Aqui realizamos la curtosis por lo que la desviacion estandar incluso sin atipicos es menor a 20. La distribucion normal Tiene una curtosis de 0. Esto significa que tiene colas moderadas y una concentración equilibrada de valores alrededor de la media. Cuando la curtosis de una distribución es diferente de 0, indica que la distribución tiene una forma diferente a la de una distribución normal. Podemos ver una curtosis positiva, esto implica que hay una mayor concentración de datos en la media. En resumen, al mencionar que la curtosis indica desviaciones respecto a la distribución normal, se está señalando que se están evaluando las diferencias en la forma de la distribución en relación con una distribución de referencia teórica, que es la distribución normal. Esto permite identificar características distintivas de la distribución de los datos en estudio.
 
 
 *Coeficiente de simetria:*
@@ -662,9 +666,9 @@ eda(DistanciaCentroSinAtipicos)
 
 
 
-### **Estadística descriptiva variables cualitativas:**
+## **Estadística descriptiva variables cualitativas**
 
-#### **Tipo de cuarto**
+### **Tipo de cuarto**
 
 Generamos una tabla de frecuencias
 
@@ -698,7 +702,7 @@ print(moda)
 barplot(table(TipoDeCuarto)) 
 ```
 
-#### **Cuarto privado**
+### **Cuarto privado**
 
 Generamos una tabla de frecuencias
 
@@ -734,7 +738,7 @@ pie(tabla, main="Grafico de pastel Cuarto privado", labels = c("Sin cuarto priva
 ```
 
 
-#### **Múltiples cuartos**
+### **Múltiples cuartos**
 
 Generamos una tabla de frecuencias
 
@@ -771,7 +775,7 @@ pie(tabla, main="Grafico de pastel multiples cuartos", labels = c("Posee un cuar
 
 
 
-#### **Fines de negocios**
+### **Fines de negocios**
 
 *Generamos una tabla de frecuencias*
 
@@ -800,7 +804,7 @@ print(moda)
 
 *Diagrama de barras*
 
-```{r}
+```{r, echo = FALSE}
 colores <- c("gray62", "white")
 tabla <- table(FinesDeNegocios)
 pie(tabla, main="Grafico de pastel fines de negocios", labels = c("Sin fines de negocios", "Con fines de negocios"), col = colores)
@@ -809,17 +813,17 @@ pie(tabla, main="Grafico de pastel fines de negocios", labels = c("Sin fines de 
 \$\$\$\$
 
 
-#### **Análisis de resultados:**
+## **Análisis de resultados**
 
 Para esta sección se van a estimar parámetros de interés a través de intervalos de confianza para cada una de las variables, ya sea para la media poblacional o la proporción. Así mismo, se van a realizar pruebas de hipótesis para la media y la proporción. \$\$\$\$
 
-#### **Intervalos de confianza:**
+### **Intervalos de confianza**
 
 Para estimar los intervalos de confianza, tenemos en cuenta que la base de datos que tenemos es una muestra de toda la población de alojamientos de París en Airbnb entre semana. Por lo tanto, para cada una de estas estimaciones, vamos a utilizar las fórmulas de la distribución t-Student, ya que no contamos con la desviación estándar poblacional.
 
 \$\$\$\$
 
-### **Variables cuantitativas**
+#### **Variables cuantitativas**
 
 ##### **Calificación de limpieza**
 
@@ -853,11 +857,11 @@ rango_Superior
 
 Con estos valores obtenemos el siguiente rango:
 
-$$[9.21~; ~9.30]$$ Es decir que el puntaje de limpieza promedio de los Airbnb en París entre semana con un 98% de confianza está dentro del rango de los 9.21 puntos a los 9.30 puntos.
+$$[9.21~; ~9.30]$$ Es decir que el puntaje de limpieza promedio de los Airbnb en París entre semana con un 99% de confianza está dentro del rango de los 9.21 puntos a los 9.30 puntos.
 
 \$\$\$\$
 
-##### **Precio Final**
+###### **Precio Final**
 
 *Ahora calculamos la media muestral*
 
@@ -889,7 +893,7 @@ rango_Superior
 
 Con estos valores obtenemos el siguiente rango:
 
-$$[384.90~; ~412.69]$$ Es decir, que el puntaje de limpieza promedio de los Airbnb en París entre semana, con un 98% de confianza, está dentro del rango de 9.21 puntos a 9.30 puntos.
+$$[384.90~; ~412.69]$$ Es decir, que el precio promedio de los Airbnb en París entre semana, con un 97,5% de confianza, está dentro del rango 384,90 y 412,69 Euros.
 
 \$\$\$\$
 
@@ -925,11 +929,11 @@ rango_Superior
 
 Con estos valores obtenemos el siguiente rango:
 
-$$[2.90~; ~2.99]$$ Es decir, que el puntaje de limpieza promedio de los AirBnB en París entre semana, con un 98% de confianza, está dentro del rango de 9.21 puntos a 9.30 puntos.
+$$[2.90~; ~2.99]$$ Es decir, que la capacidad promedio de personas de los AirBnB en París entre semana, con un 99,5% de confianza, está dentro del rango de 2,9 a 2,99 personas.
 
 \$\$\$\$
 
-#### **Distancia al centro de la ciudad**
+##### **Distancia al centro de la ciudad**
 
 *Ahora calculamos la media muestral*
 
@@ -961,7 +965,7 @@ rango_Superior
 
 Con estos valores obtenemos el siguiente rango:
 
-$$[2.94~; ~3.07]$$ Es decir, que la distancia promedio al centro de los Airbnb en París entre semana, con un 95% de confianza, está dentro del rango de 2.94 kilómetros a 3.07 kilómetros.
+$$[2.94~; ~3.07]$$ Es decir, que la distancia promedio al centro de los Airbnb en París entre semana, con un 99% de confianza, está dentro del rango de 2.94 kilómetros a 3.07 kilómetros.
 
 \$\$\$\$
 
@@ -969,7 +973,7 @@ $$[2.94~; ~3.07]$$ Es decir, que la distancia promedio al centro de los Airbnb e
 
 \$\$\$\$
 
-#### **Tipo de cuarto**
+##### **Tipo de cuarto**
 
 Para esta variable vamos a calcular los intervalos en que cada uno de los posibles tipos de cuartos estén, cada uno con un nivel de confianza del 95%:
 
@@ -1000,7 +1004,7 @@ Con esto, podemos decir que los rangos de confianza de la proporción de los val
 
 \$\$\$\$
 
-#### **Cuarto privado**
+##### **Cuarto privado**
 
 *Buscamos la proporción de esta y tomamos los alojamientos con cuarto privado*
 
@@ -1036,7 +1040,7 @@ $$[0.23, 0.26]$$
 
 \$\$\$\$
 
-#### **Multiples cuartos**
+##### **Multiples cuartos**
 
 *Buscamos la proporción de esta y tomamos los alojamientos con más de un cuarto*
 
@@ -1072,7 +1076,7 @@ $$[0.21, 0.23]$$
 
 \$\$\$\$
 
-#### **Fines de negocios**
+##### **Fines de negocios**
 
 *Buscamos la proporción de esta y tomamos los alojamientos que son con fines de negocios*
 
@@ -1108,11 +1112,11 @@ $$[0.24, 0.27]$$
 
 \$\$\$\$
 
-### **Hipótesis para las variables:**
+### **Hipótesis para las variables**
 
-Dentro de esta sección del estudio vamos a plantear hipótesis a las variables, ya sea respecto a la media o a la proporción, dependiendo de su caracteristica cualitativa o cuantitiva. Para realizar esto vamos a utilizar como base para plantear nuestras hipotesis los datos de AirBnb en Roma durante los dias entresemana, a partir de esto vamos a comprobar si se cumplen dichas hipotesis dentro de los Airbnb de Paris durante los dias entresemana.
+Dentro de esta sección del estudio vamos a plantear hipótesis a las variables, ya sea respecto a la media o a la proporción, dependiendo de su caracteristica cualitativa o cuantitiva. Para realizar esto vamos a utilizar como base para plantear nuestras hipotesis los datos de AirBnb en Roma durante los dias entresemana, a partir de esto vamos a comprobar si se cumplen dichas hipotesis dentro de los Airbnb de Paris durante los dias entre semana.
 
-Importamos los datos de AirBnb Roma entresemana:
+Importamos los datos de AirBnb Roma entre semana:
 
 ```{r}
 rome_weekdays <- read_csv("rome_weekdays.csv")
@@ -1132,9 +1136,9 @@ FinesDeNegociosRoma <- rome_weekdays$biz
 
 \$\$\$\$
 
-### **Variables cuantitativas**
+#### **Variables cuantitativas**
 
-#### **Puntaje de limpieza**
+##### **Puntaje de limpieza**
 
 Para la plataforma Airbnb es de gran imporancia la calificación de la limpieza de sus alojamientos, es por esto que se espera que la mayoría de sus alojamientos posean un buen puntaje de limpieza. Para poder plantear la hipotesis vamos a mirar cual es la media muestral de los Airbnb en Roma:
 
@@ -1155,7 +1159,7 @@ with(datos, (t.test(CalificacionDeLimpieza, alternative = "two.sided", mu = 9.52
 
 Con el resultado anterior podemos observar como $p < 0.05$, sabiendo esto, podemos rechazar la hipótesis nula y podemos afirmar que con un nivel de confianza del 95%, la calificación media de los alojamientos de Airbnb en la ciudad de París es diferente a 9.52.
 
-#### **Precio final**
+##### **Precio final**
 
 Sin duda los Airbnb en Paris quieren brindar la mejor atencion a sus clientes con los precios mas justos de acuerdo a su experiencia, por lo tanto van a comparar con Airbnb en Roma para poder establecer un punto de comparacion:
 
@@ -1178,7 +1182,7 @@ with(datos, (t.test(PrecioFinalSinAtipicos4, alternative = "greater", mu =201, c
 
 Vemos que el valor p es bastante pequeño, (menor al 0.05) asi que podemos rechazar esta hipotesis nula y podemos concluir que los Airbnb en paris tiene un precio mayor a 201 Euros.
 
-#### **Capacidad de personas**
+##### **Capacidad de personas**
 
 
 ```{r, include = FALSE, message=FALSE}
@@ -1201,7 +1205,7 @@ with(datos, (t.test(CapacidadPersonas, alternative = "less", mu = 3.35, conf.lev
 
 Como podemos ver, el valor p es menor que nuestro alfa, por lo tanto podemos rechazar la hipotesis nula y decir que la capacidad media de personas de los alojamientos de paris es mayor a la de roma.
 
-#### **Distancia al centro**
+##### **Distancia al centro**
 
 Para este punto vamos a tomar como punto referencia la distancia promedio al centro de la ciudad en los AirBnb de Roma para poder plantear nuestro estudios de Paris, a continuacion sacamos ese valor:
 
@@ -1226,9 +1230,9 @@ with(datos, (t.test(DistanciaCentro, alternative = "two.sided", mu = 3.04, conf.
 
 Como el valor p es mucho menor que el valor de alfa, podemos rechazar el hipótesis $H_0$ y, por lo tanto, podemos decir que a un nivel de confiabilidad del 95% de que el promedio de las distancias de los Airbnb al centro de Paris sea diferente a 3.04 kilometros.
 
-### **Variables cualitativas**
+#### **Variables cualitativas**
 
-#### **Tipo de cuarto**
+##### **Tipo de cuarto**
 
 Dentro de la industria de Airbnb está la incertidumbre acerca de la posible proporción de alojamientos que ofrecen el apartamento o la casa completa, ya que esto permite una mayor comodidad y exclusividad al usuario. Para poder sacar un punto de comparacion para nuestro estudio vamos a usar los datos de Roma en esta situacion:
 
@@ -1238,8 +1242,6 @@ sum(TipoDeCuartoRoma == "Entire home/apt")/ length(TipoDeCuartoRoma)
 
 
 Ahora, gracias a este resultado queremos saber si la proporcion de alojamientos que proporcionan todo la casa o apartamento esta por debajo del 61.3%. A continuación, se muestra una prueba de hipótesis de esta información con un nivel de confianza del 95%:
-
-Dentro de nuestro estudio queremos saber si
 
 Planteamos las siguientes hipótesis:
 
@@ -1255,9 +1257,9 @@ daticos
 
 Como podemos ver que el valor p es mayor al valor de confianza que fue de 0.05, por lo tanto, no podemos rechazar la hipótesis nula $H_0$. Es decir, que podemos afirmar que la probabilidad de que los alojamientos de Airbnb ofrezcan todo el apartamento o casa es mayor al 61.3%.
 
-#### **Cuarto Privado**
+##### **Cuarto Privado**
 
-Los alojamientos de Airbnb aris son las mas visitadas en el mundo, pues Francia es un pais bastante turisto, y ademas Paris es la ciudad que mas turistas recibe en el mundo, debido a esto quieren dar la mejor atencion a sus turistas, pues gran parte vive de estos. Ahora bien, no a todos les alcanza el dinero y les toca compartir, pero ellos desean saber cual es la proporcion de personas que tienen cuarto privado, por esto van a comparar con los Airbnb en Roma:
+Los alojamientos de Airbnb Paris son las mas visitadas en el mundo, pues Francia es un pais bastante turistico, y ademas Paris es una de las ciudades que mas turistas recibe en el mundo, debido a esto quieren dar la mejor atencion a sus turistas, pues gran parte vive de estos. Ahora bien, no a todos les alcanza el dinero y les toca compartir, pero ellos desean saber cual es la proporcion de personas que tienen cuarto privado, por esto van a comparar con los Airbnb en Roma:
 
 ```{r}
 sum(CuartoPrivadoRoma == "TRUE")/ length(CuartoPrivadoRoma)
@@ -1275,9 +1277,9 @@ daticos<- prop.test(sum(CuartoPrivado[CuartoPrivado== "TRUE"] ), n = length(Cuar
 daticos
 ```
 
-Como podemos ver,` el valor p es bastante mayor al 5% por lo tanto no existe alguna evidencia para decir que la proporcion de personas con cuarto privado en paris es menor al 0.38.
+Como podemos ver, el valor p es bastante mayor al 5% por lo tanto no existe alguna evidencia para decir que la proporcion de personas con cuarto privado en paris es menor al 0.38.
 
-#### **Multiples cuartos**
+##### **Multiples cuartos**
 
 Un buen punto de partida para relizar las hipotesis dentro del estudio de esta variable seria usando los datos de Roma, tal como lo hicimos anteriormente con las otras variables:
 
@@ -1298,7 +1300,7 @@ daticos
 
 Como podemos ver, el valor p es mayor a nuestro nivel de confianza, por lo que podemos decir que no podemos rechazar $H_0$. Por lo tanto, podemos decir que no hay suficiente información para afirmar que menos del 39% de los alojamientos de Airbnb tienen múltiples cuartos.
 
-#### **Fines de negocios**
+##### **Fines de negocios**
 
 Para poder plantear las hipotesis nos basamos en las estadisticas de Roma tal como lo hicimos en las anteriores hipotesis:
 
@@ -1324,7 +1326,7 @@ Como podemos ver, el valor p es mayor que nuestro nivel de confianza, por lo que
 Dentro de esta seccion se van a comparar tanto la media o la proporcion de 2 variables cruzadas dentro de nuestro estudio para poder sacar conclusiones sobre estas:
 $$$$
 
-#### **Precios del AirBnb deacuerdo al si el cuarto es compartido**
+#### **Precios del AirBnb de acuerdo al si el cuarto es compartido**
 
 Dentro de este estudio queremos saber como varian sus precios los AirBnb de acuerdo a si el cuarto es compartido o no, por lo que vamos a plantear las siguientes hipotesis:
 
@@ -1355,9 +1357,9 @@ $$H_0: \sigma_1^2 = \sigma_2^2$$
 $$H_1: \sigma_1^2 \neq \sigma_2^2$$
 Siendo:
 
-* $\sigma_1^2$: Varianza de precio en Airbnb de Paris
+* $\sigma_1^2$: Varianza de precio de Airbnb en paris con cuarto compartido
 
-* $\sigma_2^2$: Varianza de precio en Airbnb de Budapest
+* $\sigma_2^2$: Varianza de precio de Airbnb en paris con cuarto no compartido
 
  
 
@@ -1455,7 +1457,7 @@ En esta grafica podemos observar que asombrosamente los alojamientos con fines d
 
 #### **Cuarto privado vs Posee mas de un cuarto**
 
-A continuación se muestra una grafica de barras apliladas para mostrar la relación que tienen las variables de cuarto privado y posee mas de un cuarto
+A continuación se muestra una grafica de barras apiladas para mostrar la relación que tienen las variables de cuarto privado y posee mas de un cuarto
 
 ```{r, warning=FALSE}
 datos <-data.frame(CuartoPrivado, PoseeMasDeUnCuarto)
@@ -1483,7 +1485,7 @@ $$$$
 
 #### **Compracion del precio teniendo en cuenta su tipo de alojamiento**
 
-Para AirBnb resulta importante poder comparar los diferentes precios que hay deacuerdo con el tipo de alojamiento. Teniendo en cuenta que el tipo de cuarto tiene 3 posibles valores que son : Apartamento/Casa entera, cuarto privado y cuarto compartido, se van a plantear si el precio en cada uno de estos grupos es igual:
+Para AirBnb resulta importante poder comparar los diferentes precios que hay de acuerdo con el tipo de alojamiento. Teniendo en cuenta que el tipo de cuarto tiene 3 posibles valores que son : Apartamento/Casa entera, cuarto privado y cuarto compartido, se van a plantear si el precio en cada uno de estos grupos es igual:
 
 
 $$H_0: \mu_{Completo} =  \mu_{Privado} = \mu_{Compartido}$$
@@ -1523,13 +1525,13 @@ $$$$
 
 #### **Compracion del puntaje de limpieza teniendo en cuenta su tipo de alojamiento**
 
-Para AirBnb es sumamente importante mirar si hay algun tipo de diferencia en el puntaje de limpieza deacuerdo a las categorias del tipo de alojamiento. Teniendo en cuenta que el tipo de cuarto tiene 3 posibles valores que son : Apartamento/Casa entera, cuarto privado y cuarto compartido, se van a plantear si el precio en cada uno de estos grupos es igual: 
+Para AirBnb es sumamente importante mirar si hay algun tipo de diferencia en el puntaje de limpieza de acuerdo a las categorias del tipo de alojamiento. Teniendo en cuenta que el tipo de cuarto tiene 3 posibles valores que son : Apartamento/Casa entera, cuarto privado y cuarto compartido, se van a plantear si el precio en cada uno de estos grupos es igual: 
 
 $$H_0: \mu_{Completo} =  \mu_{Privado} = \mu_{Compartido}$$
 
 $$H_1: Al~menos~una~de~ellas~es~diferente$$
 
-Antes de ejecutar el coddigo de anova podemos mirar como ser verian los diagramas de cajas y bigotes de estos 3 grupos:
+Antes de ejecutar el codigo de anova podemos mirar como ser verian los diagramas de cajas y bigotes de estos 3 grupos:
 
 ```{r}
 boxplot(CalificacionDeLimpieza~TipoDeCuarto)
@@ -1647,7 +1649,7 @@ plot(baseSinAtipicos1$dist, baseSinAtipicos1$realSum)
 
 ##### **Relacion entre las variables**
 
-Queremos probar si hay una relacion entre los años de experiencia y el salario, por lo que se hacen la siguientes hipotesis:
+Queremos probar si hay una relacion entre la distancia del alojamiento y el precio , por lo que se hacen la siguientes hipotesis:
 
 $$H_0: \rho = 0$$
 $$H_1: \rho \neq 0$$
@@ -1728,7 +1730,7 @@ Vemos que el valor p ($0.44$) es mayor que nuestro alfa, por lo que no podemos r
 
 #### **Supuesto de independencia**
 
-En este caso no podemos aplicar la prueba de independencia de los residuos puesto que el analisis entre la distancia y el precio final o tiene series de tiempo.
+En este caso no podemos aplicar la prueba de independencia de los residuos puesto que el analisis entre la distancia y el precio final no tiene series de tiempo.
 
 #### **Intervalos de confianza**
 
@@ -1753,7 +1755,7 @@ predicciones
 
 
 
-### **Conclusiones:**
+## **Conclusiones**
 
 A continuación se listarán las conclusiones que se hicieron a partir de la investigación hecha:
 
