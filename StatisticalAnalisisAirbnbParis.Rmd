@@ -49,11 +49,17 @@ Analizar el comportamiento del modelo de negocio de Airbnb en la ciudad de Parí
 
 -   **Objetivo 6:** Realizar graficas que ilustren la posible relacion entre 2 variables del estudio, como pueden ser graficas de dispersion para las variables cuantitativas o graficos de barras apliadas para las variables cualitativas.
 
--   **Objetivo 7:** Determinar los precios promedio de los alojamientos en diferentes zonas de París durante la semana, considerando la distancia al metro y el tipo de habitación
+-   **Objetivo 7:** Determinar los precios promedio de los alojamientos en diferentes zonas de París durante la semana, considerando la distancia al metro y el tipo de habitación.
 
--   **Objetivo 8:** Analizar el número de reservas y la ocupación de los alojamientos de Airbnb en París durante la semana, considerando la privacidad de la habitación y la limpieza
+-   **Objetivo 8:** Analizar el número de reservas y la ocupación de los alojamientos de Airbnb en París durante la semana, considerando la privacidad de la habitación y la limpieza.
 
--   **Objetivo 9:** Evaluar la relación entre el tamaño de los alojamientos de Airbnb y su capacidad de hospedar a múltiples huéspedes en París durante la semana, considerando la tarifa total
+-   **Objetivo 9:** Evaluar la relación entre el tamaño de los alojamientos de Airbnb y su capacidad de hospedar a múltiples huéspedes en París durante la semana, considerando la tarifa total.
+
+- **Objetivo 10:** Conocer si existen diferencias entre la distrubicion de las medias para variables cuantitativas median la prueba de anova.
+
+-**Objetivo 11:** Conocer si existen diferencias en la proporcion para variables cualitativas mediante la prueba de Ji-Cuadrado
+
+-**Objetivo 12:** plantear una relacion lineal para nuestras variables y ver como se comporta este modelo
 
 \$\$\$\$
 
