@@ -3298,7 +3298,7 @@ residuos de la regresion usando la prueba de Shapiro ya que se
 utilizaron mas de 50 datos. Para esto se plantean las siguiente
 hipotesis:</p>
 <p><span class="math display">\[H_0:
-Los~residuos~se~distribuyen~de~forma~normal\]</span> <span class="math display">\[H_0:
+Los~residuos~se~distribuyen~de~forma~normal\]</span> <span class="math display">\[H_1:
 Los~residuos~no~se~distribuyen~de~forma~normal\]</span></p>
 <p>$$$$</p>
 <div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="#cb223-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(Residuos)</span></code></pre></div>
@@ -3320,7 +3320,7 @@ se ha utilizado un tamaño de muestra mayor a 30.</p>
 <p>Para esta prueba vamos a usar el test de Breush Pagan y vamos a
 plantear las siguientes hipotesis:</p>
 <p><span class="math display">\[H_0:
-Los~residuos~presentan~varianzas~constante.\]</span> <span class="math display">\[H_0:
+Los~residuos~presentan~varianzas~constante.\]</span> <span class="math display">\[H_1:
 Los~residuos~no~presentan~varianzas~constante.\]</span></p>
 <div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="#cb225-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bptest</span>(Regresion)</span></code></pre></div>
 <pre><code>## 

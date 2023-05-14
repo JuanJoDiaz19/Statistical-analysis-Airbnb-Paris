@@ -136,8 +136,8 @@ La base de datos de la cual vamos a explorar está dentro de un formato .csv y, 
 
 #setwd('C:/Users/Jardi/Downloads/santy/inferencia/Statistical-analysis-Airbnb-Paris')
 #setwd('C:/Users/melyb/OneDrive/Documentos/GitHub/Statistical-analysis-Airbnb-Paris')
-#setwd('C:/Users/Mateo Silva/Desktop/rparisino/Statistical-analysis-Airbnb-Paris')
-setwd('C:/Users/juanj/Desktop/Universidad/4. CUARTO SEMESTRE/Inferencia Estadistica/Proyecto final/Repositorio Github Proyecto Final/Statistical-analysis-Airbnb-Paris ')
+setwd('C:/Users/Mateo Silva/Desktop/rparisino/Statistical-analysis-Airbnb-Paris')
+#setwd('C:/Users/juanj/Desktop/Universidad/4. CUARTO SEMESTRE/Inferencia Estadistica/Proyecto final/Repositorio Github Proyecto Final/Statistical-analysis-Airbnb-Paris ')
 getwd
 Paris_weekdays <- read_csv("paris_weekdays.csv")
 datos <- Paris_weekdays
@@ -1695,7 +1695,7 @@ A continuacion se va a realizar la prueba de normalidad a los residuos de la reg
 
 
 $$H_0: Los~residuos~se~distribuyen~de~forma~normal$$
-$$H_0: Los~residuos~no~se~distribuyen~de~forma~normal$$
+$$H_1: Los~residuos~no~se~distribuyen~de~forma~normal$$
 
 
 $$$$
@@ -1713,7 +1713,7 @@ No obstante, podemos considerar la asunción de normalidad en los residuos debid
 Para esta prueba vamos a usar el test de Breush Pagan y vamos a plantear las siguientes hipotesis:
 
 $$H_0: Los~residuos~presentan~varianzas~constante.$$
-$$H_0: Los~residuos~no~presentan~varianzas~constante.$$
+$$H_1: Los~residuos~no~presentan~varianzas~constante.$$
 ```{r, echo = FALSE}
 baseSinAtipicos <- filter(Paris_weekdays, Paris_weekdays$realSum < 400)
 baseSinAtipicos1 <-  filter(baseSinAtipicos, baseSinAtipicos$room_type == "Shared room")
