@@ -47,19 +47,17 @@ Analizar el comportamiento del modelo de negocio de Airbnb en la ciudad de Parí
 
 -   **Objetivo 5:** Plantear hipótesis de la media o la proporcion para cada una de las variables, dependiendo si esta es cualitativa o cuantitativa.
 
--   **Objetivo 6:** Realizar graficas que ilustren la posible relacion entre 2 variables del estudio, como pueden ser graficas de dispersion para las variables cuantitativas o graficos de barras apliadas para las variables cualitativas.
+-   **Objetivo 6:** Realizar graficas que ilustren la posible relacion entre 2 variables del estudio, como pueden ser graficos de barras apliadas para las variables cualitativas.
 
--   **Objetivo 7:** Determinar los precios promedio de los alojamientos en diferentes zonas de París durante la semana, considerando la distancia al metro y el tipo de habitación.
+-   **Objetivo 7:** Realizar hipotesis para a la diferencia de medias en muestras independientes y /o dependientes.
 
--   **Objetivo 8:** Analizar el número de reservas y la ocupación de los alojamientos de Airbnb en París durante la semana, considerando la privacidad de la habitación y la limpieza.
+- **Objetivo 8:** Conocer si existen diferencias entre la distrubicion de las medias para variables cuantitativas mediante la prueba de anova.
 
--   **Objetivo 9:** Evaluar la relación entre el tamaño de los alojamientos de Airbnb y su capacidad de hospedar a múltiples huéspedes en París durante la semana, considerando la tarifa total.
+- **Objetivo 9:** Conocer si existen diferencias en la proporcion para variables cualitativas mediante la prueba de Ji-Cuadrado
 
-- **Objetivo 10:** Conocer si existen diferencias entre la distrubicion de las medias para variables cuantitativas median la prueba de anova.
+-  **Objetivo 10:** Plantear una relacion lineal para nuestras variables y ver como se comporta este modelo
 
--**Objetivo 11:** Conocer si existen diferencias en la proporcion para variables cualitativas mediante la prueba de Ji-Cuadrado
-
--**Objetivo 12:** plantear una relacion lineal para nuestras variables y ver como se comporta este modelo
+-  **Objetivo 11:** Validar los supuestos de regresion del modelo de regresion lineal
 
 \$\$\$\$
 
@@ -142,8 +140,8 @@ La base de datos de la cual vamos a explorar está dentro de un formato .csv y, 
 
 #setwd('C:/Users/Jardi/Downloads/santy/inferencia/Statistical-analysis-Airbnb-Paris')
 #setwd('C:/Users/melyb/OneDrive/Documentos/GitHub/Statistical-analysis-Airbnb-Paris')
-setwd('C:/Users/Mateo Silva/Desktop/rparisino/Statistical-analysis-Airbnb-Paris')
-#setwd('C:/Users/juanj/Desktop/Universidad/4. CUARTO SEMESTRE/Inferencia Estadistica/Proyecto final/Repositorio Github Proyecto Final/Statistical-analysis-Airbnb-Paris ')
+#setwd('C:/Users/Mateo Silva/Desktop/rparisino/Statistical-analysis-Airbnb-Paris')
+setwd('C:/Users/juanj/Desktop/Universidad/4. CUARTO SEMESTRE/Inferencia Estadistica/Proyecto final/Repositorio Github Proyecto Final/Statistical-analysis-Airbnb-Paris ')
 getwd
 Paris_weekdays <- read_csv("paris_weekdays.csv")
 datos <- Paris_weekdays
