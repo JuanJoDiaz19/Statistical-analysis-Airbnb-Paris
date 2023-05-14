@@ -134,10 +134,10 @@ La base de datos de la cual vamos a explorar está dentro de un formato .csv y, 
 
 ```{r, include = FALSE, message=FALSE}
 
-setwd('C:/Users/Jardi/Downloads/santy/inferencia/Statistical-analysis-Airbnb-Paris')
+#setwd('C:/Users/Jardi/Downloads/santy/inferencia/Statistical-analysis-Airbnb-Paris')
 #setwd('C:/Users/melyb/OneDrive/Documentos/GitHub/Statistical-analysis-Airbnb-Paris')
 #setwd('C:/Users/Mateo Silva/Desktop/rparisino/Statistical-analysis-Airbnb-Paris')
-#setwd('C:/Users/juanj/Desktop/Universidad/4. CUARTO SEMESTRE/Inferencia Estadistica/Proyecto final/Repositorio Github Proyecto Final/Statistical-analysis-Airbnb-Paris ')
+setwd('C:/Users/juanj/Desktop/Universidad/4. CUARTO SEMESTRE/Inferencia Estadistica/Proyecto final/Repositorio Github Proyecto Final/Statistical-analysis-Airbnb-Paris ')
 getwd
 Paris_weekdays <- read_csv("paris_weekdays.csv")
 datos <- Paris_weekdays
@@ -857,7 +857,7 @@ rango_Superior
 
 Con estos valores obtenemos el siguiente rango:
 
-$$[9.21~; ~9.30]$$ Es decir que el puntaje de limpieza promedio de los Airbnb en París entre semana con un 99% de confianza está dentro del rango de los 9.21 puntos a los 9.30 puntos.
+$$[9.21~; ~9.30]$$ Es decir que el puntaje de limpieza promedio de los Airbnb en París entre semana con un 98% de confianza está dentro del rango de los 9.21 puntos a los 9.30 puntos.
 
 \$\$\$\$
 
@@ -893,7 +893,7 @@ rango_Superior
 
 Con estos valores obtenemos el siguiente rango:
 
-$$[384.90~; ~412.69]$$ Es decir, que el precio promedio de los Airbnb en París entre semana, con un 97,5% de confianza, está dentro del rango 384,90 y 412,69 Euros.
+$$[384.90~; ~412.69]$$ Es decir, que el precio promedio de los Airbnb en París entre semana, con un 95% de confianza, está dentro del rango 384,90 y 412,69 Euros.
 
 \$\$\$\$
 
@@ -929,7 +929,7 @@ rango_Superior
 
 Con estos valores obtenemos el siguiente rango:
 
-$$[2.90~; ~2.99]$$ Es decir, que la capacidad promedio de personas de los AirBnB en París entre semana, con un 99,5% de confianza, está dentro del rango de 2,9 a 2,99 personas.
+$$[2.90~; ~2.99]$$ Es decir, que la capacidad promedio de personas de los AirBnB en París entre semana, con un 95% de confianza, está dentro del rango de 2,9 a 2,99 personas.
 
 \$\$\$\$
 
@@ -965,7 +965,7 @@ rango_Superior
 
 Con estos valores obtenemos el siguiente rango:
 
-$$[2.94~; ~3.07]$$ Es decir, que la distancia promedio al centro de los Airbnb en París entre semana, con un 99% de confianza, está dentro del rango de 2.94 kilómetros a 3.07 kilómetros.
+$$[2.94~; ~3.07]$$ Es decir, que la distancia promedio al centro de los Airbnb en París entre semana, con un 98% de confianza, está dentro del rango de 2.94 kilómetros a 3.07 kilómetros.
 
 \$\$\$\$
 
@@ -1267,8 +1267,8 @@ sum(CuartoPrivadoRoma == "TRUE")/ length(CuartoPrivadoRoma)
 
 como podemos ver, la proporcion de personas que poseen un cuarto privado en AirBnb Roma es de 0.38, entonces planteamos las siguientes hipótesis:
 
--   $H_0: \pi < 0.38$
--   $H_1: \pi \geq 0.38$
+-   $H_0: \pi \leq 0.38$
+-   $H_1: \pi > 0.38$
 
 Para esto ejecutamos el siguiente codigo para probar las hipotesis:
 
@@ -1381,7 +1381,7 @@ t.test(datosC1$realSum,datosC2$realSum,
 Podemos ver que el valor p es mayor que 0,05, por lo tanto podemos concluir que no existe evidencia para decir que el precio de las habitaciones no compartidas es mayor al de las compartidas.
 
 
-#### **Capacidad de personas cuando sus habitaciones son privadas o publicas**
+#### **Capacidad de personas cuando sus habitaciones son privadas o compartidas**
 
 Se desea conocer que relacion tiene media la capacidad de personas cuando las habitaciones cuando son privadas o publicas, es por esto que se plantean las siguientes hipotesis:
 
@@ -1423,11 +1423,11 @@ Podemos ver como el valor $p$ es mucho menor que 0.05, por lo que podemos asumir
 ```{r}
 t.test(datosC1$person_capacity,datosC2$person_capacity,
        alternative = "greater",
-       mu = 0, paired = FALSE, var.equal = TRUE,
+       mu = 0, paired = FALSE, var.equal = FALSE,
        conf.level = 0.95)
 ```
 
-Aqui podemos ver que el valor p es mucho mayor a 0,05, por lo tanto podemos concluir que no existe evidencia para decir que la media de personas con cuarto privado tenga menos capacidad de personas que los cuartos publicos.
+Aqui podemos ver que el valor p es mucho mayor a 0,05, por lo tanto podemos concluir que no existe evidencia para decir que la media de personas con cuarto privado tenga menos capacidad de personas que los cuartos compartido.
 
 
 
@@ -1571,14 +1571,14 @@ Esta sección del informe se va a aplicar los tests de chi cuadrado, en la que s
 
 #### **Fines de negocio vs Posee mas de un cuarto**
 
-$$Ho: No~existe~relacion~entre~si~es~por~fin~de~negocio~y~posee~mas~de~un~cuarto.$$
+$$Ho: No~existe~relacion~entre~si~es~por~fin~de~negocio~y~si~posee~mas~de~un~cuarto.$$
 
 $$H1: Existe~relacion~entre~si~es~para~fin~de~negocio~y~si~posee~mas~de~un~cuarto.$$
 
 ```{r, warning = FALSE}
 with(datos,chisq.test(FinesDeNegocios, PoseeMasDeUnCuarto, correct = TRUE))
 ```
-El valor p es muy pequeño por loq ue se concluye que si hay una relacion
+El valor p es muy pequeño por lo que se concluye que si hay una relacion
 
 ```{r, warning=FALSE}
 tabla <- crosstab(FinesDeNegocios,PoseeMasDeUnCuarto,prop.c = TRUE,plot = FALSE)

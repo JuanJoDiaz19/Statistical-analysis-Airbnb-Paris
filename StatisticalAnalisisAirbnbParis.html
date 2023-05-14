@@ -11,7 +11,7 @@
 
 <meta name="author" content="Juan Jose Diaz Parra, Mateo Silva Lasso, Santiago Espinosa, Melissa Dayana Mora" />
 
-<meta name="date" content="2023-05-13" />
+<meta name="date" content="2023-05-14" />
 
 <title>Estudio de datos de Airbnb en la ciudad de París entre semana</title>
 
@@ -1673,7 +1673,7 @@ border-radius: 0px;
 ciudad de París entre semana</strong></h1>
 <h4 class="author">Juan Jose Diaz Parra, Mateo Silva Lasso, Santiago
 Espinosa, Melissa Dayana Mora</h4>
-<h4 class="date">2023-05-13</h4>
+<h4 class="date">2023-05-14</h4>
 
 </div>
 
@@ -2250,7 +2250,7 @@ y vamos a aplicar la siguiente ecuación:</p>
 <p>Con estos valores obtenemos el siguiente rango:</p>
 <p><span class="math display">\[[9.21~; ~9.30]\]</span> Es decir que el
 puntaje de limpieza promedio de los Airbnb en París entre semana con un
-99% de confianza está dentro del rango de los 9.21 puntos a los 9.30
+98% de confianza está dentro del rango de los 9.21 puntos a los 9.30
 puntos.</p>
 <p>$$$$</p>
 <div id="precio-final-1" class="section level6">
@@ -2276,7 +2276,7 @@ y vamos a aplicar la siguiente ecuación:</p>
 <pre><code>## [1] 412.678</code></pre>
 <p>Con estos valores obtenemos el siguiente rango:</p>
 <p><span class="math display">\[[384.90~; ~412.69]\]</span> Es decir,
-que el precio promedio de los Airbnb en París entre semana, con un 97,5%
+que el precio promedio de los Airbnb en París entre semana, con un 95%
 de confianza, está dentro del rango 384,90 y 412,69 Euros.</p>
 <p>$$$$</p>
 </div>
@@ -2305,7 +2305,7 @@ y vamos a aplicar la siguiente ecuación:</p>
 <p>Con estos valores obtenemos el siguiente rango:</p>
 <p><span class="math display">\[[2.90~; ~2.99]\]</span> Es decir, que la
 capacidad promedio de personas de los AirBnB en París entre semana, con
-un 99,5% de confianza, está dentro del rango de 2,9 a 2,99 personas.</p>
+un 95% de confianza, está dentro del rango de 2,9 a 2,99 personas.</p>
 <p>$$$$</p>
 </div>
 <div id="distancia-al-centro-de-la-ciudad-1" class="section level5">
@@ -2332,7 +2332,7 @@ y vamos a aplicar la siguiente ecuación:</p>
 <p>Con estos valores obtenemos el siguiente rango:</p>
 <p><span class="math display">\[[2.94~; ~3.07]\]</span> Es decir, que la
 distancia promedio al centro de los Airbnb en París entre semana, con un
-99% de confianza, está dentro del rango de 2.94 kilómetros a 3.07
+98% de confianza, está dentro del rango de 2.94 kilómetros a 3.07
 kilómetros.</p>
 <p>$$$$</p>
 </div>
@@ -2686,11 +2686,11 @@ privado, por esto van a comparar con los Airbnb en Roma:</p>
 privado en AirBnb Roma es de 0.38, entonces planteamos las siguientes
 hipótesis:</p>
 <ul>
-<li><span class="math inline">\(H_0: \pi &lt; 0.38\)</span></li>
-<li><span class="math inline">\(H_1: \pi \geq 0.38\)</span></li>
+<li><span class="math inline">\(H_0: \pi \leq 0.38\)</span></li>
+<li><span class="math inline">\(H_1: \pi &gt; 0.38\)</span></li>
 </ul>
-<p>Para comprobar esto tenemos que utilizar una hipotesis alternativa de
-maypu en la curva y lo hacemos con la siguiente función:</p>
+<p>Para esto ejecutamos el siguiente codigo para probar las
+hipotesis:</p>
 <div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="#cb171-1" aria-hidden="true" tabindex="-1"></a>daticos<span class="ot">&lt;-</span> <span class="fu">prop.test</span>(<span class="fu">sum</span>(CuartoPrivado[CuartoPrivado<span class="sc">==</span> <span class="st">&quot;TRUE&quot;</span>] ), <span class="at">n =</span> <span class="fu">length</span>(CuartoPrivado), <span class="at">p =</span> <span class="fl">0.38</span>, <span class="at">alternative =</span> <span class="st">&quot;greater&quot;</span>)</span>
 <span id="cb171-2"><a href="#cb171-2" aria-hidden="true" tabindex="-1"></a>daticos</span></code></pre></div>
 <pre><code>## 
@@ -2844,9 +2844,9 @@ compararemos la media de los precios asumiendo varianzas diferentes:</p>
 concluir que no existe evidencia para decir que el precio de las
 habitaciones no compartidas es mayor al de las compartidas.</p>
 </div>
-<div id="capacidad-de-personas-cuando-sus-habitaciones-son-privadas-o-publicas" class="section level4">
+<div id="capacidad-de-personas-cuando-sus-habitaciones-son-privadas-o-compartidas" class="section level4">
 <h4><strong>Capacidad de personas cuando sus habitaciones son privadas o
-publicas</strong></h4>
+compartidas</strong></h4>
 <p>Se desea conocer que relacion tiene media la capacidad de personas
 cuando las habitaciones cuando son privadas o publicas, es por esto que
 se plantean las siguientes hipotesis:</p>
@@ -2894,23 +2894,23 @@ diferentes. Ahora, compararemos la capacidad media de personas asumiendo
 varianzas diferentes:</p>
 <div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="#cb189-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(datosC1<span class="sc">$</span>person_capacity,datosC2<span class="sc">$</span>person_capacity,</span>
 <span id="cb189-2"><a href="#cb189-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">alternative =</span> <span class="st">&quot;greater&quot;</span>,</span>
-<span id="cb189-3"><a href="#cb189-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">mu =</span> <span class="dv">0</span>, <span class="at">paired =</span> <span class="cn">FALSE</span>, <span class="at">var.equal =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb189-3"><a href="#cb189-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">mu =</span> <span class="dv">0</span>, <span class="at">paired =</span> <span class="cn">FALSE</span>, <span class="at">var.equal =</span> <span class="cn">FALSE</span>,</span>
 <span id="cb189-4"><a href="#cb189-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span></code></pre></div>
 <pre><code>## 
-##  Two Sample t-test
+##  Welch Two Sample t-test
 ## 
 ## data:  datosC1$person_capacity and datosC2$person_capacity
-## t = -18.065, df = 3128, p-value = 1
+## t = -23.263, df = 2184, p-value = 1
 ## alternative hypothesis: true difference in means is greater than 0
 ## 95 percent confidence interval:
-##  -0.9592785        Inf
+##  -0.9413918        Inf
 ## sample estimates:
 ## mean of x mean of y 
 ##  2.281003  3.160202</code></pre>
 <p>Aqui podemos ver que el valor p es mucho mayor a 0,05, por lo tanto
 podemos concluir que no existe evidencia para decir que la media de
 personas con cuarto privado tenga menos capacidad de personas que los
-cuartos publicos.</p>
+cuartos compartido.</p>
 </div>
 </div>
 <div id="cruces-de-variables" class="section level3">
@@ -3086,7 +3086,7 @@ variables cuantitativas como a las cualitativas de nuestro estudio:</p>
 <div id="fines-de-negocio-vs-posee-mas-de-un-cuarto" class="section level4">
 <h4><strong>Fines de negocio vs Posee mas de un cuarto</strong></h4>
 <p><span class="math display">\[Ho:
-No~existe~relacion~entre~si~es~por~fin~de~negocio~y~posee~mas~de~un~cuarto.\]</span></p>
+No~existe~relacion~entre~si~es~por~fin~de~negocio~y~si~posee~mas~de~un~cuarto.\]</span></p>
 <p><span class="math display">\[H1:
 Existe~relacion~entre~si~es~para~fin~de~negocio~y~si~posee~mas~de~un~cuarto.\]</span></p>
 <div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="#cb204-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(datos,<span class="fu">chisq.test</span>(FinesDeNegocios, PoseeMasDeUnCuarto, <span class="at">correct =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
@@ -3095,7 +3095,7 @@ Existe~relacion~entre~si~es~para~fin~de~negocio~y~si~posee~mas~de~un~cuarto.\]</
 ## 
 ## data:  FinesDeNegocios and PoseeMasDeUnCuarto
 ## X-squared = 314.33, df = 1, p-value &lt; 2.2e-16</code></pre>
-<p>El valor p es muy pequeño por loq ue se concluye que si hay una
+<p>El valor p es muy pequeño por lo que se concluye que si hay una
 relacion</p>
 <div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="#cb206-1" aria-hidden="true" tabindex="-1"></a>tabla <span class="ot">&lt;-</span> <span class="fu">crosstab</span>(FinesDeNegocios,PoseeMasDeUnCuarto,<span class="at">prop.c =</span> <span class="cn">TRUE</span>,<span class="at">plot =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb206-2"><a href="#cb206-2" aria-hidden="true" tabindex="-1"></a>tabla</span></code></pre></div>
