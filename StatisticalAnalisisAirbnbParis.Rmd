@@ -1270,7 +1270,7 @@ como podemos ver, la proporcion de personas que poseen un cuarto privado en AirB
 -   $H_0: \pi < 0.38$
 -   $H_1: \pi \geq 0.38$
 
-Para comprobar esto tenemos que utilizar una hipotesis alternativa de maypu en la curva y lo hacemos con la siguiente función:
+Para esto ejecutamos el siguiente codigo para probar las hipotesis:
 
 ```{r}
 daticos<- prop.test(sum(CuartoPrivado[CuartoPrivado== "TRUE"] ), n = length(CuartoPrivado), p = 0.38, alternative = "greater")
